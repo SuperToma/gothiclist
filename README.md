@@ -5,7 +5,7 @@
  * php composer.phar install
  * php bin/console server:run
  
-### Controller's action without arguments : 
+### OK : Controller's action without arguments : 
 
  * http://localhost:8000/
 
