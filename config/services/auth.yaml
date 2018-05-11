@@ -1,0 +1,40 @@
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: App\Entity\User
+    from_email:
+        address:     contact@gothiclist.com
+        sender_name: Contact Gothiclist
+
+hwi_oauth:
+    # list of names of the firewalls in which this bundle is active, this setting MUST be set
+    firewall_names: [secured_area]
+    fosub:
+        username_iterations: 30
+        properties:
+            facebook:  'facebook_id'
+            twitter:   'twitter_id'
+            vkontakte: 'vkontakte_id'
+    resource_owners:
+        facebook:
+            type:                'facebook'
+            client_id:           '1882882331970659'
+            client_secret:       '%env(FACEBOOK_SECRET)%'
+            scope:               'email,user_gender,user_age_range,user_location'
+            options:
+                display: popup #dialog is optimized for popup window
+                auth_type: rerequest # Re-asking for Declined Permissions
+                csrf: true
+        twitter:
+            type:                'twitter'
+            client_id:           '16FUYqdxNvpICVxrHJ7LcLsjZ'
+            client_secret:       '%env(TWITTER_SECRET)%'
+            options:
+                include_email: true
+                csrf: true
+        vkontakte:
+            type:                'vkontakte'
+            client_id:           '6049883'
+            client_secret:       '%env(VKONTAKTE_SECRET)%'
+            csrf: true
+

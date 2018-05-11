@@ -1,0 +1,3 @@
+song_add:
+    path: /add
+    controller: App\Controller\SongController::add

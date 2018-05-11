@@ -1,0 +1,14 @@
+imports:
+    resource: 'routes/auth_users.yaml'
+
+index:
+  path: /
+  controller: App\Controller\DefaultController::index
+
+autocomplete:
+    resource: 'routes/autocomplete.yaml'
+    prefix:   /autocomplete
+
+song:
+    resource: 'routes/song.yaml'
+    prefix:   /song

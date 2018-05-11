@@ -1,0 +1,84 @@
+{% extends "base.html.twig" %}
+
+
+{% block body %}
+    <div class="col-lg-6 col-md-offset-3">
+        <div class="panel panel-default" id="forms2">
+            <div class="panel-heading">Add new song</div>
+            <div class="panel-body">
+                <form>
+                    <fieldset>
+                        <legend>Legend</legend>
+                        <div class="form-group">
+                            <label for="artist_group">Artist / Group</label>
+                            <input type="text" class="form-control" id="artist_group" placeholder="Artist / Group">
+                        </div>
+                        <div class="form-group">
+                            <label for="song">Song</label>
+                            <input type="text" class="form-control" id="song" placeholder="Song" disabled="">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <link href="{{ asset('/jquery-ui-1.12.1.ui-darkness/jquery-ui.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script src="{{ asset('/jquery-ui-1.12.1.ui-darkness/jquery-ui.js') }}"></script>
+    <script>
+        $('#artist_group').autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url : '/autocomplete/artist_group/'+$('#artist_group').val(),
+                    dataType : 'json',
+                    success : function(data){
+                        return data.map(data, function(object){
+                            return object.id + ', ' + object.name;
+                        })
+                    }
+                });
+            },
+            minLength: 3,
+            success : function(data){ alert('IN');
+                return ($.map(data, function(object){
+                    return object.id + ', ' + object.name;
+                }));
+            },
+            select: function( event, ui ) {
+                log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+            }
+        });
+
+        $('#song').autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url : '/artist/' + $('#artist_group').val() + '/songs/' + $('#song').val(),
+                    dataType : 'json',
+                    success : function(data){
+                        data = data.map(data, function(object){
+                            return object.id + ', ' + object.name;
+                        })
+                    }
+                });
+            },
+            minLength: 2,
+            success : function(data){ alert('IN 2');
+                return ($.map(data, function(object){
+                    return object.id + ', ' + object.name;
+                }));
+            },
+            select: function( event, ui ) {
+                log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+            }
+        });
+    </script>
+{% endblock %}

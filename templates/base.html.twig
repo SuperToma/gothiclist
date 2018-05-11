@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}Site{% endblock %}</title>
+
+        {% block meta %}
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% endblock %}
+
+        {% block css %}
+            <link href="{{ asset('css/theme.css') }}" rel="stylesheet" media="screen">
+            <link href="{{ asset('css/gothiclist.css') }}" rel="stylesheet">
+        {% endblock %}
+    </head>
+
+    <body>
+        {% include 'parts/navbar.html.twig' %}
+        {% block body %}{% endblock %}
+        {% block js %}
+            <script src="{{ asset('jquery-ui-1.12.1.ui-darkness/external/jquery/jquery.js') }}"></script>
+            <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        {% endblock %}
+    </body>
+</html>
+
+

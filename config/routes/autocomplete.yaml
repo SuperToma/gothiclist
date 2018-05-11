@@ -1,0 +1,9 @@
+autocomplete_artist_group:
+    path: /artist_group/{artistGroup}
+    methods: GET
+    controller: App\Controller\AutocompleteController::artistGroup
+
+autocomplete_artist_songs:
+    path: /artist/{id}/songs/{song}
+    methods: GET
+    controller: App\Controller\AutocompleteController::SongsByArtist
