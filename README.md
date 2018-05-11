@@ -2,7 +2,7 @@
 
  * git clone git@github.com:SuperToma/gothiclist.git
  * cd gothiclist
- * composer install
+ * php composer.phar install
  * php bin/console server:run
  
 ###Page OK in controllers : 
