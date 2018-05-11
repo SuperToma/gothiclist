@@ -5,10 +5,11 @@
  * php composer.phar install
  * php bin/console server:run
  
-###Page OK in controllers : 
+### Controller's action without arguments : 
 
  * http://localhost:8000/
 
-###Autowiring KO :
+### KO : Service wired in controller's action
 
  * http://localhost:8000/autocomplete/artist_group/test
+ (route defined in /confg/routes/autocomplete.yaml)
