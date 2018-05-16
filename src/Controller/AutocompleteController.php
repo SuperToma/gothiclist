@@ -7,42 +7,31 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class AutocompleteController extends Controller
 {
-    protected $esFinder;
-
     /**
-     * AutocompleteController constructor.
-     * @param Finder $esFinder
-     *
-    public function __construct(Finder $esFinder)
-    {
-        $this->esFinder = $esFinder;
-    }*/
-
-    /**
-     * @param string $artistGroup
+     * @param string $prefixArtist
      * @param Finder $esFinder
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function ArtistGroup(string $artistGroup, Finder $esFinder)
+    public function artistGroup(string $prefixArtist, Finder $esFinder)
     {
         $max = 15;
 
         return $this->json(
-            $esFinder->getArtistGroupStartingWith($artistGroup, $max)
+            $esFinder->getArtistGroupStartingWith($prefixArtist, $max)
         );
     }
 
     /**
-     * @param int $id
-     * @param string $song
+     * @param int $artistId
+     * @param string $prefixSong
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function SongsByArtist(int $id, string $song)
+    public function songsByArtist(int $artistId, string $prefixSong, Finder $esFinder)
     {
         $max = 15;
 
         return $this->json(
-            $this->esFinder->getSongsByArtistStartingWith($id, $song, $max)
+            $esFinder->getSongsStartingWith($artistId, $prefixSong, $max)
         );
     }
 }
