@@ -47,7 +47,7 @@
 
                     return $.get('/autocomplete/artist_group/' + query, function (data) {
                         objects = [];
-                        $.each(data, function(i, object) {
+                        $.each(data.results, function(i, object) {
                             map[object.name] = object;
                             objects.push(object.name);
                         });
