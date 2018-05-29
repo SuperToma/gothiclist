@@ -39,6 +39,7 @@ class UserProvider extends FOSUBUserProvider
             $user->setNickname($response->getNickname());
             $user->setEmail($response->getEmail());
             $user->setPassword($username); //@TODO : Generate password
+            $user->setRole('ROLE_USER');
             $user->setEnabled(true);
 
             if(isset($response->getData()['country'])) {

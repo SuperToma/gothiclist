@@ -6,9 +6,9 @@
         <div class="panel panel-default" id="forms2">
             <div class="panel-heading">Add new song</div>
             <div class="panel-body">
-                <form>
+                <form action="{{ path('song_add') }}" method="post">
                     <fieldset>
-                        <legend>Legend</legend>
+                        {# <legend>Legend</legend>#}
                         <div class="form-group">
                             <label for="artist_group">Artist / Group</label>
                             <input type="text" class="form-control" id="artist_group" placeholder="Artist / Group" />
@@ -16,7 +16,7 @@
                         </div>
                         <div class="form-group">
                             <label for="song">Song</label>
-                            <input type="text" class="form-control" id="song" placeholder="Song" disabled />
+                            <input type="text" class="form-control" id="song" name="song_id" placeholder="Song" disabled />
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </fieldset>
@@ -76,6 +76,11 @@
                         process(objects);
                     });
                 },
+                updater: function(item) {
+                    $('#artist_group_id').val(map[item].id);
+                    $('#song').removeAttr('disabled');
+                    return item;
+                }
             });
         })
     </script>

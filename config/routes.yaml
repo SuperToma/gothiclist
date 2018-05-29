@@ -7,8 +7,6 @@ index:
 
 autocomplete:
     resource: 'routes/autocomplete.yaml'
-    prefix:   /autocomplete
 
 song:
     resource: 'routes/song.yaml'
-    prefix:   /song

@@ -13,6 +13,9 @@ hwi_oauth_login:
     resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
     prefix:   /login
 
+disconnect:
+    path: /disconnect
+
 facebook_login:
     path: /login/check-facebook
 

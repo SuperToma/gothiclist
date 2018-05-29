@@ -53,6 +53,11 @@ class User extends BaseUser
     protected $country;
 
     /**
+     * @ORM\Column(type="string", length=50)
+     */
+    protected $role;
+
+    /**
      * @var string
      * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
      */
@@ -180,6 +185,25 @@ class User extends BaseUser
     public function setCountry(string $country): User
     {
         $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRole(): string
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param string $role
+     * @return $this
+     */
+    public function setRole(string $role)
+    {
+        $this->role = $role;
 
         return $this;
     }
