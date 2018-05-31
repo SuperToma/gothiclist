@@ -49,6 +49,38 @@ class Finder
     }
 
     /**
+     * @param $artistId
+     * @return array
+     */
+    public function getArtistById($artistId)
+    {
+        $params = [
+            'index' => 'artist',
+            'body' => [
+                'query' => [
+                    'term' => ['_id' => $artistId]
+                ]
+            ]
+        ];
+
+        return $this->getResults($this->client->search($params))['results'][0] ?? [];
+    }
+
+    public function getSongById($songId)
+    {
+        $params = [
+            'index' => 'release',
+            'body' => [
+                'query' => [
+                    'term' => ['_id' => $songId]
+                ]
+            ]
+        ];
+
+        return $this->getResults($this->client->search($params))['results'][0] ?? [];
+    }
+
+    /**
      * @param string $text
      * @param int $limit
      * @return array
@@ -66,9 +98,8 @@ class Finder
                 ]
             ]
         ];
-        return $this->getResults(
-            $this->client->search($params)
-        );
+
+        return $this->getResults($this->client->search($params));
     }
 
     /**

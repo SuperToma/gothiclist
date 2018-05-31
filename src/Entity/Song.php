@@ -15,7 +15,7 @@ class Song
      */
     public function __construct()
     {
-        parent::__construct();
+        $this->createdAt = new \DateTime();
     }
 
     /**
@@ -25,50 +25,51 @@ class Song
      *
      * @var integer
      */
-    protected $id;
+    private $id;
 
     /**
      * @var integer
      * @ORM\Column(type="integer", nullable=false)
      */
-    protected $idDiscogs;
+    private $idDiscogs;
 
     /**
      * @var integer
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Artist")
+     * @ORM\JoinColumn(nullable=false)
      */
-    protected $idArtist;
+    private $idArtist;
 
     /**
      * @var integer
-     * @ORM\OneToMany(targetEntity="App\Entity\User")
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
      */
-    protected $user;
+    private $user;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $title;
+    private $title;
 
     /**
      * @var string
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $description;
+    private $description;
 
     /**
      * @var \DateTime
      * @ORM\Column(type="datetime", nullable=false)
      */
-    protected $createdAt;
+    private $createdAt;
 
     /**
      * @var \DateTime
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $updatedAt;
+    private $updatedAt;
 
 
     /**
@@ -138,9 +139,9 @@ class Song
 
     /**
      * @param User $user
-     * @return User
+     * @return Song
      */
-    public function setUser(User $user): User
+    public function setUser(User $user): Song
     {
         $this->user = $user;
 
@@ -195,13 +196,31 @@ class Song
 
     /**
      * @param \DateTime $createdAt
-     * @return \DateTime
+     * @return Song
      */
-    public function setCreatedAt(\DateTime $createdAt): \DateTime
+    public function setCreatedAt(\DateTime $createdAt): Song
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt(): \DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTime $updatedAt
+     * @return Song
+     */
+    public function setUpdatedAt(\DateTime $updatedAt): Song
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
 }

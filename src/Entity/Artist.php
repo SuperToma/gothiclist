@@ -15,7 +15,7 @@ class Artist
      */
     public function __construct()
     {
-        parent::__construct();
+        $this->createdAt = new \DateTime();
     }
 
     /**
@@ -25,56 +25,62 @@ class Artist
      *
      * @var integer
      */
-    protected $id;
+    private $id;
 
     /**
      * @var integer
      * @ORM\Column(type="integer", nullable=false)
      */
-    protected $idDiscogs;
+    private $idDiscogs;
 
     /**
      * @var integer
-     * @ORM\OneToMany(targetEntity="App\Entity\User")
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
      */
-    protected $user;
+    private $user;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=255, nullable=false)
      */
-    protected $name;
+    private $name;
 
     /**
      * @var string
      * @ORM\Column(type="json_array", nullable=true)
      */
-    protected $nameVariations;
+    private $nameVariations;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $realName;
+    private $realName;
 
     /**
      * @var string
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $description;
+    private $description;
+
+    /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description_discogs;
 
     /**
      * @var \DateTime
      * @ORM\Column(type="datetime", nullable=false)
      */
-    protected $createdAt;
+    private $createdAt;
 
     /**
      * @var \DateTime
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $updatedAt;
+    private $updatedAt;
 
     /**
      * @return int
@@ -86,9 +92,9 @@ class Artist
 
     /**
      * @param int $id
-     * @return Song
+     * @return Artist
      */
-    public function setId(int $id): Song
+    public function setId(int $id): Artist
     {
         $this->id = $id;
 
@@ -105,9 +111,9 @@ class Artist
 
     /**
      * @param int $idDiscogs
-     * @return Song
+     * @return Artist
      */
-    public function setIdDiscogs(int $idDiscogs): Song
+    public function setIdDiscogs(int $idDiscogs): Artist
     {
         $this->idDiscogs = $idDiscogs;
 
@@ -124,30 +130,11 @@ class Artist
 
     /**
      * @param User $user
-     * @return User
+     * @return Artist
      */
-    public function setUser(User $user): User
+    public function setUser(User $user): Artist
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getIdArtist(): int
-    {
-        return $this->idArtist;
-    }
-
-    /**
-     * @param int $id
-     * @return Song
-     */
-    public function setIdArtist(int $id): Song
-    {
-        $this->id = $id;
 
         return $this;
     }
@@ -162,9 +149,20 @@ class Artist
 
     /**
      * @param string $name
-     * @return Song
+     * @return Artist
      */
-    public function setTitle(string $name): Song
+    public function setName(string $name): Artist
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     * @return Artist
+     */
+    public function setTitle(string $name): Artist
     {
         $this->name = $name;
 
@@ -180,10 +178,10 @@ class Artist
     }
 
     /**
-     * @param string $nameVariations
-     * @return Song
+     * @param array $nameVariations
+     * @return Artist
      */
-    public function setNameVariations(string $nameVariations): Song
+    public function setNameVariations(array $nameVariations): Artist
     {
         $this->nameVariations = $nameVariations;
 
@@ -200,9 +198,9 @@ class Artist
 
     /**
      * @param string $realName
-     * @return Song
+     * @return Artist
      */
-    public function setRealName(string $realName): Song
+    public function setRealName(string $realName): Artist
     {
         $this->realName = $realName;
 
@@ -219,11 +217,30 @@ class Artist
 
     /**
      * @param string $description
-     * @return Song
+     * @return Artist
      */
-    public function setDescription(string $description): Song
+    public function setDescription(string $description): Artist
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescriptionDiscogs(): string
+    {
+        return $this->description_discogs;
+    }
+
+    /**
+     * @param string $descriptionDiscogs
+     * @return Artist
+     */
+    public function setDescriptionDiscogs(string $descriptionDiscogs): Artist
+    {
+        $this->description_discogs = $descriptionDiscogs;
 
         return $this;
     }
@@ -238,13 +255,31 @@ class Artist
 
     /**
      * @param \DateTime $createdAt
-     * @return \DateTime
+     * @return Artist
      */
-    public function setCreatedAt(\DateTime $createdAt): \DateTime
+    public function setCreatedAt(\DateTime $createdAt): Artist
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt(): \DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTime $updatedAt
+     * @return Artist
+     */
+    public function setUpdatedAt(\DateTime $updatedAt): Artist
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
 }

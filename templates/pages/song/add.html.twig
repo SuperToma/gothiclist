@@ -11,12 +11,21 @@
                         {# <legend>Legend</legend>#}
                         <div class="form-group">
                             <label for="artist_group">Artist / Group</label>
-                            <input type="text" class="form-control" id="artist_group" placeholder="Artist / Group" />
-                            <input type="hidden" id="artist_group_id" name="artist_group_id" value="" />
+                            <input type="text"
+                                   class="form-control"
+                                   id="artist_group"
+                                   placeholder="Artist / Group"
+                                   autocomplete="off"/>
+                            <input type="hidden" id="artist_id" name="artist_id" value="" />
                         </div>
                         <div class="form-group">
                             <label for="song">Song</label>
-                            <input type="text" class="form-control" id="song" name="song_id" placeholder="Song" disabled />
+                            <input type="text"
+                                   class="form-control"
+                                   id="song" placeholder="Song"
+                                   autocomplete="off"
+                                   disabled />
+                            <input type="hidden" id="song_id" name="song_id" value="" />
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </fieldset>
@@ -24,7 +33,6 @@
             </div>
         </div>
     </div>
-
 {% endblock %}
 
 
@@ -38,24 +46,24 @@
         jQuery(document).ready(function() {
             //Autocomplete artist/group
             $('#artist_group').typeahead({
-                hint: true,
+                hint: false,
                 highlight: true,
                 minLength: 1,
                 source: function (query, process) {
-                    $('#artist_group_id, #song').val(null);
+                    $('#artist_id, #song').val(null);
                     $('#song').attr('disabled', 'disabled');
 
                     return $.get('/autocomplete/artist_group/' + query, function (data) {
                         objects = [];
                         $.each(data.results, function(i, object) {
-                            map[object.name] = object;
+                          map[object.name] = object;
                             objects.push(object.name);
                         });
                         process(objects);
                     });
                 },
                 updater: function(item) {
-                    $('#artist_group_id').val(map[item].id);
+                    $('#artist_id').val(map[item].id);
                     $('#song').removeAttr('disabled');
                     return item;
                 }
@@ -63,21 +71,21 @@
 
             //Autocomplete song
             $('#song').typeahead({
-                hint: true,
+                hint: false,
                 highlight: true,
                 minLength: 1,
                 source: function (query, process) {
-                    return $.get('/autocomplete/artist/'+$('#artist_group_id').val()+'/songs/'+query, function (data) {
+                    return $.get('/autocomplete/artist/'+$('#artist_id').val()+'/songs/'+query, function (data) {
                         objects = [];
                         $.each(data, function(i, object) {
-                            map[object.track] = object;
+                          map[object.track] = object;
                             objects.push(object.track);
                         });
                         process(objects);
                     });
                 },
                 updater: function(item) {
-                    $('#artist_group_id').val(map[item].id);
+                    $('#song_id').val(map[item].id);
                     $('#song').removeAttr('disabled');
                     return item;
                 }
