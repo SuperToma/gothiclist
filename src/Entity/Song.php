@@ -36,16 +36,14 @@ class Song
     private $idMaster;
 
     /**
-     * @var integer
-     * @ORM\OneToOne(targetEntity="App\Entity\Release")
-     * @ORM\Column(type="integer", nullable=false)
+     * @var Release
+     * @ORM\ManyToOne(targetEntity="App\Entity\Release")
      */
-    private $idRelease;
+    private $release;
 
     /**
-     * @var integer
-     * @ORM\OneToOne(targetEntity="App\Entity\Artist")
-     * @ORM\Column(type="integer", nullable=false)
+     * @var Artist
+     * @ORM\ManyToOne(targetEntity="App\Entity\Artist")
      */
     private $artist;
 
@@ -115,20 +113,20 @@ class Song
     }
 
     /**
-     * @return int
+     * @return Release
      */
-    public function getIdRelease(): int
+    public function getRelease(): Release
     {
-        return $this->idRelease;
+        return $this->release;
     }
 
     /**
-     * @param int $idRelease
+     * @param Release $release
      * @return Song
      */
-    public function setIdRelease(int $idRelease): Song
+    public function setRelease(Release $release): Song
     {
-        $this->idRelease = $idRelease;
+        $this->release = $release;
 
         return $this;
     }
