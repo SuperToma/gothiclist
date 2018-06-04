@@ -42,7 +42,7 @@ security:
                     vkontakte: "/login/check-vkontakte"
                 login_path:    /login
                 use_forward:   false
-                failure_path:  /login
+                failure_path:  /
                 oauth_user_provider:
                     service: app.oauth_aware.user_provider.service
             logout:

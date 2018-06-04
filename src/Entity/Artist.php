@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -47,7 +48,7 @@ class Artist
     private $name;
 
     /**
-     * @var string
+     * @var ArrayCollection
      * @ORM\Column(type="json_array", nullable=true)
      */
     private $nameVariations;
@@ -88,17 +89,6 @@ class Artist
     public function getId(): int
     {
         return $this->id;
-    }
-
-    /**
-     * @param int $id
-     * @return Artist
-     */
-    public function setId(int $id): Artist
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     /**

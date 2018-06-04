@@ -10,3 +10,6 @@ autocomplete:
 
 song:
     resource: 'routes/song.yaml'
+
+admin:
+    resource: 'routes/admin.yaml'

@@ -1,0 +1,4 @@
+admin_home:
+    path: /admin/home
+    controller: App\Controller\AdminController::home
+    methods: [GET]

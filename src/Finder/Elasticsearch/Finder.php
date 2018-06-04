@@ -66,7 +66,7 @@ class Finder
         return $this->getResults($this->client->search($params))['results'][0] ?? [];
     }
 
-    public function getSongById($songId)
+    public function getReleaseById($songId)
     {
         $params = [
             'index' => 'release',
@@ -106,13 +106,13 @@ class Finder
      * @param $artistId
      * @return array
      */
-    protected function getMasterIdsFromArtistId($artistId)
+    protected function getMainReleaseIdsFromArtistId($artistId)
     {
         $params = [
             'index' => 'master',
             'from' => 0,
-            'size' => 500,
-            '_source' => false,
+            'size' => 1000,
+            '_source' => 'main_release',
             'body' => [
                 'query' => [
                     'bool' => [
@@ -124,7 +124,14 @@ class Finder
             ]
         ];
 
-        return $this->getResults($this->client->search($params));
+        $rawResults = $this->getResults($this->client->search($params));
+
+        $results = [];
+        foreach($rawResults['results'] as $rawResult) {
+            $results[] = $rawResult['main_release'];
+        }
+
+        return $results;
      }
 
     /**
@@ -147,7 +154,7 @@ class Finder
                             'match' => [ 'tracklist.title' => $text ]
                         ],
                         'filter' => [
-                            'terms' => ['master_id' => $this->getMasterIdsFromArtistId($artistId)['results']],
+                            'terms' => ['_id' => $this->getMainReleaseIdsFromArtistId($artistId)],
                         ]
                     ]
                 ]

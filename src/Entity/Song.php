@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
 * @ORM\Entity
-* @ORM\Table(name="song")
+* @ORM\Table(name="song", indexes={@ORM\Index(name="title_idx", columns={"title"})})
 */
 class Song
 {
@@ -15,6 +15,7 @@ class Song
      */
     public function __construct()
     {
+        $this->validated = false;
         $this->createdAt = new \DateTime();
     }
 
@@ -29,16 +30,24 @@ class Song
 
     /**
      * @var integer
+     * @ORM\OneToOne(targetEntity="App\Entity\Master")
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $idDiscogs;
+    private $idMaster;
 
     /**
      * @var integer
-     * @ORM\ManyToOne(targetEntity="App\Entity\Artist")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToOne(targetEntity="App\Entity\Release")
+     * @ORM\Column(type="integer", nullable=false)
      */
-    private $idArtist;
+    private $idRelease;
+
+    /**
+     * @var integer
+     * @ORM\OneToOne(targetEntity="App\Entity\Artist")
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $artist;
 
     /**
      * @var integer
@@ -58,6 +67,12 @@ class Song
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
+
+    /**
+     * @var string
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $validated;
 
     /**
      * @var \DateTime
@@ -81,12 +96,20 @@ class Song
     }
 
     /**
-     * @param int $id
+     * @return int
+     */
+    public function getIdMaster(): int
+    {
+        return $this->idMaster;
+    }
+
+    /**
+     * @param int $idMaster
      * @return Song
      */
-    public function setId(int $id): Song
+    public function setIdMaster(int $idMaster): Song
     {
-        $this->id = $id;
+        $this->idMaster = $idMaster;
 
         return $this;
     }
@@ -94,37 +117,37 @@ class Song
     /**
      * @return int
      */
-    public function getIdDiscogs(): int
+    public function getIdRelease(): int
     {
-        return $this->idDiscogs;
+        return $this->idRelease;
     }
 
     /**
-     * @param int $idDiscogs
+     * @param int $idRelease
      * @return Song
      */
-    public function setIdDiscogs(int $idDiscogs): Song
+    public function setIdRelease(int $idRelease): Song
     {
-        $this->idDiscogs = $idDiscogs;
+        $this->idRelease = $idRelease;
 
         return $this;
     }
 
     /**
-     * @return int
+     * @return Artist
      */
-    public function getIdArtist(): int
+    public function getArtist(): Artist
     {
-        return $this->idArtist;
+        return $this->artist;
     }
 
     /**
-     * @param int $id
+     * @param Artist $artist
      * @return Song
      */
-    public function setIdArtist(int $id): Song
+    public function setArtist(Artist $artist): Song
     {
-        $this->id = $id;
+        $this->artist = $artist;
 
         return $this;
     }
@@ -182,6 +205,25 @@ class Song
     public function setDescription(string $description): Song
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getValidated()
+    {
+        return $this->validated;
+    }
+
+    /**
+     * @param bool $validated
+     * @return $this
+     */
+    public function setValidated(bool $validated)
+    {
+        $this->validated = $validated;
 
         return $this;
     }

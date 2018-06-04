@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -17,6 +18,7 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
+
     }
 
     /**
@@ -51,11 +53,6 @@ class User extends BaseUser
      * @ORM\Column(type="string", length=2, nullable=true)
      */
     protected $country;
-
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    protected $role;
 
     /**
      * @var string
@@ -100,17 +97,6 @@ class User extends BaseUser
     public function getId(): int
     {
         return $this->id;
-    }
-
-    /**
-     * @param int $id
-     * @return User
-     */
-    public function setId(int $id): User
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     /**
@@ -189,31 +175,13 @@ class User extends BaseUser
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getRole(): string
-    {
-        return $this->role;
-    }
-
-    /**
-     * @param string $role
-     * @return $this
-     */
-    public function setRole(string $role)
-    {
-        $this->role = $role;
-
-        return $this;
-    }
 
     /**
      * @return string
      */
     public function getFacebookId(): string
     {
-        return $this->facebookId;
+        return $this->facebookId ? : '';
     }
 
     /**
@@ -251,7 +219,7 @@ class User extends BaseUser
      */
     public function getTwitterId(): string
     {
-        return $this->twitterId;
+        return $this->twitterId ? : '';
     }
 
     /**
@@ -289,7 +257,7 @@ class User extends BaseUser
      */
     public function getVkontakteId(): string
     {
-        return $this->vkontakteId;
+        return $this->vkontakteId ? : '';
     }
 
     /**

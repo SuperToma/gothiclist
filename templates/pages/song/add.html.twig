@@ -12,6 +12,7 @@
                         <div class="form-group">
                             <label for="artist_group">Artist / Group</label>
                             <input type="text"
+                                   name="artist_name"
                                    class="form-control"
                                    id="artist_group"
                                    placeholder="Artist / Group"
@@ -21,11 +22,12 @@
                         <div class="form-group">
                             <label for="song">Song</label>
                             <input type="text"
+                                   name="song_name"
                                    class="form-control"
                                    id="song" placeholder="Song"
                                    autocomplete="off"
                                    disabled />
-                            <input type="hidden" id="song_id" name="song_id" value="" />
+                            <input type="hidden" id="release_id" name="release_id" value="" />
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </fieldset>
@@ -85,7 +87,7 @@
                     });
                 },
                 updater: function(item) {
-                    $('#song_id').val(map[item].id);
+                    $('#release_id').val(map[item].id);
                     $('#song').removeAttr('disabled');
                     return item;
                 }

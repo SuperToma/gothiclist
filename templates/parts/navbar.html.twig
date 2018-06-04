@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">YOURSITE.COM</a>
+            <a class="navbar-brand" href="#">SITE.COM</a>
         </div>
 
         <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -22,12 +22,15 @@
                         <li><a href="#">by Types</a></li>
                     </ul>
                 </li>
-                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% if is_granted('ROLE_USER') %}
                     <li><a href="{{ path('song_add') }}">Add song</a></li>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li><a href="{{ path('admin_home') }}">Administration</a></li>
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% if is_granted('ROLE_USER') %}
                     <div class="btn-group">
                         <button class="btn btn-danger navbar-btn btn-sm">{{ app.user.nickname }}</button>
                         <button class="btn dropdown-toggle navbar-btn btn-danger btn-sm" data-toggle="dropdown">
@@ -38,17 +41,17 @@
                         </ul>
                     </div>
                 {% else %}
-                <div class="btn-group">
-                    <button class="btn btn-danger navbar-btn btn-sm">Sign up</button>
-                    <button class="btn dropdown-toggle navbar-btn btn-danger btn-sm" data-toggle="dropdown">
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" style="min-width:30px;">
-                        <li><a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}">Facebook</a></li>
-                        <li><a href="{{ path('hwi_oauth_service_redirect', {'service': 'twitter' }) }}">Twitter</a></li>
-                        <li><a href="{{ path('hwi_oauth_service_redirect', {'service': 'vkontakte' }) }}">Vkontakte</a></li>
-                    </ul>
-                </div>
+                    <div class="btn-group">
+                        <button class="btn btn-danger navbar-btn btn-sm">Sign up</button>
+                        <button class="btn dropdown-toggle navbar-btn btn-danger btn-sm" data-toggle="dropdown">
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" style="min-width:30px;">
+                            <li><a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}">Facebook</a></li>
+                            <li><a href="{{ path('hwi_oauth_service_redirect', {'service': 'twitter' }) }}">Twitter</a></li>
+                            <li><a href="{{ path('hwi_oauth_service_redirect', {'service': 'vkontakte' }) }}">Vkontakte</a></li>
+                        </ul>
+                    </div>
                 {% endif %}
             </ul>
         </div>
