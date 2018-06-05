@@ -1,0 +1,6 @@
+song_add:
+    path: /vote/song/{songId}
+    controller: App\Controller\VoteController::song
+    methods: [GET, POST]
+    requirements:
+            songId: '\d+'

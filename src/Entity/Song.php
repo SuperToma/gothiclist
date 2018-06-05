@@ -50,7 +50,6 @@ class Song
     /**
      * @var integer
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
@@ -65,6 +64,12 @@ class Song
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=25, nullable=true)
+     */
+    private $youtubeId;
 
     /**
      * @var string
@@ -206,6 +211,26 @@ class Song
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getYoutubeId()
+    {
+        return $this->youtubeId;
+    }
+
+    /**
+     * @param string $youtubeId
+     * @return $this
+     */
+    public function setYoutubeId(string $youtubeId)
+    {
+        $this->youtubeId = $youtubeId;
+
+        return $this;
+    }
+
 
     /**
      * @return string

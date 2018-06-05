@@ -11,5 +11,8 @@ autocomplete:
 song:
     resource: 'routes/song.yaml'
 
+vote:
+    resource: 'routes/vote.yaml'
+
 admin:
     resource: 'routes/admin.yaml'

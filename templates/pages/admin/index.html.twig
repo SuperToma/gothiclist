@@ -1,0 +1,27 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Last added</div>
+    <div class="panel-body">
+        <div class="panel-group">
+            <table class="table table-dark table-striped table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Artist</th>
+                    <th scope="col">Album</th>
+                    <th scope="col">By</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for song in last_songs %}
+                    <tr>
+                        <td>{{ song.title }}</td>
+                        <td>{{ song.artist.name }}</td>
+                        <td>{{ song.release.title }}</td>
+                        <td>{{ song.user.nickname }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

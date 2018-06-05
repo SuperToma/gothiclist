@@ -1,6 +1,20 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+
+    {# jumbotron #}
+    <div class="jumbotron" style="margin-top:-20px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    <h1>Gothiclist.com</h1>
+                    <p>The gothic music directory</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Last songs #}
     <div class="panel panel-default">
         <div class="panel-heading">Last added</div>
         <div class="panel-body">
@@ -17,12 +31,41 @@
                     <tbody>
                         {% for song in last_songs %}
                             <tr>
-                                <th>{{ song.title }}</th>
+                                <td>{{ song.title }}</td>
                                 <td>{{ song.artist.name }}</td>
                                 <td>{{ song.release.title }}</td>
                                 <td>{{ song.user.nickname }}</td>
                             </tr>
                         {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {# Top rated songs #}
+    <div class="panel panel-default">
+        <div class="panel-heading">Last added</div>
+        <div class="panel-body">
+            <div class="panel-group">
+                <table class="table table-dark table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Artist</th>
+                        <th scope="col">Album</th>
+                        <th scope="col">Votes</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for song in last_songs %}
+                        <tr>
+                            <td>{{ song.title }}</td>
+                            <td>{{ song.artist.name }}</td>
+                            <td>{{ song.release.title }}</td>
+                            <td>{{ song.votes }}</td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
