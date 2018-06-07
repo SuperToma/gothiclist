@@ -23,7 +23,13 @@ class Vote
      * @var string
      * @ORM\Column(type="string", length=10, nullable=false)
      */
-    private $type;
+    private $entityName;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer", length=10, nullable=false)
+     */
+    private $entityId;
 
     /**
      * @var string
@@ -64,18 +70,37 @@ class Vote
     /**
      * @return string
      */
-    public function getType()
+    public function getEntityName()
     {
-        return $this->type;
+        return $this->entityName;
     }
 
     /**
-     * @param $type
+     * @param $entityName
      * @return Vote
      */
-    public function setType($type): Vote
+    public function setEntityName($entityName): Vote
     {
-        $this->type = $type;
+        $this->entityName = $entityName;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getEntityId()
+    {
+        return $this->entityId;
+    }
+
+    /**
+     * @param $entityId
+     * @return Vote
+     */
+    public function setEntityId($entityId): Vote
+    {
+        $this->entityId = $entityId;
 
         return $this;
     }

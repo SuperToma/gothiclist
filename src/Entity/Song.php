@@ -288,4 +288,13 @@ class Song
 
         return $this;
     }
+
+    /**
+     * OTHER METHODS
+     */
+
+    public function getVotesInfos()
+    {
+
+    }
 }
