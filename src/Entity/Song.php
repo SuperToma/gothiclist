@@ -3,13 +3,16 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\SongRepository;
 
 /**
-* @ORM\Entity
-* @ORM\Table(name="song", indexes={@ORM\Index(name="title_idx", columns={"title"})})
-*/
+ * @ORM\Entity(repositoryClass="App\Repository\SongRepository")
+ * @ORM\Table(name="song", indexes={@ORM\Index(name="title_idx", columns={"title"})})
+ */
 class Song
 {
+    const VOTE_TYPE = 'song';
+
     /**
      * Song constructor.
      */
@@ -97,6 +100,7 @@ class Song
     {
         return $this->id;
     }
+
 
     /**
      * @return int

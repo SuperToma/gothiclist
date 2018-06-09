@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
 * @ORM\Entity
-* @ORM\Table(name="vote")
+* @ORM\Table(name="vote", indexes={@ORM\Index(name="type_object_id_idx", columns={"type", "object_id"})})
 */
 class Vote
 {
@@ -23,13 +23,13 @@ class Vote
      * @var string
      * @ORM\Column(type="string", length=10, nullable=false)
      */
-    private $entityName;
+    private $type;
 
     /**
      * @var int
      * @ORM\Column(type="integer", length=10, nullable=false)
      */
-    private $entityId;
+    private $objectId;
 
     /**
      * @var string
@@ -70,18 +70,18 @@ class Vote
     /**
      * @return string
      */
-    public function getEntityName()
+    public function getType()
     {
-        return $this->entityName;
+        return $this->type;
     }
 
     /**
-     * @param $entityName
+     * @param $type
      * @return Vote
      */
-    public function setEntityName($entityName): Vote
+    public function setType($type): Vote
     {
-        $this->entityName = $entityName;
+        $this->type = $type;
 
         return $this;
     }
@@ -89,18 +89,18 @@ class Vote
     /**
      * @return int
      */
-    public function getEntityId()
+    public function getObjectId()
     {
-        return $this->entityId;
+        return $this->objectId;
     }
 
     /**
-     * @param $entityId
+     * @param $objectId
      * @return Vote
      */
-    public function setEntityId($entityId): Vote
+    public function setObjectId($objectId): Vote
     {
-        $this->entityId = $entityId;
+        $this->objectId = $objectId;
 
         return $this;
     }

@@ -11,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
 */
 class Artist
 {
+    const VOTE_TYPE = 'artist';
+
     /**
      * Artist constructor.
      */

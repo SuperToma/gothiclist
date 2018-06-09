@@ -11,8 +11,10 @@
             {% if app.request.server.get('HTTP_HOST') starts with 'www' %}
                 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,300,700" rel="stylesheet">
             {% endif %}
-            <link href="{{ asset('css/theme.css') }}" rel="stylesheet" media="screen">
-            <link href="{{ asset('css/gothiclist.css') }}" rel="stylesheet">
+            <link rel="stylesheet" href="{{ asset('css/theme.css') }}" media="screen">
+            <link rel="stylesheet" href="{{ asset('css/gothiclist.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/font-awesome-4.7.0.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('jquery-bar-rating-1.2.2/dist/themes/fontawesome-stars.css') }}">
         {% endblock %}
     </head>
 
@@ -34,6 +36,8 @@
             <script src="{{ asset('jquery-ui-1.12.1.ui-darkness/external/jquery/jquery.js') }}"></script>
             <script src="{{ asset('js/bootstrap.min.js') }}"></script>
             <script src="{{ asset('js/bootstrap3-typeahead.min.js') }}"></script>
+            <script src="{{ asset('jquery-bar-rating-1.2.2/jquery.barrating.js') }}"></script>
+            <script src="{{ asset('js/main.js') }}"></script>
         {% endblock %}
     </body>
 </html>

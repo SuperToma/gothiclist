@@ -2,29 +2,29 @@
 
 namespace App\Controller;
 
-use App\Entity\Artist;
+use App\Repository\VoteRepository;
+use App\Repository\SongRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Entity\Song;
 
 class DefaultController extends Controller
 {
-    public function index()
+    /**
+     * @param SongRepository $songRepository
+     * @param VoteRepository $voteRepository
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function index(SongRepository $songRepository, VoteRepository $voteRepository)
     {
-        $songRepository = $this->getDoctrine()->getRepository(Song::class);
-        $artistRepository = $this->getDoctrine()->getRepository(Artist::class);
-        $voteRepository = $this->getDoctrine()->getRepository(Vote::class);
+        $lastSongs = $songRepository->findBy([], ['createdAt' => 'DESC'], 10);
+        // foreach($lastSongs as &$song) {
+            /** @var Song $song */
+        //     $song->vote = $voteRepository->findVotesInfos(Song::VOTE_TYPE, $song->getId());
+        // }
 
-        /**
-         * SELECT COUNT(id), AVG(value)
-         * FROM vote
-         * WHERE
-         *  entity_name = 'song' AND
-         *  entity_id = #ID#
-         */
-
+        //dump($lastSongs); exit();
         return $this->render('pages/index.html.twig', [
-            'last_songs' => $songRepository->findBy([], ['createdAt' => 'DESC'], 10),
-            'last_artists' => $artistRepository->findBy([], ['createdAt' => 'DESC'], 10),
+            'last_songs' => $lastSongs
         ]);
     }
 }

@@ -2,12 +2,14 @@
 
 namespace App\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use App\Entity\Song;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * Class SongRepository
  */
-class SongRepository extends EntityRepository
+class SongRepository extends ServiceEntityRepository
 {
     /**
      * SongRepository constructor.
@@ -16,11 +18,6 @@ class SongRepository extends EntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Song::class);
-    }
-
-    public function getVotesInfos()
-    {
-
     }
 
 }

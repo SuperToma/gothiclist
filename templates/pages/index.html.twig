@@ -26,6 +26,7 @@
                             <th scope="col">Artist</th>
                             <th scope="col">Album</th>
                             <th scope="col">By</th>
+                            <th scope="col">Vote</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,6 +36,9 @@
                                 <td>{{ song.artist.name }}</td>
                                 <td>{{ song.release.title }}</td>
                                 <td>{{ song.user.nickname }}</td>
+                                <td scope="col">
+                                    {%  include 'parts/rating-stars.html.twig' with {'type': 'song', 'id': 1} only %}
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -63,7 +67,7 @@
                             <td>{{ song.title }}</td>
                             <td>{{ song.artist.name }}</td>
                             <td>{{ song.release.title }}</td>
-                            <td>{{ song.votes }}</td>
+                            {# <td>{{ song.votes }}</td> #}
                         </tr>
                     {% endfor %}
                     </tbody>
