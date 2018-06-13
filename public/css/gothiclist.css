@@ -3,8 +3,6 @@ body {
   background-color: #1f1f1f;
 }
 
-
-
 @media screen and (min-width: 768px) {
   .jumbotron h1 {
     font-size: 35px;
@@ -32,4 +30,9 @@ body {
 .navbar-default .navbar-collapse,
 .navbar-default .navbar-form {
   border-color: #1a1a1a !important;
+}
+
+/*************** others ****************/
+.tomato {
+  color: tomato !important;
 }

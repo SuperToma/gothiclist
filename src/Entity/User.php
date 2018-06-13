@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -18,7 +19,7 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-
+        $this->votesSong = new ArrayCollection();
     }
 
     /**
@@ -53,6 +54,11 @@ class User extends BaseUser
      * @ORM\Column(type="string", length=2, nullable=true)
      */
     protected $country;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\VoteSong", mappedBy="user")
+     */
+    protected $votesSong;
 
     /**
      * @var string
@@ -175,6 +181,49 @@ class User extends BaseUser
         return $this;
     }
 
+    /**
+     * @return Collection
+     */
+    public function getVotesSong(): Collection
+    {
+        return $this->votesSong;
+    }
+
+    /**
+     * @param array $votesSong
+     * @return User
+     */
+    public function setVotesSong(array $votesSong): User
+    {
+        $this->votesSong = $votesSong;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getVotesSongIds()
+    {
+        $idsCollection = $this->votesSong->map( function( $obj ) { return $obj->getSong()->getId(); } );
+
+        return $idsCollection->toArray();
+    }
+
+    /**
+     * @return array
+     *
+    public function getVotesSongIds()
+    {
+        $votesSong = [];
+
+        /** @var VoteSong $voteSong *
+        foreach($this->votesSong as $voteSong) {
+            $votesSong[$this->getId()] = $voteSong->getSong()->getId();
+        }
+
+        return $votesSong;
+    }*/
 
     /**
      * @return string

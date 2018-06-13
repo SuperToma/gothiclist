@@ -2,15 +2,15 @@
 
 namespace App\Repository;
 
-use App\Entity\Vote;
+use App\Entity\VoteSong;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * Class VoteRepository
+ * Class VoteSongRepository
  * @package App\Repository
  */
-class VoteRepository extends ServiceEntityRepository
+class VoteSongRepository extends ServiceEntityRepository
 {
     /**
      * SongRepository constructor.
@@ -18,21 +18,18 @@ class VoteRepository extends ServiceEntityRepository
      */
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, Vote::class);
+        parent::__construct($registry, VoteSong::class);
     }
 
     /**
-     * @param $type
      * @param $objectId
      * @return mixed
      */
-    public function findVoteInfos($type, $objectId)
+    public function findVoteInfos($objectId)
     {
         $qb = $this->createQueryBuilder('r')
             ->select('COUNT(r) AS count, AVG(r.value) AS avg')
-            ->where('r.type = :type')
             ->andWhere('r.objectId = :objectId')
-            ->setParameter('type', $type)
             ->setParameter('objectId', $objectId)
             ->getQuery();
 

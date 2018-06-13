@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-
+{{ dump(app.user.votesSongIds) }}
     {# jumbotron #}
     <div class="jumbotron" style="margin-top:-20px;">
         <div class="container">
@@ -37,7 +37,11 @@
                                 <td>{{ song.release.title }}</td>
                                 <td>{{ song.user.nickname }}</td>
                                 <td scope="col">
-                                    {%  include 'parts/rating-stars.html.twig' with {'type': 'song', 'id': 1} only %}
+                                    {%  include 'parts/vote.html.twig' with {
+                                        'id': song.id,
+                                        'type': 'song',
+                                        'user_votes': app.user.votesSongIds
+                                    } only %}
                                 </td>
                             </tr>
                         {% endfor %}

@@ -1,6 +1,13 @@
-vote_add:
-    path: /vote/{type<song|artist|user>}/{id}
-    controller: App\Controller\VoteController::song
+vote_song:
+    path: /vote/song/{id}
+    controller: App\Controller\VoteController::voteSong
+    methods: [POST]
+    requirements:
+            songId: '\d+'
+
+vote_artist:
+    path: /vote/artist/{id}
+    controller: App\Controller\VoteController::voteArtist
     methods: [POST]
     requirements:
             songId: '\d+'

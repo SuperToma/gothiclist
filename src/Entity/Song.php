@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\SongRepository;
 
@@ -11,8 +12,6 @@ use App\Repository\SongRepository;
  */
 class Song
 {
-    const VOTE_TYPE = 'song';
-
     /**
      * Song constructor.
      */
@@ -69,6 +68,11 @@ class Song
     private $description;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\VoteSong", mappedBy="song")
+     */
+    private $votes;
+
+    /**
      * @var string
      * @ORM\Column(type="string", length=25, nullable=true)
      */
@@ -101,6 +105,16 @@ class Song
         return $this->id;
     }
 
+    /**
+     * @param int $id
+     * @return Song
+     */
+    public function setId(int $id): Song
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 
     /**
      * @return int
@@ -109,6 +123,7 @@ class Song
     {
         return $this->idMaster;
     }
+
 
     /**
      * @param int $idMaster
@@ -217,6 +232,25 @@ class Song
     }
 
     /**
+     * @return Collection
+     */
+    public function getVotes(): Collection
+    {
+        return $this->votes;
+    }
+
+    /**
+     * @param string $votes
+     * @return Song
+     */
+    public function setVotes(string $votes): Song
+    {
+        $this->votes = $votes;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getYoutubeId()
@@ -291,14 +325,5 @@ class Song
         $this->updatedAt = $updatedAt;
 
         return $this;
-    }
-
-    /**
-     * OTHER METHODS
-     */
-
-    public function getVotesInfos()
-    {
-
     }
 }
