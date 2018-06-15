@@ -1,0 +1,52 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<form action="{{ path('user_private_account', {'id': app.user.id}) }}" method="post">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Personal informations</div>
+                <div class="panel-body">
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="inputNickname">Nickname</label>
+                            <input type="text" name="nickname" value="{{ app.user.nickname }}" class="form-control" id="inputNickname" placeholder="Nickname">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail">Email</label>
+                            <input type="email" name="email" value="{{ app.user.email }}" class="form-control" id="inputEmail" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputName">Name</label>
+                            <input type="text" name="name" value="{{ app.user.name }}" class="form-control" id="inputName" placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputFirstname">Firstname</label>
+                            <input type="text" name="firstname" value="{{ app.user.firstname }}" class="form-control" id="inputFirstname" placeholder="Firstname">
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel panel-default" id="forms">
+                <div class="panel-heading">Other informations
+                </div>
+                <div class="panel-body">
+                    <fieldset></fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

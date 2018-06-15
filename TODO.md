@@ -1,0 +1,5 @@
+  - email != email_canonical
+  - Page contact
+  - log change nickname
+  - check change nickname
+  - get user photo

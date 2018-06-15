@@ -16,3 +16,6 @@ vote:
 
 admin:
     resource: 'routes/admin.yaml'
+
+user:
+    resource: 'routes/user.yaml'

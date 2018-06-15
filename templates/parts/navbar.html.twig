@@ -25,11 +25,19 @@
             <ul class="nav navbar-nav navbar-right">
                 {% if is_granted('ROLE_USER') %}
                     <div class="btn-group">
-                        <button class="btn btn-danger navbar-btn btn-sm">{{ app.user.nickname }}</button>
+                        <a href="{{ path('user_public_page', {'id': app.user.id, 'nickname': app.user.nickname}) }}" class="btn btn-danger navbar-btn btn-sm">
+                            {{ app.user.nickname }}
+                        </a>
                         <button class="btn dropdown-toggle navbar-btn btn-danger btn-sm" data-toggle="dropdown">
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" style="min-width:30px;">
+                            <li>
+                                <a href="{{ path('user_public_page', {'id': app.user.id, 'nickname': app.user.nickname}) }}">
+                                    My public profile
+                                </a>
+                            </li>
+                            <li><a href="{{ path('user_private_account', {'id': app.user.id}) }}">My account</a></li>
                             <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
                         </ul>
                     </div>

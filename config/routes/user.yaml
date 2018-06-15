@@ -1,0 +1,11 @@
+user_private_account:
+    path: /user/private/{id}
+    controller: App\Controller\UserController::privateAccount
+    methods: [GET, POST]
+
+user_public_page:
+    path: /user/{id}-{nickname}
+    controller: App\Controller\UserController::publicProfile
+    methods: [GET, POST]
+    requirements:
+      id: '\d+'

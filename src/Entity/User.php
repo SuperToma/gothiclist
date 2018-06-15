@@ -51,6 +51,12 @@ class User extends BaseUser
 
     /**
      * @var string
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    protected $nicknameCanonical;
+
+    /**
+     * @var string
      * @ORM\Column(type="string", length=2, nullable=true)
      */
     protected $country;
@@ -158,6 +164,25 @@ class User extends BaseUser
     public function setNickname(string $nickname): User
     {
         $this->nickname = $nickname;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNicknameCanonical(): string
+    {
+        return (string)$this->nicknameCanonical;
+    }
+
+    /**
+     * @param string $nicknameCanonical
+     * @return User
+     */
+    public function setNicknameCanonical(string $nicknameCanonical): User
+    {
+        $this->nicknameCanonical = $nicknameCanonical;
 
         return $this;
     }

@@ -1,0 +1,91 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+{# jumbotron #}
+<div class="jumbotron" style="margin-top:-20px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-lg-12">
+                <h1>{{ user.nickname }}</h1>
+                <p>public page</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Last songs Added</div>
+            <div class="panel-body">
+                <div class="panel-group">
+                    <table class="table table-dark table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">Title</th>
+                            <th scope="col">Artist</th>
+                            <th scope="col">Album</th>
+                            <th scope="col">Votes</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for song in last_songs_added %}
+                            <tr>
+                                <td>{{ song.title }}</td>
+                                <td>{{ song.artist.name }}</td>
+                                <td>{{ song.release.title }}</td>
+                                <td scope="col">
+                                    {%  include 'parts/vote.html.twig' with {
+                                        'id': song.id,
+                                        'type': 'song',
+                                        'user_votes': (app.user) ? app.user.votesSongIds : ''
+                                    } only %}
+                                    <span class="nbVotes">{{ song.nbVotes }}</span>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-default" id="forms">
+            <div class="panel-heading">Last votes
+            </div>
+            <div class="panel-body">
+                <div class="panel-group">
+                    <table class="table table-dark table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">Title</th>
+                            <th scope="col">Artist</th>
+                            <th scope="col">Album</th>
+                            <th scope="col">Votes</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for vote in last_votes_song %}
+                            <tr>
+                                <td>{{ vote.song.title }}</td>
+                                <td>{{ vote.song.artist.name }}</td>
+                                <td>{{ vote.song.release.title }}</td>
+                                <td scope="col">
+                                    {%  include 'parts/vote.html.twig' with {
+                                        'id': vote.song.id,
+                                        'type': 'song',
+                                        'user_votes': (app.user) ? app.user.votesSongIds : ''
+                                    } only %}
+                                    <span class="nbVotes">{{ vote.song.nbVotes }}</span>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
