@@ -18,24 +18,32 @@
     </head>
 
     <body>
-        {% include 'parts/navbar.html.twig' %}
-        {# flash messages #}
-        {% for label, messages in app.flashes %}
-            {% for message in messages %}
-                {# danger, success or warning #}
-                <div class="col-lg-6 col-md-offset-3 alert alert-{{ label }}">
-                    {{ message|raw }}
-                </div>
+        <div id="wrap">
+            {% include 'parts/navbar.html.twig' %}
+            {# flash messages #}
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    {# danger, success or warning #}
+                    <div class="col-lg-6 col-md-offset-3 alert alert-{{ label }}">
+                        {{ message|raw }}
+                    </div>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
 
-        <div class="container">{% block body %}{% endblock %}</div>
+            <div class="container">{% block body %}{% endblock %}</div>
 
-        {% block js %}
-            <script src="{{ asset('jquery-ui-1.12.1.ui-darkness/external/jquery/jquery.js') }}"></script>
-            <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-            <script src="{{ asset('js/bootstrap3-typeahead.min.js') }}"></script>
-            <script src="{{ asset('js/main.js') }}"></script>
-        {% endblock %}
+            {% block js %}
+                <script src="{{ asset('jquery-ui-1.12.1.ui-darkness/external/jquery/jquery.js') }}"></script>
+                <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+                <script src="{{ asset('js/bootstrap3-typeahead.min.js') }}"></script>
+                <script src="{{ asset('js/main.js') }}"></script>
+            {% endblock %}
+        </div>
+
+        <div id="footer">
+            <div class="container">
+                <p class="text-muted credit">Contact</a>.</p>
+            </div>
+        </div>
     </body>
 </html>

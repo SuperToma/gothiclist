@@ -71,8 +71,6 @@ class UserProvider extends FOSUBUserProvider
         // If user exists - go with the HWIOAuth way
         $user = parent::loadUserByOAuthUserResponse($response);
 
-
-
         return $user;
     }
 

@@ -59,7 +59,16 @@ class UserController extends Controller
                 return $this->render('pages/user/private_account.html.twig', []);
             }
 
-            //Check username not already exits
+            //Check nickname not already exits
+            $nicknameAlreadyUsed = $userRepository->nicknameAlreadyUsed($request->get('nickname'), $this->getUser()->getId());
+            if($nicknameAlreadyUsed) {
+                $this->addFlash(
+                    'danger',
+                    'Sorry, this nickname is already in use by somebody else : <strong>'.$request->get('nickname').'</strong>'
+                );
+
+                return $this->render('pages/user/private_account.html.twig', []);
+            }
 
             /** @var User $user */
             $user = $this->getUser();
