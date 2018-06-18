@@ -15,6 +15,47 @@ body {
 .btn-success, .btn-danger {
   opacity: 0.8;
 }
+/*************** Footer ***************/
+html,
+body {
+  height: 100%;
+}
+
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -50px;
+  padding: 0 0 50px;
+}
+
+#footer {
+  height: 50px;
+  background-color: #f5f5f5;
+}
+
+#footer {
+  background-color: #1a1a1a;
+  border-color: #000000;
+}
+
+#footer .navbar-nav > .active > a,
+#footer .navbar-nav > .active > a:hover,
+#footer .navbar-nav > .active > a:focus {
+  background-color: #000000;
+}
+
+#footer .navbar-default .navbar-collapse,
+#footer .navbar-default .navbar-form {
+  border-color: #1a1a1a !important;
+}
+
+#footer .nav > li > a:hover,
+#footer .nav > li > a:focus {
+  text-decoration: none;
+  background-color: #000000;
+}
+
 /*************** Navbar ***************/
 .navbar-inverse {
   background-color: #1a1a1a;

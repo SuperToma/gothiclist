@@ -69,7 +69,7 @@ class Artist
      * @var string
      * @ORM\Column(type="text", nullable=true)
      */
-    private $description_discogs;
+    private $descriptionDiscogs;
 
     /**
      * @var \DateTime
@@ -221,16 +221,16 @@ class Artist
      */
     public function getDescriptionDiscogs(): string
     {
-        return $this->description_discogs;
+        return $this->descriptionDiscogs;
     }
 
     /**
      * @param string $descriptionDiscogs
      * @return Artist
      */
-    public function setDescriptionDiscogs(string $descriptionDiscogs): Artist
+    public function setDescriptionDiscogs(?string $descriptionDiscogs): Artist
     {
-        $this->description_discogs = $descriptionDiscogs;
+        $this->descriptionDiscogs = $descriptionDiscogs;
 
         return $this;
     }

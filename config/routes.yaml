@@ -19,3 +19,6 @@ admin:
 
 user:
     resource: 'routes/user.yaml'
+
+misc:
+    resource: 'routes/misc.yaml'

@@ -200,7 +200,7 @@ class Release
      * @param string $discogsNotes
      * @return Release
      */
-    public function setDiscogsNotes(string $discogsNotes): Release
+    public function setDiscogsNotes(?string $discogsNotes): Release
     {
         $this->discogsNotes = $discogsNotes;
 
