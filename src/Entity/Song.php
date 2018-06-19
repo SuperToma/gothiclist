@@ -33,7 +33,7 @@ class Song
     /**
      * @var integer
      * @ORM\OneToOne(targetEntity="App\Entity\Master")
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $idMaster;
 
@@ -129,7 +129,7 @@ class Song
      * @param int $idMaster
      * @return Song
      */
-    public function setIdMaster(int $idMaster): Song
+    public function setIdMaster(?int $idMaster): Song
     {
         $this->idMaster = $idMaster;
 

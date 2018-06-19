@@ -87,31 +87,41 @@ class SongController extends Controller
                 //Add release genres
                 $genres = new ArrayCollection();
                 foreach($esRelease['genres'] as $genreName) {
-                    $genre = (new Genre())->setName($genreName);
-                    $this->getDoctrine()->getManager()->persist($genre);
-                    $this->getDoctrine()->getManager()->flush();
+                    $genre = $this->getDoctrine()->getRepository(Genre::class)->findOneBy(['name' => $genreName]);
+                    if(empty($genre)) {
+                        $genre = (new Genre())->setName($genreName);
+                        $this->getDoctrine()->getManager()->persist($genre);
+                        $this->getDoctrine()->getManager()->flush();
+                    }
                     $genres->add($genre);
                 }
 
                 //Add release styles
                 $styles = new ArrayCollection();
                 foreach($esRelease['styles'] as $styleName) {
-                    $style = (new Style())->setName($styleName);
-                    $this->getDoctrine()->getManager()->persist($style);
-                    $this->getDoctrine()->getManager()->flush();
+                    $style = $this->getDoctrine()->getRepository(Style::class)->findOneBy(['name' => $styleName]);
+                    if(empty($style)) {
+                        $style = (new Style())->setName($styleName);
+                        $this->getDoctrine()->getManager()->persist($style);
+                        $this->getDoctrine()->getManager()->flush();
+                    }
                     $styles->add($style);
                 }
 
-                $release = (new Release())
-                    ->setIdDiscogs($releaseId)
-                    ->setUser($user)
-                    ->setTitle($esRelease['title'])
-                    ->setStyles($styles)
-                    ->setGenres($genres)
-                    ->setCountry($esRelease['country'])
-                    ->setDiscogsNotes($esRelease['notes']);
+                $release = $this->getDoctrine()->getRepository(Release::class)->findOneBy(['idDiscogs' => $releaseId]);
+                if(empty($release)) {
+                    $release = (new Release())
+                        ->setIdDiscogs($releaseId)
+                        ->setUser($user)
+                        ->setTitle($esRelease['title'])
+                        ->setStyles($styles)
+                        ->setGenres($genres)
+                        ->setCountry($esRelease['country'])
+                        ->setDiscogsNotes($esRelease['notes'] ?? '');
 
-                $this->getDoctrine()->getManager()->persist($release);
+                    $this->getDoctrine()->getManager()->persist($release);
+                    $this->getDoctrine()->getManager()->flush();
+                }
             }
 
             //Find song in release
@@ -148,7 +158,7 @@ class SongController extends Controller
 
             $song = (new Song())
                 ->setUser($user)
-                ->setIdMaster($esRelease['master_id'])
+                ->setIdMaster($esRelease['master_id'] ?? null)
                 ->setRelease($release)
                 ->setArtist($artist)
                 ->setTitle($songName);

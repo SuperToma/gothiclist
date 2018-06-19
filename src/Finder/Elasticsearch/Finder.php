@@ -162,8 +162,9 @@ class Finder
         ];
 
         $results = $this->getResults($this->client->search($params));
-        //dump($this->client->search($params)); exit();
+        //dump($this->client->search($params));
         //dump($this->client->transport->getLastConnection()->getLastRequestInfo());
+        //exit();
 
         $newResults = [];
         foreach($results['results'] as $i => $result) {

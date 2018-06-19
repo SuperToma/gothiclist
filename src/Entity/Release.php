@@ -69,7 +69,7 @@ class Release
      * @ORM\JoinTable(
      *      name="release_genre",
      *      joinColumns={@ORM\JoinColumn(name="release_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="genre_id", referencedColumnName="id", unique=true)}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="genre_id", referencedColumnName="id")}
      * )
      */
     private $genres;
@@ -80,7 +80,7 @@ class Release
      * @ORM\JoinTable(
      *      name="release_style",
      *      joinColumns={@ORM\JoinColumn(name="release_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="style_id", referencedColumnName="id", unique=true)}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="style_id", referencedColumnName="id")}
      * )
      */
     private $styles;
