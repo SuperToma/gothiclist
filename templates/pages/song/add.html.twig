@@ -1,40 +1,39 @@
 {% extends "base.html.twig" %}
 
-
 {% block body %}
-    <div class="col-lg-6 col-md-offset-3">
-        <div class="panel panel-default" id="forms2">
-            <div class="panel-heading">Add new song</div>
-            <div class="panel-body">
-                <form action="{{ path('song_add') }}" method="post">
-                    <fieldset>
-                        {# <legend>Legend</legend>#}
-                        <div class="form-group">
-                            <label for="artist_group">Artist / Group</label>
-                            <input type="text"
-                                   name="artist_name"
-                                   class="form-control"
-                                   id="artist_group"
-                                   placeholder="Artist / Group"
-                                   autocomplete="off"/>
-                            <input type="hidden" id="artist_id" name="artist_id" value="" />
-                        </div>
-                        <div class="form-group">
-                            <label for="song">Song</label>
-                            <input type="text"
-                                   name="song_name"
-                                   class="form-control"
-                                   id="song" placeholder="Song"
-                                   autocomplete="off"
-                                   disabled />
-                            <input type="hidden" id="release_id" name="release_id" value="" />
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </fieldset>
-                </form>
-            </div>
+<div class="col-lg-6 col-md-offset-3">
+    <div class="panel panel-default">
+        <div class="panel-heading">Add new song</div>
+        <div class="panel-body">
+            <form action="{{ path('song_add') }}" method="post">
+                <fieldset>
+                    {# <legend>Legend</legend>#}
+                    <div class="form-group">
+                        <label for="artist_group">Artist / Group</label>
+                        <input type="text"
+                               name="artist_name"
+                               class="form-control"
+                               id="artist_group"
+                               placeholder="Artist / Group"
+                               autocomplete="off"/>
+                        <input type="hidden" id="artist_id" name="artist_id" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label for="song">Song</label>
+                        <input type="text"
+                               name="song_name"
+                               class="form-control"
+                               id="song" placeholder="Song"
+                               autocomplete="off"
+                               disabled />
+                        <input type="hidden" id="release_id" name="release_id" value="" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </fieldset>
+            </form>
         </div>
     </div>
+</div>
 {% endblock %}
 
 
@@ -51,6 +50,7 @@
                 hint: false,
                 highlight: true,
                 minLength: 1,
+                delay: 400,
                 source: function (query, process) {
                     $('#artist_id, #song').val(null);
                     $('#song').attr('disabled', 'disabled');
@@ -76,6 +76,7 @@
                 hint: false,
                 highlight: true,
                 minLength: 1,
+                delay: 400,
                 source: function (query, process) {
                     return $.get('/autocomplete/artist/'+$('#artist_id').val()+'/songs/'+query, function (data) {
                         objects = [];
