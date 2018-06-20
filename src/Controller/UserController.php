@@ -94,6 +94,10 @@ class UserController extends Controller
     {
         $user = $this->getDoctrine()->getRepository(User::class)->find($id);
 
+        if(!$user) {
+            throw $this->createNotFoundException('Sorry, this user does not exist');
+        }
+
         $slugify = new Slugify();
         $nicknameUrlSlug = $slugify->slugify($nickname);
 

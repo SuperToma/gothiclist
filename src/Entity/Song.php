@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\SongRepository;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SongRepository")
@@ -325,5 +324,17 @@ class Song
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasUser()
+    {
+        $user = new \ReflectionObject($this->user);
+        $emailUser = $user->getProperty('email');
+        $emailUser->setAccessible(true);
+
+        return empty($emailUser->getValue($this->user)) ? false : true;
     }
 }

@@ -35,12 +35,12 @@
                                 <td>{{ song.title }}</td>
                                 <td>{{ song.artist.name }}</td>
                                 <td>{{ song.release.title }}</td>
-                                <td>{{ song.user.nickname }}</td>
+                                <td>{{ song.hasUser ? song.user.nickname : '-' }}</td>
                                 <td scope="col">
                                     {%  include 'parts/vote.html.twig' with {
                                         'id': song.id,
                                         'type': 'song',
-                                        'user_votes': app.user.votesSongIds
+                                        'user': app.user
                                     } only %}
                                     <span class="nbVotes">{{ song.nbVotes }}</span>
                                 </td>

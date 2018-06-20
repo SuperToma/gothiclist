@@ -1,4 +1,5 @@
   - get user photo + show on page
+  - Add album name on song add
   - Add Spotify link on song
   - Add Youtube link on song
   - Page contact
