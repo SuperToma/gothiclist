@@ -45,7 +45,8 @@ class UserProvider extends FOSUBUserProvider
             $user->setUsername($response->getUsername());
             $user->setName($response->getLastName()??'');
             $user->setFirstname($response->getFirstName()??'');
-            $user->setNickname($response->getNickname()??'');
+            $user->setNickname($response->getNickname());
+            $user->setNicknameCanonical((new Slugify())->slugify($response->getNickname()));
             $user->setEmail($response->getEmail());
             $user->setPassword($response->getUsername()); //@TODO : Generate password
             $user->addRole('ROLE_USER');

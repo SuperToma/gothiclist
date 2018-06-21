@@ -146,7 +146,7 @@ class Finder
             'index' => 'release',
             'from' => 0,
             'size' => $limit,
-            '_source' => 'tracklist.title',
+            '_source' => ['title', 'tracklist.title'],
             'body' => [
                 'query' => [
                     'bool' => [
@@ -161,18 +161,40 @@ class Finder
             ]
         ];
 
-        $results = $this->getResults($this->client->search($params));
+        $esResults = $this->getResults($this->client->search($params));
+
         //dump($this->client->search($params));
         //dump($this->client->transport->getLastConnection()->getLastRequestInfo());
         //exit();
 
         $newResults = [];
-        foreach($results['results'] as $i => $result) {
+        $titles = false;
+        foreach($esResults['results'] as $i => $result) {
             foreach($result['tracklist'] as $j => $track) {
                 if(stripos($track['title'][0], $text) !== false) {
-                    $newResults[] = ['id' => $result['id'], 'track' => $track['title'][0]];
+                    $newResults[] = [
+                        'id' => $result['id'],
+                        'track' => $track['title'][0],
+                        'album' => $result['title'],
+                    ];
+                    $titles[] = $track['title'][0];
                 }
             }
+        }
+
+        // Add album title if duplicate titles
+        if(count($titles) !== count(array_unique($titles))) {
+            $duplicateTitles = array_diff_assoc($titles, array_unique($titles));
+            foreach($newResults as &$result) {
+                if(in_array($result['track'], $duplicateTitles)) {
+                    $result['track'] .= ' ('.$result['album'].')';
+                }
+            }
+        }
+
+        // Remove album
+        foreach($newResults as &$result) {
+            unset($result['album']);
         }
 
         return $newResults;

@@ -22,7 +22,7 @@ class MiscController extends Controller
             }
 
             if (mb_strlen($request->get('text')) < 10) {
-                $this->addFlash('danger', 'Please provide a valid message');
+                $this->addFlash('danger', 'Your message is too short');
 
                 return $this->render('pages/misc/contact.html.twig', []);
             }
