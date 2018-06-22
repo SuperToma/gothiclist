@@ -40,7 +40,7 @@ security:
                     facebook:  "/login/check-facebook"
                     twitter:   "/login/check-twitter"
                     vkontakte: "/login/check-vkontakte"
-                login_path:    /login
+                login_path:    /
                 use_forward:   false
                 failure_path:  /
                 oauth_user_provider:
