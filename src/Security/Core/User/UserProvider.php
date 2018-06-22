@@ -3,9 +3,9 @@
 namespace App\Security\Core\User;
 
 use App\Entity\User;
+use Cocur\Slugify\Slugify;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserProvider extends FOSUBUserProvider

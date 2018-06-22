@@ -13,6 +13,14 @@ use Doctrine\ORM\Mapping as ORM;
 */
 class User extends BaseUser
 {
+    const PHOTOS_FORMATS = [
+        'very_small' => ['width' => 10, 'height' => 10]
+    ];
+
+    const PROVIDERS_BASE_PATH = [
+        'facebook' => 'https://graph.facebook.com/'
+    ];
+
     /**
      * User constructor.
      */
@@ -362,6 +370,26 @@ class User extends BaseUser
         $this->vkontakteAccessToken = $vkontakteAccessToken;
 
         return $this;
+    }
+
+    public function getAvatarUrl($format = 'very_small')
+    {
+        if(!isset(self::PHOTOS_FORMATS[$format])) {
+            $format = self::PHOTOS_FORMATS['very_small'];
+        }
+
+        if($this->getUsername() === $this->getFacebookId()) {
+            $params = [
+                'width' => self::PHOTOS_FORMATS[$format]['width'],
+                'height' => self::PHOTOS_FORMATS[$format]['height'],
+                'type' => 'square',
+            ];
+
+            $url = self::PROVIDERS_BASE_PATH['facebook'].$this->getFacebookId().'/picture?'.http_build_query($params);
+
+            return $url;
+        }
+
     }
 
 }

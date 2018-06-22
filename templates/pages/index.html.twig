@@ -35,7 +35,18 @@
                                 <td>{{ song.title }}</td>
                                 <td>{{ song.artist.name }}</td>
                                 <td>{{ song.release.title }}</td>
-                                <td>{{ song.hasUser ? song.user.nickname : '-' }}</td>
+                                <td>
+                                    {% if song.hasUser %}
+                                    <a class="pull-left" href="{{
+                                        path('user_public_page', {'id': song.user.id, 'nickname': song.user.nicknameCanonical})
+                                    }}">
+                                        <img class="media-object img-circle" src="{{ song.user.avatarUrl }}">
+                                        {{ song.user.nickname }}
+                                    </a>
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
                                 <td scope="col">
                                     {%  include 'parts/vote.html.twig' with {
                                         'id': song.id,
