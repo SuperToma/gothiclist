@@ -63,3 +63,42 @@ jQuery(document).ready(function() {
   });
 });
 
+/******************************************
+ *            YOUTUBE VIDEOS              *
+ *****************************************/
+jQuery(document).ready(function() {
+  $(".player-youtube").click(function() {
+    var videoDialogPlayer = new YT.Player('videoDialogPlayer', {
+      height: '390',
+      width: '640',
+      videoId: $(this).data('video-id')
+    });
+
+    $('.video-dialog').on('shown.bs.modal', function () {
+      videoDialogPlayer.playVideo();
+    }).on('hide.bs.modal', function () {
+      videoDialogPlayer.stopVideo();
+    });
+  });
+});
+
+/*
+  var videoDialogPlayer;
+
+  window.onYouTubeIframeAPIReady = function () {
+    videoDialogPlayer = new YT.Player('videoDialogPlayer', {
+      height: '390',
+      width: '640',
+      videoId: '4HG6Ek_SyJs'
+    });
+  };
+
+  $(function () {
+    $('.video-dialog').on('shown.bs.modal', function () {
+      videoDialogPlayer.playVideo();
+    }).on('hide.bs.modal', function () {
+      videoDialogPlayer.stopVideo();
+    });
+  });
+
+}()); */
