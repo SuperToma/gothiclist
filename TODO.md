@@ -1,4 +1,3 @@
-  - PENDING : Pb nickname canonical null
   - "Add song" visible as anonymous but popup for connection
   - get user photo + show on page
   - Add Spotify link on song

@@ -325,16 +325,4 @@ class Song
 
         return $this;
     }
-
-    /**
-     * @return bool
-     */
-    public function hasUser()
-    {
-        $user = new \ReflectionObject($this->user);
-        $emailUser = $user->getProperty('email');
-        $emailUser->setAccessible(true);
-
-        return empty($emailUser->getValue($this->user)) ? false : true;
-    }
 }

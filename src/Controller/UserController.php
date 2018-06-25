@@ -94,7 +94,7 @@ class UserController extends Controller
     {
         $user = $this->getDoctrine()->getRepository(User::class)->find($id);
 
-        if(!$user) {
+        if(!$user || !$user->isValid()) {
             throw $this->createNotFoundException('Sorry, this user does not exist');
         }
 
@@ -107,22 +107,14 @@ class UserController extends Controller
 
         $lastSongsAdded = $this->getDoctrine()
             ->getRepository(Song::class)
-            ->findBy(
-                ['user' => $user],
-                ['createdAt' => 'DESC'],
-                10
-            );
+            ->findBy(['user' => $user], ['createdAt' => 'DESC'], 10);
         foreach($lastSongsAdded as &$song) {
             $song->nbVotes = $voteSongRepository->count(['song' => $song]);
         }
 
         $lastVotesSong = $this->getDoctrine()
             ->getRepository(VoteSong::class)
-            ->findBy(
-                ['user' => $user],
-                ['createdAt' => 'DESC'],
-                10
-            );
+            ->findBy(['user' => $user], ['createdAt' => 'DESC'], 10);
         foreach($lastVotesSong as &$vote) {
             $vote->getSong()->nbVotes = $voteSongRepository->count(['song' => $vote->getSong()]);
         }

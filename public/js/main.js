@@ -1,3 +1,6 @@
+/******************************************
+ *                VOTES                   *
+ *****************************************/
 $(".vote").click(function() {
   $button = $(this);
 
@@ -29,3 +32,34 @@ $(".vote").click(function() {
     }
   })
 });
+
+/******************************************
+ *               AVATARS                  *
+ *****************************************/
+defaultImgUrl = '/img/1x1.png';
+
+jQuery(document).ready(function() {
+  $('img.avatar').each(function() {
+
+    var imgUrl = '/img/1x1.png';
+
+    switch($(this).data("provider-name")) {
+      case 'Facebook':
+        imgUrl = "https://graph.facebook.com/"+$(this).data("provider-id")+"/picture";
+        imgUrl += "?width="+$(this).data("size")+"&height="+$(this).data("size")+"&type=square";
+        break;
+      case 'Twitter':
+        imgUrl = "https://avatars.io/twitter/"+$(this).data("provider-nickname")+"/small";
+        break;
+      case 'Vkontakte':
+        imgUrl = $(this).data("avatar-url");
+        if(!imgUrl) {
+          imgUrl = defaultImgUrl;
+        }
+        break;
+    }
+
+    $(this).attr("src", imgUrl);
+  });
+});
+

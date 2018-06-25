@@ -34,11 +34,11 @@
                                 <td>{{ song.title }}</td>
                                 <td>{{ song.artist.name }}</td>
                                 <td>{{ song.release.title }}</td>
-                                <td scope="col">
-                                    {%  include 'parts/vote.html.twig' with {
+                                <td>
+                                    {% include 'parts/vote.html.twig' with {
                                         'id': song.id,
                                         'type': 'song',
-                                        'user_votes': (app.user) ? app.user.votesSongIds : ''
+                                        'user': app.user
                                     } only %}
                                     <span class="nbVotes">{{ song.nbVotes }}</span>
                                 </td>
@@ -75,7 +75,7 @@
                                     {%  include 'parts/vote.html.twig' with {
                                         'id': vote.song.id,
                                         'type': 'song',
-                                        'user_votes': (app.user) ? app.user.votesSongIds : ''
+                                        'user': app.user
                                     } only %}
                                     <span class="nbVotes">{{ vote.song.nbVotes }}</span>
                                 </td>

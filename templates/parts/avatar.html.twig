@@ -1,0 +1,35 @@
+{% set provider_id = '' %}
+{% set provider_name = '' %}
+
+{% if is_valid(user) %}
+    {% if user.facebookId is not empty %}
+        {% set provider_id = user.facebookId %}
+        {% set provider_name = 'Facebook' %}
+    {% elseif user.twitterId is not empty %}
+        {% set provider_id = user.twitterId %}
+        {% set provider_name = 'Twitter' %}
+    {% elseif user.vkontakteId is not empty %}
+        {% set provider_id = user.vkontakteId %}
+        {% set provider_name = 'Vkontakt' %}
+    {% endif %}
+
+    {% if size is not defined %}
+        {% set size = '24' %}
+    {% endif %}
+
+    <a class="pull-left" href="{{ path('user_public_page', {'id': user.id, 'nickname': user.nicknameCanonical}) }}">
+        <img src="{{ asset('img/1x1.png') }}"
+             class="img-circle avatar"
+             data-size="{{ size }}"
+             data-provider-id="{{ provider_id }}"
+             data-avatar-url="{{ user.avatarUrl }}"
+             data-provider-name="{{ provider_name }}"
+             data-provider-nickname="{{ (provider_name == 'Twitter') ? user.providerNickname : '' }}"
+             width="{{ size }}"
+             height="{{ size }}"
+        >
+        {{ user.nickname }}
+    </a>
+{% else %}
+    -
+{% endif %}

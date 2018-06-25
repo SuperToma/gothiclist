@@ -22,6 +22,11 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    /**
+     * @param string $email
+     * @param int $userId
+     * @return bool
+     */
     public function emailAlreadyUsed(string $email, int $userId)
     {
         $emailCanonical = (new Canonicalizer())->canonicalize($email);
@@ -34,7 +39,12 @@ class UserRepository extends ServiceEntityRepository
         return empty($qb->getQuery()->getResult()) ? false : true;
     }
 
-    public function nicknameAlreadyUsed(string $nickname, int $userId)
+    /**
+     * @param string $nickname
+     * @param int $userId
+     * @return bool
+     */
+    public function nicknameAlreadyUsed(string $nickname, int $userId = 0)
     {
         $nicknameCanonical = (new Slugify())->slugify($nickname);
         $qb = $this->createQueryBuilder('u');
@@ -44,5 +54,26 @@ class UserRepository extends ServiceEntityRepository
             ->setParameter('userId', $userId);
 
         return empty($qb->getQuery()->getResult()) ? false : true;
+    }
+
+    /**
+     * @param string $nickname
+     * @return string
+     */
+    public function getNextNickname(string $nickname)
+    {
+        if($this->nicknameAlreadyUsed($nickname) === false) {
+            return $nickname;
+        }
+
+        $i = 1;
+        $nicknameExists = true;
+        while($nicknameExists === false) {
+            $nicknameOk = $nickname.$i;
+            $nicknameExists = $this->nicknameAlreadyUsed($nicknameOk);
+            $i++;
+        }
+
+        return $nicknameOk;
     }
 }

@@ -20,7 +20,8 @@
         "symfony/lts": "^4@dev",
         "symfony/swiftmailer-bundle": "^3.2",
         "symfony/twig-bundle": "^4.0",
-        "symfony/yaml": "^4.0"
+        "symfony/yaml": "^4.0",
+        "twig/extensions": "^1.5"
     },
     "require-dev": {
         "easycorp/easy-deploy-bundle": "^1.0",

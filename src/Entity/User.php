@@ -13,14 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 */
 class User extends BaseUser
 {
-    const PHOTOS_FORMATS = [
-        'very_small' => ['width' => 10, 'height' => 10]
-    ];
-
-    const PROVIDERS_BASE_PATH = [
-        'facebook' => 'https://graph.facebook.com/'
-    ];
-
     /**
      * User constructor.
      */
@@ -62,6 +54,18 @@ class User extends BaseUser
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $nicknameCanonical;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    protected $providerNickname;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    protected $providerNicknameCanonical;
 
     /**
      * @var string
@@ -110,6 +114,11 @@ class User extends BaseUser
      */
     protected $vkontakteAccessToken;
 
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $avatarUrl;
 
     /**
      * @return int
@@ -198,6 +207,44 @@ class User extends BaseUser
     /**
      * @return string
      */
+    public function getProviderNickname(): string
+    {
+        return $this->providerNickname;
+    }
+
+    /**
+     * @param string $providerNickname
+     * @return User
+     */
+    public function setProviderNickname(string $providerNickname): User
+    {
+        $this->providerNickname = $providerNickname;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProviderNicknameCanonical(): string
+    {
+        return (string)$this->nicknameCanonical;
+    }
+
+    /**
+     * @param string $providerNicknameCanonical
+     * @return User
+     */
+    public function setProviderNicknameCanonical(string $providerNicknameCanonical): User
+    {
+        $this->providerNicknameCanonical = $providerNicknameCanonical;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getCountry(): string
     {
         return $this->country;
@@ -242,21 +289,6 @@ class User extends BaseUser
 
         return $idsCollection->toArray();
     }
-
-    /**
-     * @return array
-     *
-    public function getVotesSongIds()
-    {
-        $votesSong = [];
-
-        /** @var VoteSong $voteSong *
-        foreach($this->votesSong as $voteSong) {
-            $votesSong[$this->getId()] = $voteSong->getSong()->getId();
-        }
-
-        return $votesSong;
-    }*/
 
     /**
      * @return string
@@ -372,24 +404,32 @@ class User extends BaseUser
         return $this;
     }
 
-    public function getAvatarUrl($format = 'very_small')
+    /**
+     * @return string
+     */
+    public function getAvatarUrl(): string
     {
-        if(!isset(self::PHOTOS_FORMATS[$format])) {
-            $format = self::PHOTOS_FORMATS['very_small'];
-        }
+        return $this->avatarUrl;
+    }
 
-        if($this->getUsername() === $this->getFacebookId()) {
-            $params = [
-                'width' => self::PHOTOS_FORMATS[$format]['width'],
-                'height' => self::PHOTOS_FORMATS[$format]['height'],
-                'type' => 'square',
-            ];
+    /**
+     * @param string $avatarUrl
+     * @return User
+     */
+    public function setAvatarUrl(string $avatarUrl): User
+    {
+        $this->avatarUrl = $avatarUrl;
 
-            $url = self::PROVIDERS_BASE_PATH['facebook'].$this->getFacebookId().'/picture?'.http_build_query($params);
+        return $this;
+    }
 
-            return $url;
-        }
+    public function isValid()
+    {
+        $user = new \ReflectionObject($this);
+        $emailUser = $user->getProperty('email');
+        $emailUser->setAccessible(true);
 
+        return empty($emailUser->getValue($this)) ? false : true;
     }
 
 }

@@ -1,5 +1,5 @@
 {% set user_votes = {} %}
-{% if user is not null %}
+{% if is_valid(user) %}
     {% set user_votes = user.votesSongIds %}
 {% endif %}
 <span class="vote fa fa-heart {{ (id in user_votes) ? 'tomato' : 'fa-heart-o' }}"
