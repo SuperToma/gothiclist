@@ -63,42 +63,24 @@ jQuery(document).ready(function() {
   });
 });
 
-/******************************************
- *            YOUTUBE VIDEOS              *
- *****************************************/
-jQuery(document).ready(function() {
-  $(".player-youtube").click(function() {
-    var videoDialogPlayer = new YT.Player('videoDialogPlayer', {
-      height: '390',
-      width: '640',
-      videoId: $(this).data('video-id')
-    });
-
-    $('.video-dialog').on('shown.bs.modal', function () {
-      videoDialogPlayer.playVideo();
-    }).on('hide.bs.modal', function () {
-      videoDialogPlayer.stopVideo();
-    });
-  });
-});
-
-/*
+/************************************************************
+ *            YOUTUBE VIDEOS                                *
+ * cf. https://gist.github.com/koistya/7eac879f674ae9f5e26c *
+ ***********************************************************/
+(function () {
   var videoDialogPlayer;
 
-  window.onYouTubeIframeAPIReady = function () {
-    videoDialogPlayer = new YT.Player('videoDialogPlayer', {
-      height: '390',
-      width: '640',
-      videoId: '4HG6Ek_SyJs'
-    });
-  };
-
   $(function () {
-    $('.video-dialog').on('shown.bs.modal', function () {
+    $('.youtube-dialog').on('shown.bs.modal', function () {
+      var videoDialogPlayer = new YT.Player('videoDialogPlayer', {
+        height: '390',
+        width: '640',
+        videoId: '4HG6Ek_SyJs'
+      });
       videoDialogPlayer.playVideo();
     }).on('hide.bs.modal', function () {
       videoDialogPlayer.stopVideo();
     });
   });
 
-}()); */
+}());

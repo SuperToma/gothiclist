@@ -79,6 +79,12 @@ class Song
 
     /**
      * @var string
+     * @ORM\Column(type="string", length=25, nullable=true)
+     */
+    private $spotifyId;
+
+    /**
+     * @var string
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $validated;
@@ -268,6 +274,24 @@ class Song
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getSpotifyId()
+    {
+        return $this->spotifyId;
+    }
+
+    /**
+     * @param string $spotifyId
+     * @return $this
+     */
+    public function setSpotifyId(string $spotifyId)
+    {
+        $this->spotifyId = $spotifyId;
+
+        return $this;
+    }
 
     /**
      * @return string

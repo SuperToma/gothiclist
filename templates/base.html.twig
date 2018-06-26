@@ -36,9 +36,23 @@
                 <script src="{{ asset('jquery-ui-1.12.1.ui-darkness/external/jquery/jquery.js') }}"></script>
                 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
                 <script src="{{ asset('js/bootstrap3-typeahead.min.js') }}"></script>
-                <script src="//www.youtube.com/iframe_api"></script>
+                <script src="{{ asset('js/youtube.iframe.api.js') }}"></script>
                 <script src="{{ asset('js/main.js') }}"></script>
             {% endblock %}
+        </div>
+
+        {# Youtube Player Dialog #}
+        <div class="modal fade youtube-dialog" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div id="videoDialogPlayer" class="vidflex"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div id="footer">
