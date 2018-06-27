@@ -65,22 +65,16 @@ jQuery(document).ready(function() {
 
 /************************************************************
  *            YOUTUBE VIDEOS                                *
- * cf. https://gist.github.com/koistya/7eac879f674ae9f5e26c *
  ***********************************************************/
-(function () {
-  var videoDialogPlayer;
+$(document).ready(function(){
+  $("body")
+    .find('[data-toggle="modal"]')
+    .click(function(event) {
+      event.preventDefault();
+      $('#modal iframe').attr('src', $(this).attr('href'));
 
-  $(function () {
-    $('.youtube-dialog').on('shown.bs.modal', function () {
-      var videoDialogPlayer = new YT.Player('videoDialogPlayer', {
-        height: '390',
-        width: '640',
-        videoId: '4HG6Ek_SyJs'
+      $('#modal').on('hidden.bs.modal', function () {
+        $("#modal iframe").attr("src", '');
       });
-      videoDialogPlayer.playVideo();
-    }).on('hide.bs.modal', function () {
-      videoDialogPlayer.stopVideo();
-    });
   });
-
-}());
+});

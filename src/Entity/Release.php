@@ -212,7 +212,7 @@ class Release
      */
     public function getGenres(): array
     {
-        return $this->genres;
+        return $this->genres->toArray();
     }
 
     /**
@@ -240,9 +240,9 @@ class Release
     /**
      * @return Collection
      */
-    public function getStyles(): Collection
+    public function getStyles(): array
     {
-        return $this->styles;
+        return $this->styles->toArray();
     }
 
     /**

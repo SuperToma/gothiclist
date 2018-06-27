@@ -8,6 +8,7 @@
                     <th scope="col">Title</th>
                     <th scope="col">Artist</th>
                     <th scope="col">Album</th>
+                    <th scope="col">Genre</th>
                     <th scope="col">By</th>
                 </tr>
                 </thead>
@@ -17,6 +18,11 @@
                         <td>{{ song.title }}</td>
                         <td>{{ song.artist.name }}</td>
                         <td>{{ song.release.title }}</td>
+                        <td>
+                            {% for genre in song.genres %}
+                            {{ genre.name }}
+                            {% endfor %}
+                        </td>
                         <td>{{ song.user.nickname }}</td>
                     </tr>
                 {% endfor %}

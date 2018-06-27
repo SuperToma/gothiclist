@@ -19,6 +19,7 @@ class DefaultController extends Controller
         foreach($lastSongs as &$song) {
             $song->nbVotes = $voteSongRepository->count(['song' => $song]);
         }
+        //dump($lastSongs[0]->getRelease()->getGenres()); exit();
         $bestSongs = '';
 
         return $this->render('pages/index.html.twig', [

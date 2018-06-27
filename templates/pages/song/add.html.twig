@@ -40,6 +40,8 @@
 
 {% block js %}
     {{ parent() }}
+    <script src="{{ asset('js/bootstrap3-typeahead.min.js') }}"></script>
+
     <script>
         var objects = [];
         var map = {};
