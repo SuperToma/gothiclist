@@ -238,7 +238,7 @@ class Release
     }
 
     /**
-     * @return Collection
+     * @return array
      */
     public function getStyles(): array
     {
