@@ -60,8 +60,7 @@ class UserProvider extends FOSUBUserProvider
             if(empty($nickname) || is_numeric($nickname)) {
                 $nickname = $response->getFirstName().' '.$response->getLastName();
             }
-            $userRepository = $this->getDoctrine()->getRepository(User::class);
-            $nickname = $userRepository->getNextNickname($nickname);
+            $nickname = $this->userManager->getNextNickname($nickname);
 
             $user->setNickname($nickname);
             $user->setNicknameCanonical((new Slugify())->slugify($nickname));
