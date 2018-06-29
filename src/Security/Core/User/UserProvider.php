@@ -3,13 +3,30 @@
 namespace App\Security\Core\User;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Cocur\Slugify\Slugify;
+use FOS\UserBundle\Model\UserManagerInterface;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserProvider extends FOSUBUserProvider
 {
+    /** @var UserRepository $userRepository */
+    private $userRepository;
+
+    /**
+     * UserProvider constructor.
+     * @param UserManagerInterface $userManager
+     * @param array $properties
+     * @param UserRepository $userRepository
+     */
+    public function __construct(UserManagerInterface $userManager, Array $properties, UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+        parent::__construct($userManager, $properties);
+    }
+
     /**
      * @param UserResponseInterface $response
      * @return mixed
@@ -60,7 +77,8 @@ class UserProvider extends FOSUBUserProvider
             if(empty($nickname) || is_numeric($nickname)) {
                 $nickname = $response->getFirstName().' '.$response->getLastName();
             }
-            $nickname = $this->userManager->getNextNickname($nickname);
+
+            $nickname = $this->userRepository->getNextNickname($nickname);
 
             $user->setNickname($nickname);
             $user->setNicknameCanonical((new Slugify())->slugify($nickname));
@@ -84,7 +102,7 @@ class UserProvider extends FOSUBUserProvider
         // Update avatar url in all cases
         if(!empty($response->getProfilePicture())) {
             $user->setAvatarUrl($response->getProfilePicture());
-        } elseif($serviceName == 'vkontakte') {
+        } elseif($serviceName === 'vkontakte') {
             $data = $response->getData()['response'][0];
             if(isset($data['photo_medium'])) {
                 $user->setAvatarUrl($data['photo_medium']);

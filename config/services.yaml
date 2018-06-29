@@ -30,6 +30,7 @@ services:
         arguments:
             - '@fos_user.user_manager'
             - { facebook: facebookId, twitter: twitterId, vkontakte: vkontakteId}
+            - '@App\Repository\UserRepository'
 
 imports:
     - { resource: services/auth.yaml }

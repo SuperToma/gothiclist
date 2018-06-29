@@ -405,9 +405,9 @@ class User extends BaseUser
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getAvatarUrl(): string
+    public function getAvatarUrl()
     {
         return $this->avatarUrl;
     }
