@@ -7,3 +7,8 @@ autocomplete_artist_songs:
     path: /autocomplete/artist/{artistId}/songs/{prefixSong}
     methods: GET
     controller: App\Controller\AutocompleteController::songsByArtist
+
+autocomplete_styles:
+    path: /autocomplete/styles
+    methods: GET
+    controller: App\Controller\AutocompleteController::styles

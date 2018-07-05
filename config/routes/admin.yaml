@@ -2,3 +2,8 @@ admin_home:
     path: /admin/home
     controller: App\Controller\AdminController::home
     methods: [GET]
+
+admin_song_validated:
+    path: /admin/song/validated
+    controller: App\Controller\AdminController::songValidated
+    methods: [POST]

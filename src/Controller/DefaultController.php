@@ -15,16 +15,9 @@ class DefaultController extends Controller
      */
     public function index(SongRepository $songRepository, VoteSongRepository $voteSongRepository)
     {
-        $lastSongs = $songRepository->findBy([], ['createdAt' => 'DESC'], 10);
-        foreach($lastSongs as &$song) {
-            $song->nbVotes = $voteSongRepository->count(['song' => $song]);
-        }
-        //dump($lastSongs[0]->getRelease()->getGenres()); exit();
-        $bestSongs = '';
-
         return $this->render('pages/index.html.twig', [
-            'last_songs' => $lastSongs,
-            'best_songs' => $bestSongs
+            'last_songs' => $songRepository->getLast(),
+            'best_songs' => []
         ]);
     }
 }

@@ -1,0 +1,63 @@
+<table class="table table-dark table-striped table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Artist</th>
+            <th scope="col">Album</th>
+            <th scope="col">Styles</th>
+            <th scope="col">By</th>
+            <th scope="col">Votes</th>
+            <th scope="col">Listen</th>
+            <th scope="col">Validated</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for song in songs %}
+        <tr>
+            <td>{{ song.title }}</td>
+            <td>{{ song.artist.name }}</td>
+            <td>{{ song.release.title }}</td>
+            <td>
+                <input type="text" class="form-control tags-styles" data-role="tagsinput" data-values='[
+                    {%- for style in song.release.styles -%}
+                        {"id" : {{ style.id }}, "name": "{{ style.name }}"}{{ (loop.last) ? '' : ',' }}
+                    {%- endfor -%}
+                ]' />
+            </td>
+            <td>{% include 'parts/avatar.html.twig' with { 'user': song.user } only %}</td>
+            <td>
+                {% include 'parts/vote.html.twig' with { 'id': song.id, 'type': 'song', 'user': song.user } only %}
+                <span class="nbVotes">{{ song.nbVotes }}</span>
+            </td>
+            <td>
+                <div class="w-125 form-inline">
+                    <input type="text" value="{{ song.youtubeId }}" class="w-100 form-control input-sm" placeholder="Youtube id">
+                    {% if song.youtubeId %}
+                        <a href="https://www.youtube.com/embed/{{ song.youtubeId }}?autoplay=1" data-target="#modal" data-toggle="modal">
+                            <i class="fa fa-youtube-play fa-lg"></i>
+                        </a>
+                    {% else %}
+                        <i class="fa fa-youtube-play fa-lg fa-off"></i>
+                    {% endif %}
+                </div>
+                <div class="w-125 form-inline">
+                <input type="text" value="{{ song.spotifyId }}" class="w-100 form-control input-sm" placeholder="Spotify id">
+                    {% if song.spotifyId %}
+                        <a href="https://embed.spotify.com/?uri=spotify:track:{{ song.spotifyId }}" data-target="#modal" data-toggle="modal">
+                            <i class="fa fa-spotify fa-lg"></i>
+                        </a>
+                    {% else %}
+                        <i class="fa fa-spotify fa-lg fa-off"></i>
+                    {% endif %}
+                </div>
+            </td>
+            <td class="v-a-middle">
+                <label class="switch">
+                    <input type="checkbox" data-id="{{ song.id }}" name="validated" {{ song.validated ? 'checked="checked"' : ''}} >
+                    <span class="slider"></span>
+                </label>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

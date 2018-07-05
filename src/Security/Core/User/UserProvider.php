@@ -70,6 +70,7 @@ class UserProvider extends FOSUBUserProvider
             $user->setEmail($response->getEmail());
             $user->setPassword($response->getUsername()); //@TODO : Generate password
             $user->addRole('ROLE_USER');
+            //$user->addRole('ROLE_ADMIN');
             $user->setEnabled(true);
 
             //Nickname
@@ -92,7 +93,7 @@ class UserProvider extends FOSUBUserProvider
 
             $this->userManager->updateUser($user);
 
-            return $user;
+            //return $user;
         }
 
         if($user->$getter_id() == ''){
@@ -155,6 +156,5 @@ class UserProvider extends FOSUBUserProvider
         $user->$setter_id($username);
         $user->$setter_token($response->getAccessToken());
         $this->userManager->updateUser($user);
-    }
-     */
+    }*/
 }

@@ -3,29 +3,36 @@
 namespace App\Controller;
 
 use App\Entity\Song;
+use App\Repository\SongRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class AdminController extends Controller
 {
     /**
-     * AdminController constructor.
+     * @param SongRepository $songRepository
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function __construct()
+    public function home(SongRepository $songRepository)
     {
-        $this->denyAccessUnlessGranted(
-            'ROLE_ADMIN', null, 'You need to be administrator to access this page'
-        );
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'You need to be administrator to access this page');
+
+        return $this->render('pages/admin/index.html.twig', [
+            'last_songs' => $songRepository->getLast(30)
+        ]);
     }
 
-    /**
-     *
-     */
-    public function home()
+    public function songValidated(Request $request, SongRepository $songRepository)
     {
-        $songRepository = $this->getDoctrine()->getRepository(Song::class);
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'You need to be administrator to access this page');
 
-        //Search last 20 songs added
-        $songs = $songRepository->findBy([], ['createdAt' => 'DESC'], 20);
+        /** @var Song $song */
+        $song = $songRepository->find($request->get('id'));
+        $song->setValidated($request->get('validated'));
+        $this->getDoctrine()->getManager()->persist($song);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->json(true);
     }
 
 }

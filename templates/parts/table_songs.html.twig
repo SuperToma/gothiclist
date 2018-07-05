@@ -1,14 +1,14 @@
 <table class="table table-dark table-striped table-hover">
     <thead>
-    <tr>
-        <th scope="col">Title</th>
-        <th scope="col">Artist</th>
-        <th scope="col">Album</th>
-        <th scope="col">Style</th>
-        <th scope="col">By</th>
-        <th scope="col">Votes</th>
-        <th scope="col">Listen</th>
-    </tr>
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Artist</th>
+            <th scope="col">Album</th>
+            <th scope="col">Styles</th>
+            <th scope="col">By</th>
+            <th scope="col">Votes</th>
+            <th scope="col">Listen</th>
+        </tr>
     </thead>
     <tbody>
     {% for song in songs %}
@@ -33,8 +33,8 @@
                     </a>
                 {% endif %}
                 {% if song.spotifyId %}
-                    <a href="#">
-                        <i class="fa fa-spotify fa-lg" data-song-id="{{ song.spotifyId }}"></i>
+                    <a href="https://embed.spotify.com/?uri=spotify:track:{{ song.spotifyId }}" data-target="#modal" data-toggle="modal">
+                        <i class="fa fa-spotify fa-lg"></i>
                     </a>
                 {% endif %}
             </td>

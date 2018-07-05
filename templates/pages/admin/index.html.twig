@@ -1,33 +1,27 @@
+{% extends "base.html.twig" %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-tagsinput.css') }}" media="screen">
+{% endblock %}
+
+{% block body %}
+
+
 <div class="panel panel-default">
     <div class="panel-heading">Last added</div>
     <div class="panel-body">
         <div class="panel-group">
-            <table class="table table-dark table-striped table-hover">
-                <thead>
-                <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Artist</th>
-                    <th scope="col">Album</th>
-                    <th scope="col">Genre</th>
-                    <th scope="col">By</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for song in last_songs %}
-                    <tr>
-                        <td>{{ song.title }}</td>
-                        <td>{{ song.artist.name }}</td>
-                        <td>{{ song.release.title }}</td>
-                        <td>
-                            {% for genre in song.genres %}
-                                {{ genre.name }}
-                            {% endfor %}
-                        </td>
-                        <td>{{ song.user.nickname }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            {% include 'parts/table_songs_admin.html.twig' with {'songs': last_songs, 'title': 'Last songs'} only %}
         </div>
     </div>
 </div>
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script src="{{ asset('js/typeahead.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-tagsinput.min.js') }}"></script>
+    <script src="{{ asset('js/admin.js') }}"></script>
+{% endblock %}

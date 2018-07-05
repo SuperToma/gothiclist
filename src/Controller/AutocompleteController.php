@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Style;
 use App\Finder\Elasticsearch\Finder;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -16,9 +17,7 @@ class AutocompleteController extends Controller
     {
         $max = 15;
 
-        return $this->json(
-            $esFinder->getArtistGroupStartingWith($prefixArtist, $max)
-        );
+        return $this->json($esFinder->getArtistGroupStartingWith($prefixArtist, $max));
     }
 
     /**
@@ -30,8 +29,18 @@ class AutocompleteController extends Controller
     {
         $max = 15;
 
-        return $this->json(
-            $esFinder->getSongsStartingWith($artistId, $prefixSong, $max)
-        );
+        return $this->json($esFinder->getSongsStartingWith($artistId, $prefixSong, $max));
+    }
+
+    public function styles()
+    {
+        $styles = $this->getDoctrine()->getRepository(Style::class)->findAll();
+
+        $results = [];
+        foreach($styles as $style) {
+            $results[] = ['id' => $style->getId(), 'name' => $style->getName()];
+        }
+
+        return $this->json($results);
     }
 }

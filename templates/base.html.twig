@@ -39,15 +39,8 @@
             <script src="{{ asset('jquery-ui-1.12.1.ui-darkness/external/jquery/jquery.js') }}"></script>
             <script src="{{ asset('js/bootstrap.min.js') }}"></script>
             <script src="{{ asset('js/main.js') }}"></script>
-
-            {% if app.request.server.get('HTTP_HOST') starts with 'www' %}
-                <script src="https://www.youtube.com/iframe_api"></script>
-                <script src="https://sdk.scdn.co/spotify-player.js"></script>
-            {% else %}
-                <script src="{{ asset('js/local-youtube.iframe.api.js') }}"></script>
-                <script src="{{ asset('js/local-spotify-player.js') }}"></script>
-            {% endif %}
-
+            <script src="https://www.youtube.com/iframe_api"></script>
+            <script src="https://sdk.scdn.co/spotify-player.js"></script>
         {% endblock %}
 
         <div id="footer">

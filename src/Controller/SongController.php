@@ -161,6 +161,7 @@ class SongController extends Controller
                 ->setIdMaster($esRelease['master_id'] ?? null)
                 ->setRelease($release)
                 ->setArtist($artist)
+                ->setValidated(1)
                 ->setTitle($songName);
 
             $this->getDoctrine()->getManager()->persist($song);
