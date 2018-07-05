@@ -1,5 +1,6 @@
   - song page
   - artist page
+  - Add country on artists
 
   - style listing page
   - http doesn't redirect to https

@@ -32,10 +32,13 @@ elt.tagsinput({
 
 $('.tags-styles').each(function() {
   var elt = $(this);
-  $(this).data('values').forEach(function(element) {
+  console.log($(this).data('styles'));
+  $(this).data('styles').forEach(function(element) {
     elt.tagsinput('add', element);
     elt.on('beforeItemRemove', function(event) {
-      alert('yeah');
+		if (confirm('Are you sure the style ' + event.item.name + ' of the album ' )) {
+
+		}
     })
   });
 });

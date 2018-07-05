@@ -18,7 +18,12 @@
             <td>{{ song.artist.name }}</td>
             <td>{{ song.release.title }}</td>
             <td>
-                <input type="text" class="form-control tags-styles" data-role="tagsinput" data-values='[
+                <input
+                    type="text"
+                    class="form-control tags-styles"
+                    data-role="tagsinput"
+                    data-release-title="{{ song.release.title }}"
+                    data-styles='[
                     {%- for style in song.release.styles -%}
                         {"id" : {{ style.id }}, "name": "{{ style.name }}"}{{ (loop.last) ? '' : ',' }}
                     {%- endfor -%}
