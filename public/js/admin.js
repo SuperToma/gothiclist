@@ -32,11 +32,10 @@ elt.tagsinput({
 
 $('.tags-styles').each(function() {
   var elt = $(this);
-  console.log($(this).data('styles'));
   $(this).data('styles').forEach(function(element) {
     elt.tagsinput('add', element);
     elt.on('beforeItemRemove', function(event) {
-		if (confirm('Are you sure the style ' + event.item.name + ' of the album ' )) {
+		if (confirm('Delete the style "' + event.item.name + '"\nof the album \n"' + $(this).data('release-title') + '" ???')) {
 
 		}
     })
