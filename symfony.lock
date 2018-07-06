@@ -62,8 +62,17 @@
     "friendsofsymfony/user-bundle": {
         "version": "v2.1.2"
     },
+    "guzzlehttp/command": {
+        "version": "1.0.0"
+    },
     "guzzlehttp/guzzle": {
         "version": "6.3.3"
+    },
+    "guzzlehttp/guzzle-services": {
+        "version": "1.1.3"
+    },
+    "guzzlehttp/oauth-subscriber": {
+        "version": "0.3.0"
     },
     "guzzlehttp/promises": {
         "version": "v1.3.1"
@@ -142,6 +151,12 @@
     },
     "react/promise": {
         "version": "v2.5.1"
+    },
+    "ricbra/discogs-bundle": {
+        "version": "1.0.1"
+    },
+    "ricbra/php-discogs-api": {
+        "version": "1.0.x-dev"
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.0.2"

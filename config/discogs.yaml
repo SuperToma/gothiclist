@@ -1,0 +1,7 @@
+ricbra_discogs:
+    throttle:
+        enabled: true
+    oauth:
+        enabled: false
+        consumer_key: '%env(DISCOGS_KEY)%'
+        consumer_secret: '%env(DISCOGS_SECRET)%'
