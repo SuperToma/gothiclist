@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d9db401b4d656b4a8fac25f7ce2a1da8",
+    "content-hash": "7e1d310d3fb7208ad99a9c7bb9ee3328",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -2763,56 +2763,6 @@
                 "promises"
             ],
             "time": "2018-06-13T15:59:06+00:00"
-        },
-        {
-            "name": "ricbra/discogs-bundle",
-            "version": "1.0.1",
-            "target-dir": "Ricbra/Bundle/DiscogsBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ricbra/RicbraDiscogsBundle.git",
-                "reference": "6c9105a0e7ad94d04d4e68d4b8af89a2446047d6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ricbra/RicbraDiscogsBundle/zipball/6c9105a0e7ad94d04d4e68d4b8af89a2446047d6",
-                "reference": "6c9105a0e7ad94d04d4e68d4b8af89a2446047d6",
-                "shasum": ""
-            },
-            "require": {
-                "ricbra/php-discogs-api": "^1.0"
-            },
-            "suggest": {
-                "hwi/oauth-bundle": "Enable OAuth support using HWIOAuthBundle"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Ricbra\\Bundle\\DiscogsBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Richard van den Brand",
-                    "email": "richard@vandenbrand.org"
-                }
-            ],
-            "description": "Bundle around the Discogs API client",
-            "homepage": "https://github.com/ricbra/RicbraDiscogsBundle",
-            "keywords": [
-                "api",
-                "discogs"
-            ],
-            "time": "2015-12-06T15:01:41+00:00"
         },
         {
             "name": "ricbra/php-discogs-api",

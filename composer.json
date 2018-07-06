@@ -18,7 +18,6 @@
         "hwi/oauth-bundle": "^0.6.2",
         "php-http/guzzle6-adapter": "^1.1",
         "php-http/httplug-bundle": "^1.10",
-        "ricbra/discogs-bundle": "^1.0",
         "ricbra/php-discogs-api": "dev-master",
         "symfony/asset": "^4.0",
         "symfony/console": "^4.0",

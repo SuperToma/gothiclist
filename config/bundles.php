@@ -13,5 +13,4 @@ return [
     Http\HttplugBundle\HttplugBundle::class => ['all' => true],
     Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true, 'test' => true],
     EasyCorp\Bundle\EasyDeployBundle\EasyDeployBundle::class => ['dev' => true, 'test' => true],
-    Ricbra\Bundle\DiscogsBundle\RicbraDiscogsBundle::class => ['all' => true],
 ];

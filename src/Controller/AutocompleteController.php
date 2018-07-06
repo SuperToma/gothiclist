@@ -15,9 +15,11 @@ class AutocompleteController extends Controller
      * @param Finder $esFinder
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function artistGroup(string $prefixArtist, Finder $esFinder, RicbraDiscogsBundle $discogsBundle)
+    public function artistGroup(string $prefixArtist, Finder $esFinder)
     {
-        $artist = $discogsBundle->getArtist(['id' => 120]);
+        $discogs = $this->container->get('discogs');
+        dump($discogs); exit();
+        $artist = $discogs->getArtist(['id' => 120]);
         dump($artist); exit();
         $max = 15;
 

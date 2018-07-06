@@ -152,9 +152,6 @@
     "react/promise": {
         "version": "v2.5.1"
     },
-    "ricbra/discogs-bundle": {
-        "version": "1.0.1"
-    },
     "ricbra/php-discogs-api": {
         "version": "1.0.x-dev"
     },
