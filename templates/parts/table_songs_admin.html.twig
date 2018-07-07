@@ -4,7 +4,7 @@
             <th scope="col">Title</th>
             <th scope="col">Artist</th>
             <th scope="col">Album</th>
-            <th scope="col">Styles</th>
+            <th scope="col">Album's styles</th>
             <th scope="col">By</th>
             <th scope="col">Votes</th>
             <th scope="col">Listen</th>
@@ -18,16 +18,22 @@
             <td>{{ song.artist.name }}</td>
             <td>{{ song.release.title }}</td>
             <td>
+                {%- for style in song.release.styles -%}
+                    {{ style.name }}{{ (loop.last) ? '' : ' / ' }}
+                {% endfor %}
+                {#
                 <input
                     type="text"
                     class="form-control tags-styles"
                     data-role="tagsinput"
+                    data-release-id="{{ song.release.id }}"
                     data-release-title="{{ song.release.title }}"
                     data-styles='[
                     {%- for style in song.release.styles -%}
                         {"id" : {{ style.id }}, "name": "{{ style.name }}"}{{ (loop.last) ? '' : ',' }}
                     {%- endfor -%}
                 ]' />
+                #}
             </td>
             <td>{% include 'parts/avatar.html.twig' with { 'user': song.user } only %}</td>
             <td>

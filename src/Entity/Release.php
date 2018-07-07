@@ -245,6 +245,18 @@ class Release
         return $this->styles->toArray();
     }
 
+    public function hasStyle(int $idStyle): bool
+    {
+        $styles = $this->getStyles();
+        foreach ($styles as $style) {
+            if($style['id'] === $idStyle) {
+                return true;
+            }
+        }
+
+        return true;
+    }
+
     /**
      * @param string $style
      * @return Release

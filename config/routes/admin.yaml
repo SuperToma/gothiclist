@@ -7,3 +7,8 @@ admin_song_validated:
     path: /admin/song/validated
     controller: App\Controller\AdminController::songValidated
     methods: [POST]
+
+admin_release_style:
+    path: /admin/release/{idRelease}/style/{idStyle}
+    controller: App\Controller\AdminController::releaseStyle
+    methods: [GET]

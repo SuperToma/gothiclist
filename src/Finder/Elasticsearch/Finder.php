@@ -183,7 +183,7 @@ class Finder
         }
 
         // Add album title if duplicate titles
-        if(count($titles) !== count(array_unique($titles))) {
+        if($titles !== false && count($titles) !== count(array_unique($titles))) {
             $duplicateTitles = array_diff_assoc($titles, array_unique($titles));
             foreach($newResults as &$result) {
                 if(in_array($result['track'], $duplicateTitles)) {

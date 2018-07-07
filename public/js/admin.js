@@ -36,6 +36,11 @@ $('.tags-styles').each(function() {
     elt.tagsinput('add', element);
     elt.on('beforeItemRemove', function(event) {
 		if (confirm('Delete the style "' + event.item.name + '"\nof the album \n"' + $(this).data('release-title') + '" ???')) {
+      $.ajax({
+        url: '/admin/release/'+$(this).data('release-id')+'/style/'+event.item.id,
+        method: "post",
+        dataType: "json"
+      });
 
 		}
     })
