@@ -9,6 +9,7 @@
   - Style listPage
   - Button "More"
   - on song search : show a loading + show nb results & end
+  - on song search : keep non existing songs on excluded releases
   
   - "Add song" visible as anonymous but popup for connection
   - get user photo + show on page
