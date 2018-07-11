@@ -4,23 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Style;
 use App\Finder\Elasticsearch\Finder;
-use Discogs\ClientFactory;
-use Ricbra\Bundle\DiscogsBundle\RicbraDiscogsBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class AutocompleteController extends Controller
 {
-    /**
-     * @param string $prefixArtist
-     * @param Finder $esFinder
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     public function artistGroup(string $prefixArtist, Finder $esFinder)
     {
-        $discogs = $this->container->get('discogs');
-        dump($discogs); exit();
-        $artist = $discogs->getArtist(['id' => 120]);
-        dump($artist); exit();
         $max = 15;
 
         return $this->json($esFinder->getArtistGroupStartingWith($prefixArtist, $max));

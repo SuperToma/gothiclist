@@ -5,7 +5,7 @@
   - style listing page
   - http doesn't redirect to https
   - admin validation, youtube ids
-  - Check inscriptiton vkontakte
+  - Check inscriptiton vkontakte (2 times registration)
   - Style listPage
   - Button "More"
   - on song search : show a loading + show nb results & end

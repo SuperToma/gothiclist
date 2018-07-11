@@ -106,20 +106,16 @@ class Finder
      * @param $artistId
      * @return array
      */
-    protected function getMainReleaseIdsFromArtistId($artistId)
+    protected function getMainReleasesFromArtistId($artistId)
     {
         $params = [
             'index' => 'master',
             'from' => 0,
             'size' => 1000,
-            '_source' => 'main_release',
+            '_source' => ['main_release', 'title'],
             'body' => [
                 'query' => [
-                    'bool' => [
-                        'must' => [
-                            'term' => [ 'artists.id' => $artistId ]
-                        ]
-                    ]
+                    'term' => [ 'artists.id' => $artistId ]
                 ]
             ]
         ];
@@ -128,7 +124,7 @@ class Finder
 
         $results = [];
         foreach($rawResults['results'] as $rawResult) {
-            $results[] = $rawResult['main_release'];
+            $results[$rawResult['main_release']] = $rawResult['title'];
         }
 
         return $results;
@@ -149,23 +145,27 @@ class Finder
             '_source' => ['title', 'tracklist.title'],
             'body' => [
                 'query' => [
-                    'bool' => [
-                        'must' => [
-                            'match' => [ 'tracklist.title' => $text ]
-                        ],
-                        'filter' => [
-                            'terms' => ['_id' => $this->getMainReleaseIdsFromArtistId($artistId)],
-                        ]
-                    ]
+                    'term' => ['artists.artist.id' => $artistId]
                 ]
             ]
         ];
 
         $esResults = $this->getResults($this->client->search($params));
 
-        //dump($this->client->search($params));
-        //dump($this->client->transport->getLastConnection()->getLastRequestInfo());
-        //exit();
+        if($esResults['total'] == 0) {
+            return ['results' => 0];
+        }
+
+        $mainReleases = $this->getMainReleasesFromArtistId($artistId);
+
+        //Remove non main_releases
+        foreach($esResults['results'] as $i => $result) {
+            if(in_array($result['title'], $mainReleases) ) {
+                if($result['id'] != array_search($result['title'], $mainReleases)) {
+                    unset($esResults['results'][$i]);
+                }
+            }
+        }
 
         $newResults = [];
         $titles = false;

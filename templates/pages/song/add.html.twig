@@ -37,64 +37,94 @@
 {% endblock %}
 
 
-
 {% block js %}
     {{ parent() }}
-    <script src="{{ asset('js/bootstrap3-typeahead.min.js') }}"></script>
+    <script src="{{ asset('js/typeahead.bundle.min.js') }}"></script>
+    {# <script src="{{ asset('js/bootstrap3-typeahead.min.js') }}"></script> #}
 
     <script>
-        var objects = [];
-        var map = {};
-
         jQuery(document).ready(function() {
-            //Autocomplete artist/group
-            $('#artist_group').typeahead({
+
+          /**********************
+           * Field artist       *
+           * *******************/
+          var artists = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('results.name'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+              url: '/autocomplete/artist_group/%QUERY',
+              wildcard: '%QUERY',
+              filter: function(response) {
+                return response.results;
+              }
+            },
+            ttl: 0,
+            cache: false
+          });
+          artists.initialize();
+
+          $('#artist_group')
+            .typeahead({
                 hint: false,
                 highlight: true,
-                minLength: 1,
-                delay: 400,
-                source: function (query, process) {
-                    $('#artist_id, #song').val(null);
-                    $('#song').attr('disabled', 'disabled');
-
-                    return $.get('/autocomplete/artist_group/' + query, function (data) {
-                        objects = [];
-                        $.each(data.results, function(i, object) {
-                          map[object.name] = object;
-                            objects.push(object.name);
-                        });
-                        process(objects);
-                    });
+                minLength: 2,
+                delay: 400
+            }, {
+                name: 'artists',
+                source: artists.ttAdapter(),
+                displayKey: function (results) {
+                  return results.name;
                 },
-                updater: function(item) {
-                    $('#artist_id').val(map[item].id);
-                    $('#song').removeAttr('disabled');
-                    return item;
-                }
+            })
+            .bind('typeahead:asyncrequest', function(ev, suggestion) {
+              $('#artist_id, #song').val(null);
+              $('#song').attr('disabled', 'disabled');
+            })
+            .bind('typeahead:select', function(ev, suggestion) {
+              $('#artist_id').val(suggestion.id);
+              $('#song').removeAttr('disabled');
             });
 
-            //Autocomplete song
-            $('#song').typeahead({
-                hint: false,
-                highlight: true,
-                minLength: 1,
-                delay: 400,
-                source: function (query, process) {
-                    return $.get('/autocomplete/artist/'+$('#artist_id').val()+'/songs/'+query, function (data) {
-                        objects = [];
-                        $.each(data, function(i, object) {
-                          map[object.track] = object;
-                            objects.push(object.track);
-                        });
-                        process(objects);
-                    });
-                },
-                updater: function(item) {
-                    $('#release_id').val(map[item].id);
-                    $('#song').removeAttr('disabled');
-                    return item;
-                }
+          /**********************
+           * Field songs        *
+           * *******************/
+          var songs = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('track'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            limit: Number.MAX_VALUE,
+            remote: {
+              url: '/autocomplete/artist/',
+              replace: function (url, query) {
+                return url + $('#artist_id').val() + '/songs/' + query
+              },
+              filter: function(response) {
+                return response;
+              }
+            },
+            ttl: 0,
+            cache: false
+          });
+          songs.initialize();
+
+          $('#song')
+            .typeahead({
+              hint: false,
+              highlight: true,
+              minLength: 2,
+              delay: 400
+            }, {
+              name: 'songs',
+              source: songs.ttAdapter(),
+              limit: 15,
+              displayKey: function (results) {
+                console.log(results);
+                return results.track;
+              },
+            })
+            .bind('typeahead:select', function(ev, suggestion) {
+              $('#release_id').val(suggestion.id);
             });
-        })
+
+        });
     </script>
 {% endblock %}

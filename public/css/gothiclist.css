@@ -147,6 +147,9 @@ input:checked + .slider:before {
 }
 /**************** tags inputs ****************/
 
+.twitter-typeahead {
+  display: block !important;
+}
 .twitter-typeahead .tt-query,
 .twitter-typeahead .tt-hint {
   margin-bottom: 0;
@@ -169,7 +172,7 @@ input:checked + .slider:before {
   margin: 2px 0 0;
   list-style: none;
   font-size: 14px;
-  background-color: #ffffff;
+  background-color: #888888;
   border: 1px solid #cccccc;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 4px;
@@ -177,6 +180,8 @@ input:checked + .slider:before {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   background-clip: padding-box;
   cursor: pointer;
+  max-height: 124px;
+  overflow-y: auto;
 }
 
 .tt-suggestion {

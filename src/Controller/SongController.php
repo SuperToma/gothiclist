@@ -158,7 +158,6 @@ class SongController extends Controller
 
             $song = (new Song())
                 ->setUser($user)
-                ->setIdMaster($esRelease['master_id'] ?? null)
                 ->setRelease($release)
                 ->setArtist($artist)
                 ->setValidated(1)

@@ -51,8 +51,10 @@
             <script src="{{ asset('jquery-ui-1.12.1.ui-darkness/external/jquery/jquery.js') }}"></script>
             <script src="{{ asset('js/bootstrap.min.js') }}"></script>
             <script src="{{ asset('js/main.js') }}"></script>
-            <script src="https://www.youtube.com/iframe_api"></script>
-            <script src="https://sdk.scdn.co/spotify-player.js"></script>
+            {% if app.request.server.get('HTTP_HOST') starts with 'www' %}
+                <script src="https://www.youtube.com/iframe_api"></script>
+                <script src="https://sdk.scdn.co/spotify-player.js"></script>
+            {% endif %}
         {% endblock %}
 
         <div id="footer">

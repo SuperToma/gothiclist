@@ -30,13 +30,6 @@ class Song
     private $id;
 
     /**
-     * @var integer
-     * @ORM\OneToOne(targetEntity="App\Entity\Master")
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $idMaster;
-
-    /**
      * @var Release
      * @ORM\ManyToOne(targetEntity="App\Entity\Release")
      */
@@ -117,26 +110,6 @@ class Song
     public function setId(int $id): Song
     {
         $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getIdMaster(): int
-    {
-        return $this->idMaster;
-    }
-
-
-    /**
-     * @param int $idMaster
-     * @return Song
-     */
-    public function setIdMaster(?int $idMaster): Song
-    {
-        $this->idMaster = $idMaster;
 
         return $this;
     }
