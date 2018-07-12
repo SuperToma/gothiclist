@@ -30,7 +30,7 @@ class StyleController extends Controller
         $slugify = new Slugify();
         if($slug != $slugify->slugify($style->getName())) {
             return $this->redirectToRoute(
-                'style_home', ['id' => $style->getId(), 'slug' => $slugify->slugify($style->getName())]
+                'style_home', ['idStyle' => $style->getId(), 'slug' => $slugify->slugify($style->getName())]
             );
         }
 
