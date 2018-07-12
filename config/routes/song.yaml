@@ -1,5 +1,5 @@
 song_add:
     path: /song/add
     controller: App\Controller\SongController::add
-    methods: [POST]
+    methods: [GET, POST]
 
