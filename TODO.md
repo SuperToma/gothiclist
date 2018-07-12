@@ -1,5 +1,7 @@
   - song page
   - artist page
+  - SEO : jsonLD
+  
   - Add country on artists
 
   - style listing page
