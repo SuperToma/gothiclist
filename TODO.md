@@ -4,6 +4,7 @@
 
   - style listing page
   - Style listPage
+  - Check video ID is correct on saved
   - Check inscriptiton vkontakte (2 times registration)
   - Button "More"
   - on song search : show a loading + show nb results & end

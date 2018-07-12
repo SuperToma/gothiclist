@@ -18,7 +18,7 @@
             <td>{{ song.release.title }}</td>
             <td>
                 {% for style in song.release.styles %}
-                    {{ style.name }} {{ (loop.last) ? '' : ' / ' }}
+                    <a href="{{ path('style_home', {'id': style.id, 'slug': style.name|slugify}) }}">{{ style.name }}</a> {{ (loop.last) ? '' : ' / ' }}
                 {% endfor %}
             </td>
             <td>{% include 'parts/avatar.html.twig' with { 'user': song.user } only %}</td>

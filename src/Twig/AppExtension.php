@@ -11,9 +11,9 @@ class AppExtension extends AbstractExtension
 {
     public function getFunctions()
     {
-        return array(
+        return [
             new TwigFunction('is_valid', [$this, 'is_valid']),
-        );
+        ];
     }
 
     public function is_valid(User $user)

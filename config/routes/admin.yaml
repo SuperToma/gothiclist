@@ -12,3 +12,10 @@ admin_release_style:
     path: /admin/release/{idRelease}/style/{idStyle}
     controller: App\Controller\AdminController::releaseStyle
     methods: [GET]
+
+admin_song_patch:
+    path: /admin/song/{id}
+    controller: App\Controller\SongController::patch
+    methods: [PATCH]
+    requirements:
+          id: '\d+'

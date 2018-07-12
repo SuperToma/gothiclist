@@ -3,9 +3,3 @@ song_add:
     controller: App\Controller\SongController::add
     methods: [POST]
 
-song_patch:
-    path: /admin/song/{id}
-    controller: App\Controller\SongController::patch
-    methods: [PATCH]
-    requirements:
-          id: '\d+'

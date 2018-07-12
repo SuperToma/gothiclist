@@ -1,0 +1,6 @@
+style_home:
+    path: /style/{id}-{slug}
+    controller: App\Controller\StyleController::home
+    methods: [GET]
+    requirements:
+        id: '\d+'
