@@ -6,7 +6,6 @@ use App\Entity\VoteArtist;
 use App\Entity\VoteSong;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class VoteController
