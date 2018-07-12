@@ -42,7 +42,7 @@
             </td>
             <td>
                 <div class="w-125 form-inline">
-                    <input type="text" value="{{ song.youtubeId }}" class="w-100 form-control input-sm" placeholder="Youtube id">
+                    <input type="text" value="{{ song.youtubeId }}" data-song-id="{{ song.id }}" class="youtube-id w-100 form-control input-sm" placeholder="Youtube id">
                     {% if song.youtubeId %}
                         <a href="https://www.youtube.com/embed/{{ song.youtubeId }}?autoplay=1" data-target="#modal" data-toggle="modal">
                             <i class="fa fa-youtube-play fa-lg"></i>
@@ -52,7 +52,7 @@
                     {% endif %}
                 </div>
                 <div class="w-125 form-inline">
-                <input type="text" value="{{ song.spotifyId }}" class="w-100 form-control input-sm" placeholder="Spotify id">
+                <input type="text" value="{{ song.spotifyId }}" data-song-id="{{ song.id }}" class="spotify-id w-100 form-control input-sm" placeholder="Spotify id">
                     {% if song.spotifyId %}
                         <a href="https://embed.spotify.com/?uri=spotify:track:{{ song.spotifyId }}" data-target="#modal" data-toggle="modal">
                             <i class="fa fa-spotify fa-lg"></i>

@@ -172,8 +172,31 @@ class SongController extends Controller
         return $this->render('pages/song/add.html.twig', []);
     }
 
-    protected function verifyForm()
+    public function patch(Request $request, $id)
     {
+        $validPatchProperties = ['youtubeId', 'spotifyId'];
+        $params = $request->request->all();
 
+        if(empty($params)) {
+            return false;
+        }
+
+        $song = $this->getDoctrine()
+            ->getRepository(Song::class)
+            ->find($id);
+
+        foreach($params as $name => $value) {
+            if(!in_array($name, $validPatchProperties)) {
+                return $this->json(false, 400);
+            } else {
+                $setter = 'set'.ucfirst($name);
+                $song->$setter($value);
+            }
+        }
+
+        $this->getDoctrine()->getManager()->persist($song);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->json(true);
     }
 }

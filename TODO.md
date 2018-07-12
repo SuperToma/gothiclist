@@ -3,10 +3,8 @@
   - Add country on artists
 
   - style listing page
-  - http doesn't redirect to https
-  - admin validation, youtube ids
-  - Check inscriptiton vkontakte (2 times registration)
   - Style listPage
+  - Check inscriptiton vkontakte (2 times registration)
   - Button "More"
   - on song search : show a loading + show nb results & end
   - on song search : keep non existing songs on excluded releases

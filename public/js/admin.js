@@ -8,6 +8,32 @@ $("input[type='checkbox'][name='validated']").click(function() {
   });
 });
 
+/******* IDs Youtube / Spotify *******/
+$(".youtube-id, .spotify-id").keyup(function(event) {
+  if (event.keyCode === 13) {
+    var type;
+    if($(this).hasClass('youtube-id')) {
+      type = 'youtubeId';
+    } else if ($(this).hasClass('spotify-id')) {
+      type = 'spotifyId';
+    } else {
+      return;
+    }
+    $.ajax({
+      url: '/admin/song/' + $(this).data('song-id'),
+      data: { [type]: $(this).val() },
+      method: "patch",
+      dataType: "json",
+      success: function( data ) {
+        alert('Video ID saved');
+      },
+      error: function() {
+        alert('Oops, an error occured while saving video ID');
+      }
+    });
+  }
+});
+
 /************** Styles ***************/
 
 var styles = new Bloodhound({
