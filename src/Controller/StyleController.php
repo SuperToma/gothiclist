@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Style;
 use App\Repository\SongRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Cocur\Slugify\Slugify;
 use Symfony\Component\HttpFoundation\Response;
 
 class StyleController extends Controller
@@ -30,7 +31,7 @@ class StyleController extends Controller
             );
         }
 
-        return $this->render('style/index.html.twig', [
+        return $this->render('pages/style/index.html.twig', [
             'last_songs' => $songRepository->getLastByStyle($id),
             'best_songs' => $songRepository->getMostLikedByStyle($id, 20),
         ]);

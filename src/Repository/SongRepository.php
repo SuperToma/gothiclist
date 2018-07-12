@@ -44,9 +44,11 @@ class SongRepository extends ServiceEntityRepository
      */
     public function getLastByStyle(int $styleId, int $limit = 10)
     {
-        $qbd = $this->createQueryBuilder('s');
-        $qbd->innerJoin('s.releaseId', 'rs', 'WITH', 'rs.styleId = :styleId')
-            ->setParameter('styleId', $styleId)
+        $qbd = $this->createQueryBuilder('song');
+        $qbd->innerJoin('song.release', 'release')
+            ->innerJoin('release.styles', 'style')
+            ->where('style.id = :styleId')->setParameter('styleId', $styleId)
+            ->orderBy('song.createdAt', 'DESC')
             ->setMaxResults($limit);
 
         return $qbd->getQuery()->getResult();
@@ -59,11 +61,14 @@ class SongRepository extends ServiceEntityRepository
      */
     public function getMostLikedByStyle(int $styleId, int $limit = 10)
     {
-        $qbd = $this->createQueryBuilder('s');
-        $qbd->innerJoin('s.releaseId', 'rs', 'WITH', 'rs.styleId = :styleId')
-            ->innerJoin('s.vote', 'v')
-            ->groupBy('s.releaseId')
-            ->setParameter('styleId', $styleId)
+        $qbd = $this->createQueryBuilder('song');
+        $qbd->addSelect('COUNT(vote.id)')
+            ->innerJoin('song.release', 'release')
+            ->innerJoin('release.styles', 'style')
+            ->innerJoin('song.votes', 'vote')
+            ->where('style.id = :styleId')->setParameter('styleId', $styleId)
+            ->groupBy('song.id')
+            ->orderBy('COUNT(vote.id)', 'DESC')
             ->setMaxResults($limit);
 
         return $qbd->getQuery()->getResult();
