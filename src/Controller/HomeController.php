@@ -17,7 +17,7 @@ class HomeController extends Controller
     {
         return $this->render('pages/home.html.twig', [
             'last_songs' => $songRepository->getLast(),
-            'best_songs' => []
+            'most_rated_songs' => $songRepository->getMostRated(),
         ]);
     }
 }

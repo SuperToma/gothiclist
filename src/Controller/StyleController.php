@@ -33,7 +33,7 @@ class StyleController extends Controller
 
         return $this->render('pages/style/index.html.twig', [
             'last_songs' => $songRepository->getLastByStyle($id),
-            'best_songs' => $songRepository->getMostLikedByStyle($id, 20),
+            'most_rated_songs' => $songRepository->getMostRatedByStyle($id, 20),
         ]);
     }
 

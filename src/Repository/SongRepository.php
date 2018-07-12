@@ -38,6 +38,22 @@ class SongRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param int $limit
+     * @return mixed
+     */
+    public function getMostRated(int $limit = 10)
+    {
+        $qbd = $this->createQueryBuilder('song');
+        $qbd->addSelect('COUNT(vote.id)')
+            ->innerJoin('song.votes', 'vote')
+            ->groupBy('song.id')
+            ->orderBy('COUNT(vote.id)', 'DESC')
+            ->setMaxResults($limit);
+
+        return $qbd->getQuery()->getResult();
+    }
+
+    /**
      * @param int $styleId
      * @param int $limit
      * @return mixed
@@ -59,7 +75,7 @@ class SongRepository extends ServiceEntityRepository
      * @param int $limit
      * @return mixed
      */
-    public function getMostLikedByStyle(int $styleId, int $limit = 10)
+    public function getMostRatedByStyle(int $styleId, int $limit = 10)
     {
         $qbd = $this->createQueryBuilder('song');
         $qbd->addSelect('COUNT(vote.id)')

@@ -6,17 +6,7 @@
 {% endblock %}
 
 {% block body %}
-
-
-<div class="panel panel-default">
-    <div class="panel-heading">Last added</div>
-    <div class="panel-body">
-        <div class="panel-group">
-            {% include 'parts/table_songs_admin.html.twig' with {'songs': last_songs, 'title': 'Last songs'} only %}
-        </div>
-    </div>
-</div>
-
+    {% include 'parts/table_songs_admin.html.twig' with {'songs': last_songs, 'title': 'Last added songs'} only %}
 {% endblock %}
 
 {% block js %}

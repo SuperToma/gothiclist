@@ -1,0 +1,6 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    {% include 'parts/table_songs.html.twig' with {'songs': last_songs, 'title': 'Last songs'} only %}
+    {% include 'parts/table_songs.html.twig' with {'songs': most_rated_songs, 'title': 'Most voted songs'} only %}
+{% endblock %}

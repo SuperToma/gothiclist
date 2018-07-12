@@ -14,23 +14,6 @@
         </div>
     </div>
 
-    {# Last songs #}
-    <div class="panel panel-default">
-        <div class="panel-heading">Last songs</div>
-        <div class="panel-body">
-            <div class="panel-group">
-                {% include 'parts/table_songs.html.twig' with {'songs': last_songs, 'title': 'Last songs'} only %}
-            </div>
-        </div>
-    </div>
-
-    {# Top rated songs #}
-    <div class="panel panel-default">
-        <div class="panel-heading">Most voted songs</div>
-        <div class="panel-body">
-            <div class="panel-group">
-                {% include 'parts/table_songs.html.twig' with {'songs': last_songs, 'title': 'Most voted songs'} only %}
-            </div>
-        </div>
-    </div>
+    {% include 'parts/table_songs.html.twig' with {'songs': last_songs, 'title': 'Last songs'} only %}
+    {% include 'parts/table_songs.html.twig' with {'songs': most_rated_songs, 'title': 'Most rated songs'} only %}
 {% endblock %}
