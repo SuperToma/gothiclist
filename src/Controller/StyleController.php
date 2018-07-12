@@ -2,20 +2,38 @@
 
 namespace App\Controller;
 
+use App\Entity\Style;
+use App\Repository\SongRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class StyleController extends Controller
 {
     /**
      * @param int $id
      * @param string $slug
+     * @return Response
      */
-    public function home(int $id, string $slug)
+    public function home(int $id, string $slug, SongRepository $songRepository)
     {
-        $songRepository = $this->getDoctrine()->getRepository(Song::class);
+        /** @var Style $style */
+        $style = $this->getDoctrine()->getRepository(Style::class)->find($id);
 
-        //Search last 20 songs added
-        $songs = $songRepository->findBy([], ['createdAt' => 'DESC'], 20);
+        if(!$style) {
+            throw $this->createNotFoundException('Sorry, this style does not exist');
+        }
+
+        $slugify = new Slugify();
+        if($slug != $slugify->slugify($style->getName())) {
+            return $this->redirectToRoute(
+                'style_home', ['id' => $style->getId(), 'slug' => $slugify->slugify($style->getName())]
+            );
+        }
+
+        return $this->render('style/index.html.twig', [
+            'last_songs' => $songRepository->getLastByStyle($id),
+            'best_songs' => $songRepository->getMostLikedByStyle($id, 20),
+        ]);
     }
 
 }

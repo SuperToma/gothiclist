@@ -25,7 +25,7 @@ class VoteSongRepository extends ServiceEntityRepository
      * @param $objectId
      * @return mixed
      */
-    public function findVoteInfos($objectId)
+    public function findVoteInfos(int $objectId)
     {
         $qb = $this->createQueryBuilder('r')
             ->select('COUNT(r) AS count, AVG(r.value) AS avg')
