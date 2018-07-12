@@ -8,7 +8,7 @@ $("input[type='checkbox'][name='validated']").click(function() {
   });
 });
 
-/******* IDs Youtube / Spotify *******/
+/******* inputs IDs Youtube / Spotify *******/
 $(".youtube-id, .spotify-id").keyup(function(event) {
   if (event.keyCode === 13) {
     var type;
@@ -34,8 +34,7 @@ $(".youtube-id, .spotify-id").keyup(function(event) {
   }
 });
 
-/************** Styles ***************/
-
+/************** Songs styles ***************/
 var styles = new Bloodhound({
   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
   queryTokenizer: Bloodhound.tokenizers.whitespace,

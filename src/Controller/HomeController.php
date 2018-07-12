@@ -6,7 +6,7 @@ use App\Repository\SongRepository;
 use App\Repository\VoteSongRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DefaultController extends Controller
+class HomeController extends Controller
 {
     /**
      * @param SongRepository $songRepository
@@ -15,7 +15,7 @@ class DefaultController extends Controller
      */
     public function index(SongRepository $songRepository, VoteSongRepository $voteSongRepository)
     {
-        return $this->render('pages/index.html.twig', [
+        return $this->render('pages/home.html.twig', [
             'last_songs' => $songRepository->getLast(),
             'best_songs' => []
         ]);

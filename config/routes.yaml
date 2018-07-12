@@ -3,7 +3,7 @@ imports:
 
 index:
   path: /
-  controller: App\Controller\DefaultController::index
+  controller: App\Controller\HomeController::index
 
 autocomplete:
     resource: 'routes/autocomplete.yaml'
