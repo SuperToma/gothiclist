@@ -44,13 +44,20 @@ class SongRepository extends ServiceEntityRepository
     public function getMostRated(int $limit = 10)
     {
         $qbd = $this->createQueryBuilder('song');
-        $qbd->addSelect('COUNT(vote.id)')
+        $qbd->addSelect('COUNT(vote.id) as nbVotes')
             ->innerJoin('song.votes', 'vote')
             ->groupBy('song.id')
             ->orderBy('COUNT(vote.id)', 'DESC')
             ->setMaxResults($limit);
 
-        return $qbd->getQuery()->getResult();
+        $results = $qbd->getQuery()->getResult();
+
+        foreach($results as &$result) {
+            $result[0]->nbVotes = $result['nbVotes'];
+            $result = $result[0];
+        }
+
+        return $results;
     }
 
     /**
@@ -78,7 +85,7 @@ class SongRepository extends ServiceEntityRepository
     public function getMostRatedByStyle(int $styleId, int $limit = 10)
     {
         $qbd = $this->createQueryBuilder('song');
-        $qbd->addSelect('COUNT(vote.id)')
+        $qbd->addSelect('COUNT(vote.id) as nbVotes')
             ->innerJoin('song.release', 'release')
             ->innerJoin('release.styles', 'style')
             ->innerJoin('song.votes', 'vote')
@@ -87,6 +94,13 @@ class SongRepository extends ServiceEntityRepository
             ->orderBy('COUNT(vote.id)', 'DESC')
             ->setMaxResults($limit);
 
-        return $qbd->getQuery()->getResult();
+        $results = $qbd->getQuery()->getResult();
+
+        foreach($results as &$result) {
+            $result[0]->nbVotes = $result['nbVotes'];
+            $result = $result[0];
+        }
+
+        return $results;
     }
 }

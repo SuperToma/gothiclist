@@ -15,8 +15,13 @@ class HomeController extends Controller
      */
     public function index(SongRepository $songRepository, VoteSongRepository $voteSongRepository)
     {
+        $lastSongsAdded = $songRepository->getLast();
+        foreach($lastSongsAdded as &$song) {
+            $song->nbVotes = $voteSongRepository->count(['song' => $song]);
+        }
+
         return $this->render('pages/home.html.twig', [
-            'last_songs' => $songRepository->getLast(),
+            'last_songs' => $lastSongsAdded,
             'most_rated_songs' => $songRepository->getMostRated(),
         ]);
     }

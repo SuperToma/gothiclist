@@ -22,7 +22,12 @@
                         <td>{{ song.release.title }}</td>
                         <td>
                             {% for style in song.release.styles %}
-                                <a href="{{ path('style_home', {'id': style.id, 'slug': style.name|slugify}) }}">{{ style.name }}</a> {{ (loop.last) ? '' : ' / ' }}
+                                {% if style.id == app.request.get('idStyle') %}
+                                    <span class="text-muted">{{ style.name }}</span>
+                                {% else %}
+                                 <a href="{{ path('style_home', {'idStyle': style.id, 'slug': style.name|slugify}) }}">{{ style.name }}</a>
+                                {% endif %}
+                                {{ (loop.last) ? '' : ' / ' }}
                             {% endfor %}
                         </td>
                         <td>{% include 'parts/avatar.html.twig' with { 'user': song.user } only %}</td>

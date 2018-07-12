@@ -18,13 +18,15 @@
                 {% if is_granted('ROLE_USER') %}
                     <li><a href="{{ path('song_add') }}">Add song</a></li>
                 {% endif %}
-                {% if is_granted('ROLE_ADMIN') %}
-                    <li><a href="{{ path('admin_home') }}">Administration</a></li>
-                {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if is_granted('ROLE_USER') %}
                     <div class="btn-group">
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <ul class="nav navbar-nav">
+                                <li><a href="{{ path('admin_home') }}">Administration</a></li>
+                            </ul>
+                        {% endif %}
                         <a href="{{ path('user_public_page', {'id': app.user.id, 'nickname': app.user.nickname}) }}" class="btn btn-danger navbar-btn btn-sm">
                             {{ app.user.nickname }}
                         </a>
