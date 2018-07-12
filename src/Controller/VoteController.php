@@ -6,6 +6,7 @@ use App\Entity\VoteArtist;
 use App\Entity\VoteSong;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class VoteController
@@ -19,9 +20,9 @@ class VoteController extends Controller
      */
     public function voteSong(Request $request)
     {
-        $this->denyAccessUnlessGranted(
-            'ROLE_USER', null, 'You need to be connected to access this page.'
-        );
+        if (!$this->isGranted('ROLE_USER')) {
+            return $this->json(['message' => 'Please sign up before voting'], 403);
+        }
 
         $songId = $request->get('id');
         $em = $this->getDoctrine()->getManager();

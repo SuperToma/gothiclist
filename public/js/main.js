@@ -25,8 +25,8 @@ $(".vote").click(function() {
     }
   })
   .fail(function (jqXHR) {
-    if(jqXHR.responseText.message) {
-      alert(jqXHR.responseText.message);
+    if(jqXHR.responseJSON.message) {
+      alert(jqXHR.responseJSON.message);
     } else {
       alert("Sorry, an error occurred");
     }
