@@ -11,6 +11,7 @@
                     <div class="form-group">
                         <label for="artist_group">
                             Artist / Group
+                            <span id="nb_artists_founds"></span>
                             <i style="display:none;" class="spin-artist fa fa-spinner fa-spin"></i>
                         </label>
                         <input type="text"
@@ -18,12 +19,14 @@
                                class="form-control"
                                id="artist_group"
                                placeholder="Artist / Group"
-                               autocomplete="off"/>
+                               autocomplete="off"
+                               typeahead-editable="false"/>
                         <input type="hidden" id="artist_id" name="artist_id" value="" />
                     </div>
                     <div class="form-group">
                         <label for="song">
                             Song
+                            <span id="nb_songs_found"></span>
                             <i style="display:none;" class="spin-song fa fa-spinner fa-spin"></i>
                         </label>
                         <input type="text"
@@ -31,6 +34,7 @@
                                class="form-control"
                                id="song" placeholder="Song"
                                autocomplete="off"
+                               typeahead-editable="false"
                                disabled />
                         <input type="hidden" id="release_id" name="release_id" value="" />
                     </div>
@@ -59,6 +63,7 @@
               url: '/autocomplete/artist_group/%QUERY',
               wildcard: '%QUERY',
               filter: function(response) {
+                $('#nb_artists_founds').html('('+response.total+')');
                 return response.results;
               }
             },
@@ -72,7 +77,7 @@
                 hint: false,
                 highlight: true,
                 minLength: 2,
-                delay: 400
+                delay: 400,
             }, {
                 name: 'artists',
                 source: artists.ttAdapter(),
@@ -91,6 +96,7 @@
             .bind('typeahead:select', function(ev, suggestion) {
               $('#artist_id').val(suggestion.id);
               $('#song').removeAttr('disabled');
+              $('#nb_artists_founds').html('');
             });
 
           /**********************
@@ -106,7 +112,8 @@
                 return url + $('#artist_id').val() + '/songs/' + query
               },
               filter: function(response) {
-                return response;
+                $('#nb_songs_found').html('('+response.total+')');
+                return response.results;
               }
             },
             ttl: 0,
@@ -119,13 +126,13 @@
               hint: false,
               highlight: true,
               minLength: 2,
-              delay: 400
+              delay: 400,
+              limit: Infinity
             }, {
               name: 'songs',
               source: songs.ttAdapter(),
               limit: 15,
               displayKey: function (results) {
-                console.log(results);
                 return results.track;
               },
             })

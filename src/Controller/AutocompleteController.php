@@ -18,11 +18,12 @@ class AutocompleteController extends Controller
     /**
      * @param int $artistId
      * @param string $prefixSong
+     * @param Finder $esFinder
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function songsByArtist(int $artistId, string $prefixSong, Finder $esFinder)
     {
-        $max = 15;
+        $max = 50;
 
         return $this->json($esFinder->getSongsStartingWith($artistId, $prefixSong, $max));
     }

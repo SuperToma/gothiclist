@@ -141,36 +141,43 @@ class Finder
         $params = [
             'index' => 'release',
             'from' => 0,
-            'size' => $limit,
+            'size' => $limit * 5,
             '_source' => ['title', 'tracklist.title'],
             'body' => [
                 'query' => [
-                    'term' => ['artists.artist.id' => $artistId]
+                    'bool' => [
+                        'must' => [
+                            'match' => ['tracklist.title' => $text]
+                        ],
+                        'filter' => [
+                            'term' => ['artists.artist.id' => $artistId]
+                        ]
+                    ]
+
                 ]
             ]
         ];
 
         $esResults = $this->getResults($this->client->search($params));
 
-        if($esResults['total'] == 0) {
-            return ['results' => 0];
-        }
-
+        //Remove non main_releases
         $mainReleases = $this->getMainReleasesFromArtistId($artistId);
 
-        //Remove non main_releases
+        //@TODO : keep releases non existing songs
         foreach($esResults['results'] as $i => $result) {
             if(in_array($result['title'], $mainReleases) ) {
                 if($result['id'] != array_search($result['title'], $mainReleases)) {
                     unset($esResults['results'][$i]);
+                    $esResults['total']--;
                 }
             }
         }
 
         $newResults = [];
         $titles = false;
-        foreach($esResults['results'] as $i => $result) {
-            foreach($result['tracklist'] as $j => $track) {
+        foreach($esResults['results'] as $i => $result) { // Albums
+            $foundInAlbum = false;
+            foreach($result['tracklist'] as $j => $track) { // Tracks
                 if(stripos($track['title'][0], $text) !== false) {
                     $newResults[] = [
                         'id' => $result['id'],
@@ -178,9 +185,14 @@ class Finder
                         'album' => $result['title'],
                     ];
                     $titles[] = $track['title'][0];
+                    if($foundInAlbum) {
+                        $esResults['total']++;
+                    }
+                    $foundInAlbum = true;
                 }
             }
         }
+
 
         // Add album title if duplicate titles
         if($titles !== false && count($titles) !== count(array_unique($titles))) {
@@ -197,7 +209,10 @@ class Finder
             unset($result['album']);
         }
 
-        return $newResults;
+        return [
+            'total' => $esResults['total'],
+            'results' => array_splice($newResults, 0, $limit),
+        ];
     }
 
 
