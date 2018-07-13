@@ -45,7 +45,7 @@ class SongRepository extends ServiceEntityRepository
     {
         $qbd = $this->createQueryBuilder('song');
         $qbd->addSelect('COUNT(vote.id) as nbVotes')
-            ->innerJoin('song.votes', 'vote')
+            ->leftJoin('song.votes', 'vote')
             ->groupBy('song.id')
             ->orderBy('COUNT(vote.id)', 'DESC')
             ->setMaxResults($limit);
@@ -88,7 +88,7 @@ class SongRepository extends ServiceEntityRepository
         $qbd->addSelect('COUNT(vote.id) as nbVotes')
             ->innerJoin('song.release', 'release')
             ->innerJoin('release.styles', 'style')
-            ->innerJoin('song.votes', 'vote')
+            ->leftJoin('song.votes', 'vote')
             ->where('style.id = :styleId')->setParameter('styleId', $styleId)
             ->groupBy('song.id')
             ->orderBy('COUNT(vote.id)', 'DESC')

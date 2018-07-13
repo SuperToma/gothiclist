@@ -7,9 +7,12 @@
         <div class="panel-body">
             <form action="{{ path('song_add') }}" method="post">
                 <fieldset>
-                    {# <legend>Legend</legend>#}
+                    {# <legend>Legend</legend> #}
                     <div class="form-group">
-                        <label for="artist_group">Artist / Group</label>
+                        <label for="artist_group">
+                            Artist / Group
+                            <i style="display:none;" class="spin-artist fa fa-spinner fa-spin"></i>
+                        </label>
                         <input type="text"
                                name="artist_name"
                                class="form-control"
@@ -19,7 +22,10 @@
                         <input type="hidden" id="artist_id" name="artist_id" value="" />
                     </div>
                     <div class="form-group">
-                        <label for="song">Song</label>
+                        <label for="song">
+                            Song
+                            <i style="display:none;" class="spin-song fa fa-spinner fa-spin"></i>
+                        </label>
                         <input type="text"
                                name="song_name"
                                class="form-control"
@@ -40,8 +46,6 @@
 {% block js %}
     {{ parent() }}
     <script src="{{ asset('js/typeahead.bundle.min.js') }}"></script>
-    {# <script src="{{ asset('js/bootstrap3-typeahead.min.js') }}"></script> #}
-
     <script>
         jQuery(document).ready(function() {
 
@@ -76,9 +80,13 @@
                   return results.name;
                 },
             })
-            .bind('typeahead:asyncrequest', function(ev, suggestion) {
+            .bind('typeahead:asyncrequest', function() {
               $('#artist_id, #song').val(null);
               $('#song').attr('disabled', 'disabled');
+              $('.spin-artist').show();
+            })
+            .bind('typeahead:asyncreceive', function() {
+              $('.spin-artist').hide();
             })
             .bind('typeahead:select', function(ev, suggestion) {
               $('#artist_id').val(suggestion.id);
@@ -120,6 +128,12 @@
                 console.log(results);
                 return results.track;
               },
+            })
+            .bind('typeahead:asyncrequest', function() {
+              $('.spin-song').show();
+            })
+            .bind('typeahead:asyncreceive', function() {
+              $('.spin-song').hide();
             })
             .bind('typeahead:select', function(ev, suggestion) {
               $('#release_id').val(suggestion.id);
