@@ -19,7 +19,7 @@ class ArtistController extends Controller
     public function index(int $id, string $slug, SongRepository $songRepository): Response
     {
         /** @var Artist $artist */
-        $artist = $this->getDoctrine()->getRepository(Artist::class)->find($artistId);
+        $artist = $this->getDoctrine()->getRepository(Artist::class)->find($id);
 
         if(!$artist) {
             throw $this->createNotFoundException('Sorry, this artist does not exist');
@@ -30,8 +30,9 @@ class ArtistController extends Controller
             return $this->redirectToRoute('artist_home', ['id' => $id, 'slug' => $slugify->slugify($artist->getName())]);
         }
 
-        return $this->render('pages/home.html.twig', [
-            'last_songs' => $songRepository->getLast(10, ['artistId' => $id])
+        return $this->render('pages/artist/home.html.twig', [
+            'artist' => $artist,
+            'last_songs' => $songRepository->getLast(10, ['artist' => $id])
         ]);
     }
 }
