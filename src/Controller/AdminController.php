@@ -6,14 +6,16 @@ use App\Entity\Release;
 use App\Entity\Song;
 use App\Entity\Style;
 use App\Repository\SongRepository;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AdminController extends Controller
 {
     /**
      * @param SongRepository $songRepository
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function home(SongRepository $songRepository)
     {
@@ -27,7 +29,7 @@ class AdminController extends Controller
     /**
      * @param Request $request
      * @param SongRepository $songRepository
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
     public function songValidated(Request $request, SongRepository $songRepository)
     {
@@ -45,7 +47,7 @@ class AdminController extends Controller
     /**
      * @param int $idRelease
      * @param int $idStyle
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
     public function releaseStyle(int $idRelease, int $idStyle)
     {

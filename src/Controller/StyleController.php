@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\Style;
 use App\Repository\SongRepository;
 use App\Repository\VoteSongRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Cocur\Slugify\Slugify;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 
 class StyleController extends Controller
 {
@@ -16,7 +18,7 @@ class StyleController extends Controller
      * @param string $slug
      * @param SongRepository $songRepository
      * @param VoteSongRepository $voteSongRepository
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return RedirectResponse|Response
      */
     public function home(int $idStyle, string $slug, SongRepository $songRepository, VoteSongRepository $voteSongRepository)
     {

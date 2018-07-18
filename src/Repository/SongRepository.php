@@ -16,6 +16,7 @@ class SongRepository extends ServiceEntityRepository
     /**
      * SongRepository constructor.
      * @param RegistryInterface $registry
+     * @param VoteSongRepository $voteSongRepository
      */
     public function __construct(RegistryInterface $registry, VoteSongRepository $voteSongRepository)
     {
@@ -25,13 +26,18 @@ class SongRepository extends ServiceEntityRepository
 
     /**
      * @param int $limit
-     * @return Song[]|array
+     * @param array $criteria
+     * @param bool $withCountVotes
+     * @return array
      */
-    public function getLast(int $limit = 10)
+    public function getLast(int $limit = 10, array $criteria = [], $withCountVotes = true)
     {
-        $lastSongs = $this->findBy([], ['createdAt' => 'DESC'], $limit);
-        foreach($lastSongs as &$song) {
-            $song->nbVotes = $this->voteSongRepository->count(['song' => $song]);
+        $lastSongs = $this->findBy($criteria, ['createdAt' => 'DESC'], $limit);
+
+        if($withCountVotes) {
+            foreach ($lastSongs as &$song) {
+                $song->nbVotes = $this->voteSongRepository->count(['song' => $song]);
+            }
         }
 
         return $lastSongs;

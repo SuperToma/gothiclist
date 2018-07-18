@@ -2,24 +2,25 @@
 
 namespace App\Controller;
 
+use App\Entity\Artist;
 use App\Entity\Genre;
 use App\Entity\Release;
 use App\Entity\Song;
 use App\Entity\Style;
+use App\Entity\User;
+use App\Finder\Elasticsearch\Finder;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use App\Finder\Elasticsearch\Finder;
-use App\Entity\User;
-use App\Entity\Artist;
+use Symfony\Component\HttpFoundation\Response;
 
 class SongController extends Controller
 {
     /**
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function add(Request $request, Finder $esFinder)
+    public function add(Request $request, Finder $esFinder): Response
     {
         $this->denyAccessUnlessGranted(
             'ROLE_USER', null, 'You need to be connected to access this page.'
@@ -172,13 +173,18 @@ class SongController extends Controller
         return $this->render('pages/song/add.html.twig', []);
     }
 
-    public function patch(Request $request, $id)
+    /**
+     * @param Request $request
+     * @param $id
+     * @return JsonResponse
+     */
+    public function patch(Request $request, $id): JsonResponse
     {
         $validPatchProperties = ['youtubeId', 'spotifyId'];
         $params = $request->request->all();
 
         if(empty($params)) {
-            return false;
+            $this->json(false);
         }
 
         $song = $this->getDoctrine()

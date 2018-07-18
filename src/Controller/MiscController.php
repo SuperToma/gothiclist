@@ -4,15 +4,16 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class MiscController extends Controller
 {
     /**
      * @param Request $request
      * @param \Swift_Mailer $mailer
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function contact(Request $request, \Swift_Mailer $mailer)
+    public function contact(Request $request, \Swift_Mailer $mailer): Response
     {
         if($request->getMethod() === 'POST') {
             if (filter_var($request->get('email'), FILTER_VALIDATE_EMAIL) === false) {

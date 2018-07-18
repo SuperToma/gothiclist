@@ -75,7 +75,7 @@
                                 <td>{{ vote.song.artist.name }}</td>
                                 <td>{{ vote.song.release.title }}</td>
                                 <td scope="col">
-                                    {%  include 'parts/vote.html.twig' with {
+                                    {% include 'parts/vote.html.twig' with {
                                         'id': vote.song.id,
                                         'type': 'song',
                                         'user': app.user

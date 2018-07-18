@@ -5,10 +5,16 @@ namespace App\Controller;
 use App\Entity\Style;
 use App\Finder\Elasticsearch\Finder;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AutocompleteController extends Controller
 {
-    public function artistGroup(string $prefixArtist, Finder $esFinder)
+    /**
+     * @param string $prefixArtist
+     * @param Finder $esFinder
+     * @return JsonResponse
+     */
+    public function artistGroup(string $prefixArtist, Finder $esFinder): JsonResponse
     {
         $max = 15;
 
@@ -19,16 +25,19 @@ class AutocompleteController extends Controller
      * @param int $artistId
      * @param string $prefixSong
      * @param Finder $esFinder
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
-    public function songsByArtist(int $artistId, string $prefixSong, Finder $esFinder)
+    public function songsByArtist(int $artistId, string $prefixSong, Finder $esFinder): JsonResponse
     {
         $max = 50;
 
         return $this->json($esFinder->getSongsStartingWith($artistId, $prefixSong, $max));
     }
 
-    public function styles()
+    /**
+     * @return JsonResponse
+     */
+    public function styles(): JsonResponse
     {
         $styles = $this->getDoctrine()->getRepository(Style::class)->findAll();
 

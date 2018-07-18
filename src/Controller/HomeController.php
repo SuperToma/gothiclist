@@ -3,25 +3,19 @@
 namespace App\Controller;
 
 use App\Repository\SongRepository;
-use App\Repository\VoteSongRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class HomeController extends Controller
 {
     /**
      * @param SongRepository $songRepository
-     * @param VoteSongRepository $voteSongRepository
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function index(SongRepository $songRepository, VoteSongRepository $voteSongRepository)
+    public function index(SongRepository $songRepository): Response
     {
-        $lastSongsAdded = $songRepository->getLast();
-        foreach($lastSongsAdded as &$song) {
-            $song->nbVotes = $voteSongRepository->count(['song' => $song]);
-        }
-
         return $this->render('pages/home.html.twig', [
-            'last_songs' => $lastSongsAdded,
+            'last_songs' => $songRepository->getLast(10),
             'most_rated_songs' => $songRepository->getMostRated(),
         ]);
     }

@@ -4,8 +4,9 @@ namespace App\Controller;
 
 use App\Entity\VoteArtist;
 use App\Entity\VoteSong;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class VoteController
@@ -15,7 +16,7 @@ class VoteController extends Controller
 {
     /**
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
     public function voteSong(Request $request)
     {
@@ -46,6 +47,10 @@ class VoteController extends Controller
         return $this->json(['action' => 'add', 'message' => 'Song liked']);
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function voteArtist(Request $request)
     {
         $this->denyAccessUnlessGranted(

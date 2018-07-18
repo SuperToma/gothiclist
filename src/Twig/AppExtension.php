@@ -16,8 +16,13 @@ class AppExtension extends AbstractExtension
         ];
     }
 
-    public function is_valid(User $user)
+    public function is_valid($user)
     {
+        // if not connected $user == null (ex : for check voting)
+        if(!$user instanceof User) {
+            return false;
+        }
+
         try {
             if(!empty($user->getEmail())) {
                 return true;

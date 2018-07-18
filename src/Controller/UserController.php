@@ -6,11 +6,12 @@ use App\Entity\Song;
 use App\Entity\User;
 use App\Entity\VoteSong;
 use App\Repository\UserRepository;
-use Cocur\Slugify\Slugify;
-use FOS\UserBundle\Util\Canonicalizer;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Repository\VoteSongRepository;
+use Cocur\Slugify\Slugify;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Class UserController
@@ -20,7 +21,7 @@ class UserController extends Controller
 {
     /**
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function privateAccount(Request $request, UserRepository $userRepository)
     {
@@ -90,8 +91,15 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * @param int $id
+     * @param string $nickname
+     * @param VoteSongRepository $voteSongRepository
+     * @return RedirectResponse|Response
+     */
     public function publicProfile(int $id, string $nickname, VoteSongRepository $voteSongRepository)
     {
+        /** @var User $user */
         $user = $this->getDoctrine()->getRepository(User::class)->find($id);
 
         if(!$user || !$user->isValid()) {
