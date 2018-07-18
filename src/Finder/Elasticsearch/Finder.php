@@ -106,7 +106,7 @@ class Finder
      * @param $artistId
      * @return array
      */
-    protected function getMainReleasesFromArtistId($artistId)
+    protected function getMainReleasesTitlesFromArtistId($artistId)
     {
         $params = [
             'index' => 'master',
@@ -141,61 +141,73 @@ class Finder
         $params = [
             'index' => 'release',
             'from' => 0,
-            'size' => $limit * 5,
-            '_source' => ['title', 'tracklist.title'],
+            'size' => $limit,
+            '_source' => ['title'],
             'body' => [
                 'query' => [
                     'bool' => [
                         'must' => [
-                            'match' => ['tracklist.title' => $text]
-                        ],
-                        'filter' => [
-                            'term' => ['artists.artist.id' => $artistId]
+                            [
+                                'nested' => [
+                                    "path" => "tracklist",
+                                    "inner_hits" => [
+                                        "_source" => [
+                                            "tracklist.title"
+                                        ]
+                                    ],
+                                    'query' => [
+                                        'bool' => [
+                                            'must' => [
+                                                'match' => ['tracklist.title' => $text]
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ], [
+                                'term' => ['artists.artist.id' => $artistId]
+                            ]
                         ]
                     ]
-
-                ]
+                ],
+                //'sort' => ['released' => ['order' => 'asc']]
             ]
         ];
+
+        //$this->client->search($params);
+        //dump($this->client->transport->getLastConnection()->getLastRequestInfo());
 
         $esResults = $this->getResults($this->client->search($params));
 
         //Remove non main_releases
-        $mainReleases = $this->getMainReleasesFromArtistId($artistId);
-
-        //@TODO : keep releases non existing songs
+        $mainReleases = $this->getMainReleasesTitlesFromArtistId($artistId);
+        //@TODO : keep releases's non existing songs
         foreach($esResults['results'] as $i => $result) {
-            if(in_array($result['title'], $mainReleases) ) {
-                if($result['id'] != array_search($result['title'], $mainReleases)) {
+            if (in_array($result['title'], $mainReleases)) {
+                if ($result['id'] != array_search($result['title'], $mainReleases)) {
                     unset($esResults['results'][$i]);
                     $esResults['total']--;
                 }
             }
         }
 
+        //Make results in correct form & duplicate tracks
         $newResults = [];
-        $titles = false;
-        foreach($esResults['results'] as $i => $result) { // Albums
-            $foundInAlbum = false;
-            foreach($result['tracklist'] as $j => $track) { // Tracks
-                if(stripos($track['title'][0], $text) !== false) {
-                    $newResults[] = [
-                        'id' => $result['id'],
-                        'track' => $track['title'][0],
-                        'album' => $result['title'],
-                    ];
-                    $titles[] = $track['title'][0];
-                    if($foundInAlbum) {
-                        $esResults['total']++;
-                    }
-                    $foundInAlbum = true;
-                }
+        $titles = [];
+        foreach($esResults['results'] as $result) {
+            //If many tracks returned
+            foreach($result['inner_hits']['tracklist']['hits']['hits'] as $track) {
+                $title = $track['_source']['title'][0];
+                $newResults[] = [
+                    'id' => $result['id'],
+                    'album' => $result['title'],
+                    'track' => $title,
+                ];
+                $titles[] = $title;
             }
         }
 
-
-        // Add album title if duplicate titles
-        if($titles !== false && count($titles) !== count(array_unique($titles))) {
+        // Concat with album title if duplicate titles
+        if(!empty($titles) && count($titles) !== count(array_unique($titles))) {
             $duplicateTitles = array_diff_assoc($titles, array_unique($titles));
             foreach($newResults as &$result) {
                 if(in_array($result['track'], $duplicateTitles)) {
@@ -204,7 +216,7 @@ class Finder
             }
         }
 
-        // Remove album
+        // Remove albums
         foreach($newResults as &$result) {
             unset($result['album']);
         }

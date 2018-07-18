@@ -60,15 +60,15 @@
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('results.name'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
+              ttl: 0,
+              cache: false,
               url: '/autocomplete/artist_group/%QUERY',
               wildcard: '%QUERY',
               filter: function(response) {
                 $('#nb_artists_founds').html('('+response.total+')');
                 return response.results;
               }
-            },
-            ttl: 0,
-            cache: false
+            }
           });
           artists.initialize();
 
@@ -107,6 +107,8 @@
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             limit: Number.MAX_VALUE,
             remote: {
+              ttl: 0,
+              cache: false,
               url: '/autocomplete/artist/',
               replace: function (url, query) {
                 return url + $('#artist_id').val() + '/songs/' + query
@@ -115,9 +117,7 @@
                 $('#nb_songs_found').html('('+response.total+')');
                 return response.results;
               }
-            },
-            ttl: 0,
-            cache: false
+            }
           });
           songs.initialize();
 
@@ -131,7 +131,7 @@
             }, {
               name: 'songs',
               source: songs.ttAdapter(),
-              limit: 15,
+              limit: 50,
               displayKey: function (results) {
                 return results.track;
               },
