@@ -64,7 +64,7 @@ jQuery(document).ready(function() {
 });
 
 /************************************************************
- *            YOUTUBE & POSTIFY PLAYER                      *
+ *            YOUTUBE & SPOTIFY PLAYER                      *
  ***********************************************************/
 window.onSpotifyWebPlaybackSDKReady = function () {}; // Prevent player error on loading
 
@@ -79,4 +79,19 @@ $(document).ready(function(){
         $("#modal iframe").attr("src", '');
       });
   });
+});
+
+/************************************************************
+ *                   Edit artist page                       *
+ ***********************************************************/
+$(".artist button.edit").click(function() {
+  $(".artist button.edit").hide();
+  $.ajax({
+    url: window.location.href + '.json',
+    method: "get",
+    dataType: "json"
+  })
+  .done(function (res) {
+    console.log(res);
+  })
 });

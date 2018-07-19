@@ -4,13 +4,18 @@
 {% block description %}Best songs of {{ artist.name }}{% endblock %}
 
 {% block body %}
-    <div class="jumbotron" style="margin-top:-20px;">
+    <div class="jumbotron artist">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 col-lg-12">
                     <h1>{{ artist.name }}</h1>
                 </div>
             </div>
+
+            {% if is_granted('ROLE_USER') %}
+                <button type="button" class="btn btn-primary edit">Edit description</button>
+            {% endif %}
+            <div id="description">{{ artist.description }}</div>
         </div>
     </div>
 

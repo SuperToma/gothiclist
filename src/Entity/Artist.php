@@ -202,7 +202,7 @@ class Artist
      */
     public function getDescription(): string
     {
-        return $this->description;
+        return (string)$this->description;
     }
 
     /**

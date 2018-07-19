@@ -1,6 +1,14 @@
+artist_json:
+    path: /artist/{id}-{slug}.json
+    controller: App\Controller\ArtistController::jsonFormat
+    methods: [GET]
+    requirements:
+      id: '\d+'
+
 artist_home:
     path: /artist/{id}-{slug}
     controller: App\Controller\ArtistController::index
     methods: [GET]
     requirements:
       id: '\d+'
+
