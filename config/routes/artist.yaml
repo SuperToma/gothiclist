@@ -8,7 +8,7 @@ artist_json:
 artist_home:
     path: /artist/{id}-{slug}
     controller: App\Controller\ArtistController::index
-    methods: [GET]
+    methods: [GET, POST]
     requirements:
       id: '\d+'
 

@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Artist;
+use App\Entity\ArtistVersion;
 use App\Repository\SongRepository;
 use Cocur\Slugify\Slugify;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -15,10 +17,11 @@ class ArtistController extends Controller
     /**
      * @param int $id
      * @param string $slug
+     * @param Request $request
      * @param SongRepository $songRepository
      * @return Response
      */
-    public function index(int $id, string $slug, SongRepository $songRepository): Response
+    public function index(int $id, string $slug, Request $request, SongRepository $songRepository): Response
     {
         /** @var Artist $artist */
         $artist = $this->getDoctrine()->getRepository(Artist::class)->find($id);
@@ -30,6 +33,22 @@ class ArtistController extends Controller
         $slugify = new Slugify();
         if($slug !== $slugify->slugify($artist->getName())) {
             return $this->redirectToRoute('artist_home', ['id' => $id, 'slug' => $slugify->slugify($artist->getName())]);
+        }
+
+        if($request->getMethod() === 'POST') {
+            $description = $request->get('description');
+
+            /** @var ArtistVersion $version */
+            $artistVersion = (new ArtistVersion())
+                ->setUser($artist->getUser())
+                ->setArtist($artist)
+                ->setDescription($artist->getDescription());
+
+            $artist->setDescription($description);
+
+            $this->getDoctrine()->getManager()->persist($artistVersion);
+            $this->getDoctrine()->getManager()->persist($artist);
+            $this->getDoctrine()->getManager()->flush();
         }
 
         return $this->render('pages/artist/home.html.twig', [

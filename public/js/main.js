@@ -84,14 +84,9 @@ $(document).ready(function(){
 /************************************************************
  *                   Edit artist page                       *
  ***********************************************************/
-$(".artist button.edit").click(function() {
-  $(".artist button.edit").hide();
-  $.ajax({
-    url: window.location.href + '.json',
-    method: "get",
-    dataType: "json"
-  })
-  .done(function (res) {
-    console.log(res);
-  })
+$(".artist a.edit").click(function() {
+  $('artist_description').hide();
+  $('artist_description_editor').show();
+  $('.form_artist :submit').show();
+  CKEDITOR.replace('artist_description_editor');
 });

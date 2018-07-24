@@ -13,11 +13,24 @@
             </div>
 
             {% if is_granted('ROLE_USER') %}
-                <button type="button" class="btn btn-primary edit">Edit description</button>
+                <a class="btn edit" href="#" onclick=""><i class="fa fa-pencil"></i></a>
             {% endif %}
-            <div id="description">{{ artist.description }}</div>
+
+            <div id="artist_description">{{ artist.description|raw }}</div>
+
+            {% if is_granted('ROLE_USER') %}
+                <form method="post" class="form_artist" action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}">
+                    <textarea name="description" class="form-control" style="display:none;" id="artist_description_editor" rows="13">{{ artist.description|raw }}</textarea>
+                    <button style="display:none;" type="submit" class="btn btn-primary">Save</button>
+                </form>
+            {% endif %}
         </div>
     </div>
 
     {% include 'parts/table_songs.html.twig' with {'songs': last_songs, 'title': 'Best songs' } only %}
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script src="/js/ckeditor/ckeditor.js"></script>">
 {% endblock %}
