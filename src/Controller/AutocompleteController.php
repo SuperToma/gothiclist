@@ -29,7 +29,7 @@ class AutocompleteController extends Controller
      */
     public function songsByArtist(int $artistId, string $prefixSong, Finder $esFinder): JsonResponse
     {
-        $max = 50;
+        $max = 150;
 
         return $this->json($esFinder->getSongsStartingWith($artistId, $prefixSong, $max));
     }

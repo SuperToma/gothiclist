@@ -131,7 +131,7 @@ class SongController extends Controller
 
             foreach($esRelease['tracklist'] as $track) {
                 $tracklist .= '<li>'.$track['title'][0].'</li>';
-                if(preg_match("/".$songName."( \(.*\))?/", $track['title'][0]) !== false) {
+                if(preg_match("/".preg_quote($track['title'][0])."( \(.*\))?/", $songName) !== false) {
                     $trackFound = true;
                 }
             }
@@ -139,7 +139,8 @@ class SongController extends Controller
             if(!$trackFound) {
                 $this->addFlash(
                     'danger',
-                    'Your track is not found in the album : <strong>'.$esRelease['title'].'</strong><br />
+                    'The track : <strong>'.$songName.'</strong><br />
+                    is not found in the album : <strong>'.$esRelease['title'].'</strong><br />
                     did you mean : <ul>'.$tracklist.'</ul>'
                 );
                 return $this->render('pages/song/add.html.twig', []);
