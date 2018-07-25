@@ -3,8 +3,9 @@ body {
   background-color: #1f1f1f;
 }
 
-.w-100 { width: 100px }
+.w-100 { width: 100px; }
 .w-125 { width: 125px; }
+.mb-lg { margin-bottom: 30px; }
 
 .v-a-middle {
   vertical-align: middle !important;
