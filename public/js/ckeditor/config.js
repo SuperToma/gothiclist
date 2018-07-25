@@ -57,4 +57,16 @@ CKEDITOR.editorConfig = function( config ) {
   ];
 
   config.removeButtons = 'Underline,Subscript,Superscript,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Scayt,Anchor,Image,Table,Styles,About,Source,Outdent,Indent,Blockquote';
+
+  config.language = 'en';
+
+  config.extraPlugins = 'wordcount';
+  config.wordcount = {
+    showWordCount: true,
+    showCharCount: false,
+    showParagraphs: false,
+    maxWordCount: -1,
+    maxCharCount: -1
+  };
 };
+
