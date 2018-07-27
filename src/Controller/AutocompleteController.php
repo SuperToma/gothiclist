@@ -7,6 +7,10 @@ use App\Finder\Elasticsearch\Finder;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+/**
+ * Class AutocompleteController
+ * @package App\Controller
+ */
 class AutocompleteController extends Controller
 {
     /**

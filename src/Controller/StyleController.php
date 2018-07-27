@@ -10,7 +10,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-
+/**
+ * Class StyleController
+ * @package App\Controller
+ */
 class StyleController extends Controller
 {
     /**

@@ -7,6 +7,10 @@ use Doctrine\ORM\EntityNotFoundException;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
+/**
+ * Class AppExtension
+ * @package App\Twig
+ */
 class AppExtension extends AbstractExtension
 {
     public function getFunctions()

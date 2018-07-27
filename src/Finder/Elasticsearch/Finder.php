@@ -4,6 +4,10 @@ namespace App\Finder\Elasticsearch;
 
 use Elasticsearch\ClientBuilder;
 
+/**
+ * Class Finder
+ * @package App\Finder\Elasticsearch
+ */
 class Finder
 {
     /* @var $client ClientBuilder */

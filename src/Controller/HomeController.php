@@ -6,6 +6,10 @@ use App\Repository\SongRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class HomeController
+ * @package App\Controller
+ */
 class HomeController extends Controller
 {
     /**

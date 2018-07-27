@@ -14,6 +14,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class SongController
+ * @package App\Controller
+ */
 class SongController extends Controller
 {
     /**
