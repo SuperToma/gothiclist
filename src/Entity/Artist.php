@@ -72,6 +72,12 @@ class Artist
     private $descriptionDiscogs;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $photoUrl;
+
+    /**
      * @var \DateTime
      * @ORM\Column(type="datetime", nullable=false)
      */
@@ -231,6 +237,25 @@ class Artist
     public function setDescriptionDiscogs(?string $descriptionDiscogs): Artist
     {
         $this->descriptionDiscogs = $descriptionDiscogs;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhotoUrl(): string
+    {
+        return $this->photoUrl;
+    }
+
+    /**
+     * @param null|string $photoUrl
+     * @return Artist
+     */
+    public function setPhotoUrl(?string $photoUrl): Artist
+    {
+        $this->photoUrl = $photoUrl;
 
         return $this;
     }

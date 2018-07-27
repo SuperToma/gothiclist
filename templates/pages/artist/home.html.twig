@@ -3,6 +3,58 @@
 {% block title %}{{ artist.name }} songs{% endblock %}
 {% block description %}The best songs of {{ artist.name }}{% endblock %}
 
+{% block scripts_head %}
+    {{ parent() }}
+    <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "MusicGroup",
+      "name": "{{ artist.name }}",
+      {{ (artist.photoUrl) ? '"image": ["{{ photo.url }}"],' : '' }}
+      "interactionStatistic": {
+        "@type": "InteractionCounter",
+        "interactionType": "http://schema.org/CommentAction",
+        "userInteractionCount": "0"
+      },
+      "track": [{
+        "@type": "MusicRecording",
+        "audio": "foo-fighters-rope-play.html",
+        "duration": "PT4M5S",
+        "inAlbum": "foo-fighters-wasting-light.html",
+        "interactionStatistic": {
+          "@type": "InteractionCounter",
+          "interactionType": "http://schema.org/ListenAction",
+          "userInteractionCount": "14300"
+        },
+        "name": "Rope",
+        "offers": "foo-fighters-rope-buy.html",
+        "url": "foo-fighters-rope.html"
+      }, {
+        "@type": "MusicRecording",
+        "audio": "foo-fighters-everlong-play.html",
+        "duration": "PT6M33S",
+        "inAlbum": "foo-fighters-color-and-shape.html",
+        "name": "Everlong",
+        "interactionStatistic": {
+          "@type": "InteractionCounter",
+          "interactionType": "http://schema.org/ListenAction",
+          "userInteractionCount": "11700"
+        },
+        "offers": "foo-fighters-everlong-buy.html",
+        "url": "foo-fighters-everlong.html"
+      }],
+      "video": {
+        "@type": "VideoObject",
+        "description": "Catch this exclusive interview with Dave Grohl and the Foo Fighters about their new album, Rope.",
+        "duration": "T1M33S",
+        "name": "Interview with the Foo Fighters",
+        "thumbnail": "foo-fighters-interview-thumb.jpg",
+        "embedUrl": "https://www.youtube.com/embed/4ZQ6UxEzpB8"
+      }
+    }
+    </script>
+{% endblock %}
+
 {% block body %}
     <div class="artist mb-lg">
         <div class="container">
