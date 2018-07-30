@@ -85,8 +85,7 @@ $(document).ready(function(){
  *                   Edit artist page                       *
  ***********************************************************/
 $(".artist a.edit").click(function() {
-  $('artist_description').hide();
-  $('artist_description_editor').show();
-  $('.form_artist :submit').show();
-  CKEDITOR.replace('artist_description_editor');
+  $('#artist_description').addClass('hidden');
+  $('#artist_description_form').removeClass('hidden');
+  CKEDITOR.replace('artist_description_text');
 });

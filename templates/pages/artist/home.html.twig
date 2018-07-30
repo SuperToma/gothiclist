@@ -11,46 +11,28 @@
       "@type": "MusicGroup",
       "name": "{{ artist.name }}",
       {{ (artist.photoUrl) ? '"image": ["{{ photo.url }}"],' : '' }}
-      "interactionStatistic": {
+      {# "interactionStatistic": {
         "@type": "InteractionCounter",
         "interactionType": "http://schema.org/CommentAction",
         "userInteractionCount": "0"
-      },
-      "track": [{
-        "@type": "MusicRecording",
-        "audio": "foo-fighters-rope-play.html",
-        "duration": "PT4M5S",
-        "inAlbum": "foo-fighters-wasting-light.html",
-        "interactionStatistic": {
-          "@type": "InteractionCounter",
-          "interactionType": "http://schema.org/ListenAction",
-          "userInteractionCount": "14300"
-        },
-        "name": "Rope",
-        "offers": "foo-fighters-rope-buy.html",
-        "url": "foo-fighters-rope.html"
-      }, {
-        "@type": "MusicRecording",
-        "audio": "foo-fighters-everlong-play.html",
-        "duration": "PT6M33S",
-        "inAlbum": "foo-fighters-color-and-shape.html",
-        "name": "Everlong",
-        "interactionStatistic": {
-          "@type": "InteractionCounter",
-          "interactionType": "http://schema.org/ListenAction",
-          "userInteractionCount": "11700"
-        },
-        "offers": "foo-fighters-everlong-buy.html",
-        "url": "foo-fighters-everlong.html"
-      }],
-      "video": {
-        "@type": "VideoObject",
-        "description": "Catch this exclusive interview with Dave Grohl and the Foo Fighters about their new album, Rope.",
-        "duration": "T1M33S",
-        "name": "Interview with the Foo Fighters",
-        "thumbnail": "foo-fighters-interview-thumb.jpg",
-        "embedUrl": "https://www.youtube.com/embed/4ZQ6UxEzpB8"
-      }
+      }, #}
+      "track": [
+      {% for song in last_songs if song.spotifyId %}
+          {
+            "@type": "MusicRecording",
+            "name": "{{ song.title }}",
+            "audio": "https://embed.spotify.com/?uri=spotify:track:{{ song.spotifyId }}",
+            {# "duration": "PT4M5S",
+            "inAlbum": "foo-fighters-wasting-light.html",
+            "interactionStatistic": {
+              "@type": "InteractionCounter",
+              "interactionType": "http://schema.org/ListenAction",
+              "userInteractionCount": "14300"
+            },
+            "url": "foo-fighters-rope.html" #}
+          }
+      {% endfor %}
+      ]
     }
     </script>
 {% endblock %}
@@ -68,12 +50,25 @@
                 <a class="btn edit" href="#" onclick=""><i class="fa fa-pencil"></i></a>
             {% endif %}
 
-            <div id="artist_description">{{ artist.description|raw }}</div>
+            <div id="artist_description">
+                <div class="col-lg-6">
+                    {{ artist.description|raw }}
+                </div>
+                <div class="col-lg-2">
+                    {% if artist.photoUrl %}
+                        <img src="{{ artist.photoUrl }}" class="img-artist" alt="{{ artist.name }}" />
+                    {% endif %}
+                </div>
+            </div>
 
             {% if is_granted('ROLE_USER') %}
-                <form method="post" class="form_artist" action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}">
-                    <textarea name="description" class="form-control" style="display:none;" id="artist_description_editor" rows="13">{{ artist.description|raw }}</textarea>
-                    <button style="display:none;" type="submit" class="btn btn-primary">Save</button>
+                <form method="post"
+                      action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}"
+                      id="artist_description_form"
+                      class="form_artist hidden">
+                    <input type="text" class="form-control m-b" placeholder="Photo URL" value="{{ artist.photoUrl }}">
+                    <textarea name="description" id="artist_description_text" class="form-control" rows="13">{{ artist.description|raw }}</textarea>
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </form>
             {% endif %}
         </div>

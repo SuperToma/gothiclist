@@ -246,7 +246,7 @@ class Artist
      */
     public function getPhotoUrl(): string
     {
-        return $this->photoUrl;
+        return (string)$this->photoUrl;
     }
 
     /**
