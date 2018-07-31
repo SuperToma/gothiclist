@@ -26,6 +26,11 @@ body {
 .btn-success, .btn-danger {
   opacity: 0.8;
 }
+
+.country_flag {
+  width: 20px;
+  vertical-align: text-top;
+}
 /*************** Footer ***************/
 html,
 body {

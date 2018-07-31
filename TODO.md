@@ -1,9 +1,6 @@
   - song page
-  - artist page
   - SEO : jsonLD
   
-  - Add country on artists
-
   - style listing page
   - Style listPage
   - Check video ID is correct on saved

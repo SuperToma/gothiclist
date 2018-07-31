@@ -4,6 +4,7 @@ twig:
     strict_variables: '%kernel.debug%'
     globals:
         countries:
+            Europe: ''
             Belgium: 'be'
             Germany: 'de'
             Russia: 'ru'

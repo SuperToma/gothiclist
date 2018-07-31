@@ -1,3 +1,4 @@
+
 <div class="panel panel-default">
     <div class="panel-heading">{{ title }}</div>
     <div class="panel-body">
@@ -23,7 +24,13 @@
                         {% if app.request.get('_route') != 'artist_home' %}
                         <td><a href="{{ path('artist_home', {'id': song.artist.id, 'slug': song.artist.name|slugify}) }}">{{ song.artist.name }}</a></td>
                         {% endif %}
-                        <td>{{ song.release.title }}</td>
+                        <td>
+                            <img
+                                src="{{ asset('img/flags/4x3/' ~ countries[song.release.country] ~ '.svg') }}"
+                                class="country_flag"
+                                alt="{{ song.release.country }}" />
+                            {{ song.release.title }}
+                        </td>
                         <td>
                             {% for style in song.release.styles %}
                                 {% if style.id == app.request.get('idStyle') %}
