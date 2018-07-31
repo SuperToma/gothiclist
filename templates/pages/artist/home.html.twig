@@ -66,7 +66,7 @@
                       action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}"
                       id="artist_description_form"
                       class="form_artist hidden">
-                    <input type="text" class="form-control m-b" placeholder="Photo URL" value="{{ artist.photoUrl }}">
+                    <input type="text" name="photo_url" class="form-control m-b" placeholder="Photo URL" value="{{ artist.photoUrl }}">
                     <textarea name="description" id="artist_description_text" class="form-control" rows="13">{{ artist.description|raw }}</textarea>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>

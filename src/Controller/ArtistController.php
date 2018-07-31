@@ -41,14 +41,17 @@ class ArtistController extends Controller
 
         if($request->getMethod() === 'POST') {
             $description = $request->get('description');
+            $photoUrl = $request->get('photo_url');
 
             /** @var ArtistVersion $version */
             $artistVersion = (new ArtistVersion())
                 ->setUser($artist->getUser())
                 ->setArtist($artist)
-                ->setDescription($artist->getDescription());
+                ->setDescription($artist->getDescription())
+                ->setPhotoUrl($artist->getPhotoUrl());
 
             $artist->setDescription($description);
+            $artist->setPhotoUrl($photoUrl);
 
             $this->getDoctrine()->getManager()->persist($artistVersion);
             $this->getDoctrine()->getManager()->persist($artist);

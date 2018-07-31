@@ -48,6 +48,12 @@ class ArtistVersion
     private $description;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $photoUrl;
+
+    /**
      * @var \DateTime
      * @ORM\Column(type="datetime", nullable=false)
      */
@@ -114,6 +120,25 @@ class ArtistVersion
     public function setDescription(string $description): ArtistVersion
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhotoUrl(): string
+    {
+        return (string)$this->photoUrl;
+    }
+
+    /**
+     * @param string $photoUrl
+     * @return ArtistVersion
+     */
+    public function setPhotoUrl(string $photoUrl): ArtistVersion
+    {
+        $this->photoUrl = $photoUrl;
 
         return $this;
     }
