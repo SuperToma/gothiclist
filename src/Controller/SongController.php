@@ -11,6 +11,7 @@ use App\Entity\User;
 use App\Finder\Elasticsearch\Finder;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -184,7 +185,7 @@ class SongController extends Controller
      * @param $id
      * @return JsonResponse
      */
-    public function patch(Request $request, $id): JsonResponse
+    public function patch(Request $request, int $id): JsonResponse
     {
         $validPatchProperties = ['youtubeId', 'spotifyId'];
         $params = $request->request->all();
