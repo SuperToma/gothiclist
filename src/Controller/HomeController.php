@@ -19,7 +19,7 @@ class HomeController extends Controller
     public function index(SongRepository $songRepository): Response
     {
         return $this->render('pages/home.html.twig', [
-            'last_songs' => $songRepository->getLast(10),
+            'last_songs' => $songRepository->getLast(10, ['validated' => true]),
             'most_rated_songs' => $songRepository->getMostRated(),
         ]);
     }

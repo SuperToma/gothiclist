@@ -61,7 +61,7 @@ class ArtistController extends Controller
 
         return $this->render('pages/artist/home.html.twig', [
             'artist' => $artist,
-            'last_songs' => $songRepository->getLast(10, ['artist' => $id])
+            'last_songs' => $songRepository->getLast(10, ['artist' => $id, 'validated' => true])
         ]);
     }
 
