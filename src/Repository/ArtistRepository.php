@@ -38,11 +38,7 @@ class ArtistRepository extends ServiceEntityRepository
     protected function cleanArtistsNames(array $artists)
     {
         foreach($artists as &$artist) {
-            //echo '<pre>';
-            //var_dump(preg_match("/".preg_quote($artist->getName())."\( (.*)\)?/"), $artist->getName());
-            //exit();
-
-                $artist->setName(preg_replace("/^(.*)( \(.*\))?/", '${1}', $artist->getName()));
+            $artist->setName(preg_replace("/^(.*)( \(.*\))$/", '${1}', $artist->getName()));
         }
 
         return $artists;
