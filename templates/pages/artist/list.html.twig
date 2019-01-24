@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+
+{% block title %}All artists{% endblock %}
+{% block description %}List of all artists on GothicList{% endblock %}
+
+{% block body %}
+<div class="panel panel-default">
+    <div class="panel-heading">All artists</div>
+    <div class="panel-body">
+        <div class="panel-group">
+            <table class="table table-dark table-striped table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Styles</th>
+                    <th scope="col">Website</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for artist in artists %}
+                    <tr>
+                        <td>{{ artist.name }}</td>
+                        <td> - </td>
+                        <td> - </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

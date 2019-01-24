@@ -1,3 +1,7 @@
+style_list:
+    path: /styles
+    controller: App\Controller\StyleController::list
+    methods: [GET]
 style_home:
     path: /style/{idStyle}-{slug}
     controller: App\Controller\StyleController::home

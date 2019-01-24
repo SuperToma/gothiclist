@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Artist;
 use App\Entity\ArtistVersion;
+use App\Repository\ArtistRepository;
 use App\Repository\SongRepository;
 use Cocur\Slugify\Slugify;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -88,6 +89,17 @@ class ArtistController extends Controller
             'slug' => $slug,
             'name' => $artist->getName(),
             'description' => $artist->getDescription()
+        ]);
+    }
+
+    /**
+     * @param ArtistRepository $artistRepository
+     * @return Response
+     */
+    public function list(ArtistRepository $artistRepository): Response
+    {
+        return $this->render('pages/artist/list.html.twig', [
+            'artists' => $artistRepository->getAll(),
         ]);
     }
 }
