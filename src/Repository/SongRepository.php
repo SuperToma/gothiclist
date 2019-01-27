@@ -34,6 +34,9 @@ class SongRepository extends ServiceEntityRepository
     public function getLast(int $limit = 10, array $criteria = [], $withCountVotes = true)
     {
         $lastSongs = $this->findBy($criteria, ['createdAt' => 'DESC'], $limit);
+        foreach ($lastSongs as &$song) {
+            $song->getArtist()->setName(ArtistRepository::cleanArtistName($song->getArtist()->getName()));
+        }
 
         if($withCountVotes) {
             foreach ($lastSongs as &$song) {
@@ -60,6 +63,7 @@ class SongRepository extends ServiceEntityRepository
         $results = $qbd->getQuery()->getResult();
 
         foreach($results as &$result) {
+            $result[0]->getArtist()->setName(ArtistRepository::cleanArtistName($result[0]->getArtist()->getName()));
             $result[0]->nbVotes = $result['nbVotes'];
             $result = $result[0];
         }

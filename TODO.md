@@ -3,6 +3,7 @@
   
   - style listing page
   - Style listPage
+  - Move ArtistRepository::cleanArtistName to a helper
   - Check video ID is correct on saved
   - Check inscriptiton vkontakte (2 times registration)
   - Button "More"

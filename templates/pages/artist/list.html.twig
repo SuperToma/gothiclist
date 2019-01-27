@@ -19,8 +19,19 @@
                 <tbody>
                 {% for artist in artists %}
                     <tr>
-                        <td>{{ artist.name }}</td>
-                        <td> - </td>
+                        <td>
+                            <a href="{{ path('artist_home', {'id': artist.id, 'slug': artist.name|slugify}) }}">
+                                {{ artist.name }}
+                            </a>
+                        </td>
+                        <td>
+                            {% for style in artist.styles %}
+                                <a href="{{ path('style_home', {'idStyle': style.id, 'slug': style.name|slugify}) }}">
+                                    {{ style.name }}
+                                </a>
+                                {{ (loop.last) ? '' : ' / ' }}
+                            {% endfor %}
+                        </td>
                         <td> - </td>
                     </tr>
                 {% endfor %}

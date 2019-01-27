@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Artist;
+use App\Entity\Song;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -24,49 +25,71 @@ class ArtistRepository extends ServiceEntityRepository
     /**
      * @return array
      */
-    public function getAll()
+    public function getAllWithInfos()
     {
-        $artists = $this->findBy([], ['name' => 'ASC']);
+        $artists = $this
+            ->createQueryBuilder('artist')
+            ->select(['artist.id', 'artist.name'])
+            ->orderBy('artist.name', 'ASC')
+            ->getQuery()
+            ->getArrayResult();
 
-        $sql = "
-        SELECT song.artist_id, style.name, COUNT(style.id) AS nbInStyle
-        FROM song
-        INNER JOIN `release` ON song.release_id = release.id
-        INNER JOIN release_style ON `release`.id = release_style.release_id
-        INNER JOIN style ON release_style.style_id = style.id
-        WHERE song.validated = 1
-        GROUP BY style.id
-        ORDER BY nbInStyle DESC;
-        ";
-/*
-        $qbd = $this->createQueryBuilder('song');
-        $qbd->addSelect('song.artist')
-            //->addSelect('style.name')
-            //->addSelect('COUNT(style.id) as nbInStyle')
-            ->from('App\Entity\Song', 'song')
-            ->innerJoin('song.release', 'release');
-           // ->innerJoin('release.id', 'release_style')
-            //->innerJoin('release_style.style_id', 'style')
-            //->where('song.validated = :songId')->setParameter('songId', 1)
-            //->groupBy('song.id')
-            //->orderBy('COUNT(style.id)', 'DESC');
+        $artists = self::cleanArtistsNames($artists);
 
-        $results = $qbd->getQuery()->getResult();
-        echo '<pre>'; print_r($results); exit();
-        */
-        return $this->cleanArtistsNames($artists);
+        foreach($artists as &$artist) {
+            $artist['styles'] = $this->getArtistStylesById($artist['id']);
+        }
+
+        return $artists;
+    }
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    protected function getArtistStylesById(int $id)
+    {
+        $songEm = $this->getEntityManager()->getRepository(Song::class);
+
+        $qbd = $songEm->createQueryBuilder('song');
+        $qbd->select(['style.id', 'style.name', 'COUNT(style.id) as nbInStyle'])
+            ->innerJoin('song.release', 'release')
+            //->innerJoin('release', 'release_style')
+            ->innerJoin('release.styles', 'style')
+            ->where('song.validated = :songId')
+            ->andWhere('song.artist = :artistId')
+            ->setParameters(['songId' => 1, 'artistId' => $id])
+            ->groupBy('style.id')
+            ->orderBy('COUNT(style.id)', 'DESC');
+
+        return $qbd->getQuery()->getResult();
     }
 
     /**
      * @param array $artists
      * @return array
      */
-    protected function cleanArtistsNames(array $artists)
+    public static function cleanArtistsNames(array $artists)
     {
         foreach($artists as &$artist) {
-            $artist->setName(preg_replace("/^(.*)( \(.*\))$/", '${1}', $artist->getName()));
+            if(is_object($artist)) {
+                $artist->setName(self::cleanArtistName($artist->getName()));
+            }
+
+            if(is_array($artist)) {
+                $artist['name'] = self::cleanArtistName($artist['name']);
+            }
         }
 
         return $artists;
+    }
+
+    /**
+     * @param string $artistName
+     * @return string|string[]|null
+     */
+    public static function cleanArtistName(string $artistName)
+    {
+        return preg_replace("/^(.*)( \(.*\))$/", '${1}', $artistName);
     }
 }

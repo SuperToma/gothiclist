@@ -35,6 +35,7 @@ class ArtistController extends Controller
             throw $this->createNotFoundException('Sorry, this artist does not exist');
         }
 
+        $artist->setName(ArtistRepository::cleanArtistName($artist->getName()));
         $slugify = new Slugify();
         if($slug !== $slugify->slugify($artist->getName())) {
             return $this->redirectToRoute('artist_home', ['id' => $id, 'slug' => $slugify->slugify($artist->getName())]);
@@ -98,8 +99,9 @@ class ArtistController extends Controller
      */
     public function list(ArtistRepository $artistRepository): Response
     {
+        //echo '<pre>'; print_r($artistRepository->getAllWithInfos()); exit();
         return $this->render('pages/artist/list.html.twig', [
-            'artists' => $artistRepository->getAll(),
+            'artists' => $artistRepository->getAllWithInfos(),
         ]);
     }
 }
