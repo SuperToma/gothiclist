@@ -136,8 +136,12 @@ class SongController extends Controller
 
             foreach($esRelease['tracklist'] as $track) {
                 $tracklist .= '<li>'.$track['title'][0].'</li>';
-                if(preg_match("/".preg_quote($track['title'][0])."( \(.*\))?/", $songName) === 1) {
+                if(preg_match("/^".preg_quote($track['title'][0])."( \(.*\))$/", $songName) === 1) {
                     $songName = $track['title'][0];
+                    $trackFound = true;
+                    break;
+                }
+                if($track['title'][0] == $songName) {
                     $trackFound = true;
                     break;
                 }

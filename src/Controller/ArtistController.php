@@ -99,7 +99,6 @@ class ArtistController extends Controller
      */
     public function list(ArtistRepository $artistRepository): Response
     {
-        //echo '<pre>'; print_r($artistRepository->getAllWithInfos()); exit();
         return $this->render('pages/artist/list.html.twig', [
             'artists' => $artistRepository->getAllWithInfos(),
         ]);

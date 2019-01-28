@@ -16,3 +16,5 @@
   - search youtube video auto
   - log change nickname
   - Page 500/404
+
+  - update directory + vnv nation

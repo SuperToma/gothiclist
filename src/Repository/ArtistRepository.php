@@ -8,13 +8,13 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * Class SongRepository
+ * Class StyleRepository
  * @package App\Repository
  */
 class ArtistRepository extends ServiceEntityRepository
 {
     /**
-     * SongRepository constructor.
+     * StyleRepository constructor.
      * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
@@ -54,7 +54,6 @@ class ArtistRepository extends ServiceEntityRepository
         $qbd = $songEm->createQueryBuilder('song');
         $qbd->select(['style.id', 'style.name', 'COUNT(style.id) as nbInStyle'])
             ->innerJoin('song.release', 'release')
-            //->innerJoin('release', 'release_style')
             ->innerJoin('release.styles', 'style')
             ->where('song.validated = :songId')
             ->andWhere('song.artist = :artistId')

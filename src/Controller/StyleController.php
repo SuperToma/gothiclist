@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Style;
 use App\Repository\SongRepository;
+use App\Repository\StyleRepository;
 use App\Repository\VoteSongRepository;
 use Cocur\Slugify\Slugify;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -48,6 +49,17 @@ class StyleController extends Controller
             'style' => $style,
             'last_songs' => $lastSongsAdded,
             'most_rated_songs' => $songRepository->getMostRatedByStyle($idStyle, 20),
+        ]);
+    }
+
+    /**
+     * @param StyleRepository $artistRepository
+     * @return Response
+     */
+    public function list(StyleRepository $styleRepository): Response
+    {
+        return $this->render('pages/artist/list.html.twig', [
+            'artists' => $styleRepository->getAllWithInfos(),
         ]);
     }
 
