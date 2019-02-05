@@ -432,4 +432,11 @@ class User extends BaseUser
         return empty($emailUser->getValue($this)) ? false : true;
     }
 
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->getProviderNicknameCanonical();
+    }
 }

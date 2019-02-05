@@ -1,0 +1,39 @@
+{% extends "base.html.twig" %}
+
+{% block title %}All music styles on gothiclist{% endblock %}
+{% block description %}
+    List of all gothic styles listed on gothiclist.com.
+    Currently {styles.length} are present but feel free to add more by creating an account.
+{% endblock %}
+
+{% block body %}
+<div class="panel panel-default">
+    <div class="panel-heading">All artists</div>
+    <div class="panel-body">
+        <div class="panel-group">
+            <table class="table table-dark table-striped table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Styles</th>
+                    <th scope="col">Number of songs</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for style in styles %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('style_home', {'idStyle': style.id, 'slug': style.name|slugify}) }}">
+                                {{ style.name }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ style.nbSongs }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

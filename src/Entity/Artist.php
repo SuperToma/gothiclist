@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -296,5 +297,15 @@ class Artist
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        $slugify = new Slugify();
+
+        return $slugify->slugify($this->getName());
     }
 }

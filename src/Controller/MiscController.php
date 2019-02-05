@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Artist;
+use App\Entity\Style;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -59,6 +62,49 @@ class MiscController extends Controller
         }
 
         return $this->render('pages/misc/contact.html.twig', []);
+    }
+
+    public function sitemap(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $urls = array();
+        $hostname = $request->getSchemeAndHttpHost();
+
+        $artists = $em->getRepository(Artist::class)->findAll();
+        /** @var Artist $artist */
+        foreach ($artists as $artist) {
+            $urls[] = [
+                'loc' => $this->router->generate('artist_home', [
+                    'id' => $artist->getId(),
+                    'slug' => $artist->getSlug()
+                ], true)
+            ];
+        }
+
+        $styles = $em->getRepository(Style::class)->findAll();
+        /** @var Style $style */
+        foreach ($styles as $style) {
+            $urls[] = [
+                'loc' => $this->router->generate('style_home', [
+                    'id' => $style->getId(),
+                    'slug' => $style->getSlug()
+                ], true)
+            ];
+        }
+
+        $users = $em->getRepository(User::class)->findAll();
+        /** @var User $user */
+        foreach ($users as $user) {
+            $urls[] = [
+                'loc' => $this->router->generate('user_public_page', [
+                    'id' => $user->getId(),
+                    'slug' => $user->getSlug()
+                ], true)
+            ];
+        }
+
+        return $this->router->generate('user_public_page', ['id' => $id, 'nickname' => $user->getNicknameCanonical()]);
+
 
     }
 

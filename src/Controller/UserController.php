@@ -106,11 +106,8 @@ class UserController extends Controller
             throw $this->createNotFoundException('Sorry, this user does not exist');
         }
 
-        $slugify = new Slugify();
-        $nicknameUrlSlug = $slugify->slugify($nickname);
-
-        if($user->getNicknameCanonical() !== $nicknameUrlSlug) {
-            return $this->redirectToRoute('user_public_page', ['id' => $id, 'nickname' => $nicknameUrlSlug]);
+        if($user->getNicknameCanonical() !== $nickname) {
+            return $this->redirectToRoute('user_public_page', ['id' => $id, 'nickname' => $user->getNicknameCanonical()]);
         }
 
         $lastSongsAdded = $this->getDoctrine()

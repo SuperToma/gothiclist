@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Release;
 use App\Entity\Style;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -26,19 +27,15 @@ class StyleRepository extends ServiceEntityRepository
      */
     public function getAllWithInfos()
     {
-        $artists = $this
-            ->createQueryBuilder('style')
-            ->select(['COUNT(release.id)', 'style.name'])
+        $releaseEm = $this->getEntityManager()->getRepository(Release::class);
+
+        return $releaseEm
+            ->createQueryBuilder('release')
+            ->select(['style.id', 'style.name', 'COUNT(release.id) AS nbSongs'])
             ->innerJoin('release.styles', 'style')
-            ->groupBy('release.style')
-            ->orderBy('style.name', 'ASC')
+            ->groupBy('style.name')
+            ->orderBy('COUNT(release.id)', 'DESC')
             ->getQuery()
             ->getArrayResult();
-
-        foreach($artists as &$artist) {
-            $artist['styles'] = $this->getArtistStylesById($artist['id']);
-        }
-
-        return $artists;
     }
 }

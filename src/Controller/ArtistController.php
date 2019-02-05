@@ -6,7 +6,6 @@ use App\Entity\Artist;
 use App\Entity\ArtistVersion;
 use App\Repository\ArtistRepository;
 use App\Repository\SongRepository;
-use Cocur\Slugify\Slugify;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,9 +35,8 @@ class ArtistController extends Controller
         }
 
         $artist->setName(ArtistRepository::cleanArtistName($artist->getName()));
-        $slugify = new Slugify();
-        if($slug !== $slugify->slugify($artist->getName())) {
-            return $this->redirectToRoute('artist_home', ['id' => $id, 'slug' => $slugify->slugify($artist->getName())]);
+        if($slug !== $artist->getSlug()) {
+            return $this->redirectToRoute('artist_home', ['id' => $id, 'slug' => $artist->getSlug()]);
         }
 
         if($request->getMethod() === 'POST') {
@@ -80,9 +78,8 @@ class ArtistController extends Controller
             throw $this->createNotFoundException('Sorry, this artist does not exist');
         }
 
-        $slugify = new Slugify();
-        if($slug !== $slugify->slugify($artist->getName())) {
-            return $this->redirectToRoute('artist_json', ['id' => $id, 'slug' => $slugify->slugify($artist->getName())]);
+        if($slug !== $artist->getSlug()) {
+            return $this->redirectToRoute('artist_json', ['id' => $id, 'slug' => $artist->getSlug()]);
         }
 
         return $this->json([

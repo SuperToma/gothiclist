@@ -2,3 +2,8 @@ misc_contact:
     path: /contact
     controller: App\Controller\MiscController::contact
     methods: [GET, POST]
+
+sitemap:
+    path: sitemap.xml
+    controller: App\Controller\MiscController::sitemap
+    methods: [GET]

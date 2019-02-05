@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -52,4 +53,13 @@ class Style
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        $slugify = new Slugify();
+
+        return $slugify->slugify($this->getName());
+    }
 }
