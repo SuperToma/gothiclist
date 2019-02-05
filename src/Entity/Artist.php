@@ -305,7 +305,8 @@ class Artist
     public function getSlug()
     {
         $slugify = new Slugify();
+        $artistName = preg_replace("/^(.*)( \(.*\))$/", '${1}', $this->getName());
 
-        return $slugify->slugify($this->getName());
+        return $slugify->slugify($artistName);
     }
 }

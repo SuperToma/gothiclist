@@ -8,6 +8,7 @@ use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class MiscController
@@ -74,10 +75,10 @@ class MiscController extends Controller
         /** @var Artist $artist */
         foreach ($artists as $artist) {
             $urls[] = [
-                'loc' => $this->router->generate('artist_home', [
+                'loc' => $this->generateUrl('artist_home', [
                     'id' => $artist->getId(),
                     'slug' => $artist->getSlug()
-                ], true)
+                ], UrlGeneratorInterface::ABSOLUTE_URL)
             ];
         }
 
@@ -85,10 +86,10 @@ class MiscController extends Controller
         /** @var Style $style */
         foreach ($styles as $style) {
             $urls[] = [
-                'loc' => $this->router->generate('style_home', [
-                    'id' => $style->getId(),
+                'loc' => $this->generateUrl('style_home', [
+                    'idStyle' => $style->getId(),
                     'slug' => $style->getSlug()
-                ], true)
+                ], UrlGeneratorInterface::ABSOLUTE_URL)
             ];
         }
 
@@ -96,16 +97,14 @@ class MiscController extends Controller
         /** @var User $user */
         foreach ($users as $user) {
             $urls[] = [
-                'loc' => $this->router->generate('user_public_page', [
+                'loc' => $this->generateUrl('user_public_page', [
                     'id' => $user->getId(),
-                    'slug' => $user->getSlug()
-                ], true)
+                    'nickname' => $user->getSlug()
+                ], UrlGeneratorInterface::ABSOLUTE_URL)
             ];
         }
 
-        return $this->router->generate('user_public_page', ['id' => $id, 'nickname' => $user->getNicknameCanonical()]);
-
-
+        return $this->render('pages/misc/sitemap.xml.twig', ['urls' => $urls]);
     }
 
 }
