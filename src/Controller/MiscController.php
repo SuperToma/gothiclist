@@ -68,8 +68,12 @@ class MiscController extends Controller
     public function sitemap(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $urls = array();
         $hostname = $request->getSchemeAndHttpHost();
+
+        $urls = [];
+
+        $urls[] = ['loc' => $hostname.'/'];
+        $urls[] = ['loc' => $this->generateUrl('misc_contact', [], UrlGeneratorInterface::ABSOLUTE_URL)];
 
         $artists = $em->getRepository(Artist::class)->findAll();
         /** @var Artist $artist */
