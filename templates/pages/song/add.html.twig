@@ -59,6 +59,7 @@
           var artists = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('results.name'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
+            limit: Number.MAX_VALUE,
             remote: {
               ttl: 0,
               cache: false,
@@ -78,9 +79,11 @@
                 highlight: true,
                 minLength: 2,
                 delay: 400,
+                limit: Infinity
             }, {
                 name: 'artists',
                 source: artists.ttAdapter(),
+                limit: 150,
                 displayKey: function (results) {
                   return results.name;
                 },

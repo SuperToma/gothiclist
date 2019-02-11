@@ -94,6 +94,8 @@ class Finder
         $params = [
             'index' => 'artist',
             '_source' => 'name',
+            'from' => 0,
+            'size' => $limit,
             'body' => [
                 'query' => [
                     'match' => [
