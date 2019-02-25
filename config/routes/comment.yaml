@@ -1,0 +1,6 @@
+
+comment_add:
+    path: /comment/add
+    controller: App\Controller\CommentController::add
+    methods: [POST]
+    condition: "request.isXmlHttpRequest()"

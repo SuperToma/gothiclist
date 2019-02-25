@@ -3,12 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Artist;
+use App\Entity\CommentSong;
 use App\Entity\Genre;
 use App\Entity\Release;
 use App\Entity\Song;
 use App\Entity\Style;
 use App\Entity\User;
+use App\Entity\VoteSong;
 use App\Finder\Elasticsearch\Finder;
+use App\Repository\SongRepository;
+use App\Repository\VoteSongRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,6 +25,28 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class SongController extends Controller
 {
+    public function index(int $id, string $slug, SongRepository $songRepository): Response
+    {
+        /** @var Song $song */
+        $song = $this->getDoctrine()->getRepository(Song::class)->find($id);
+
+        if(!$song) {
+            throw $this->createNotFoundException('Sorry, this song does not exist');
+        }
+
+        if($slug !== $song->getSlug()) {
+            return $this->redirectToRoute('song_home', ['id' => $id, 'slug' => $song->getSlug()]);
+        }
+
+        $comments = $this->getDoctrine()->getRepository(CommentSong::class)->findBySong($song);
+
+        return $this->render('pages/song/home.html.twig', [
+            'song' => $song,
+            'other_songs' => $songRepository->getByArtist($song->getArtist(), $song),
+            'comments' => $comments,
+        ]);
+    }
+
     /**
      * @param Request $request
      * @return Response

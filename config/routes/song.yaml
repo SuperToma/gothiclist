@@ -1,3 +1,10 @@
+song_home:
+    path: /song/{id}-{slug}
+    controller: App\Controller\SongController::index
+    methods: [GET, POST]
+    requirements:
+        id: '\d+'
+
 song_add:
     path: /song/add
     controller: App\Controller\SongController::add

@@ -89,3 +89,31 @@ $(".artist a.edit").click(function() {
   $('#artist_description_form').removeClass('hidden');
   CKEDITOR.replace('artist_description_text');
 });
+
+/************************************************************
+ *                     Comment add                          *
+ ***********************************************************/
+
+$(".comment").submit(function(e) {
+  e.preventDefault();
+
+  const form = $(this);
+
+  $.ajax({
+    type: "POST",
+    url: '/comment/add',
+    data: form.serialize(),
+    success: function(data) {
+      alert(data);
+      window.location.href = window.location.origin + window.location.pathname + '#last-comment';
+      window.location.reload(true);
+    },
+    error: function(e) {
+      if(typeof e.responseJSON === 'object' && typeof e.responseJSON.msg === 'string') {
+        alert(e.responseJSON.msg);
+      } else {
+        alert('Sorry, an error occurred while posting your comment');
+      }
+    }
+  });
+});

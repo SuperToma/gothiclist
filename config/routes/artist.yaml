@@ -2,6 +2,7 @@ artist_list:
     path: /artists
     controller: App\Controller\ArtistController::list
     methods: [GET]
+
 artist_json:
     path: /artist/{id}-{slug}.json
     controller: App\Controller\ArtistController::jsonFormat

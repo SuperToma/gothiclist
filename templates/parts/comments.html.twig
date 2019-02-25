@@ -1,0 +1,30 @@
+
+<div id="comments" class="panel panel-default">
+    <div class="panel-heading">Comments</div>
+    <div class="panel-body">
+        <ul class="media-list">
+            {% for comment in comments %}
+                <li class="media" {{ (loop.last) ? 'id="last-comment"' : '' }}>
+                    <a class="pull-left" href="#">
+                        {% include 'parts/avatar.html.twig' with { 'user': comment.user } only %}
+                    </a>
+                    <div class="media-body">
+                        <h5 class="media-heading">{{ comment.user.nickname }}</h5>
+                        <p>{{ comment.text }}</p>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <form class="comment input-group">
+            <input type="hidden" name="type" value="{{ type }}" />
+            <input type="hidden" name="id" value="{{ id }}" />
+
+            <span class="input-group-btn">
+                <button class="add btn btn-primary" type="submit">Add comment</button>
+            </span>
+            <input type="text" name="comment" placeholder="comment" class="form-control comment">
+        </form>
+
+    </div>
+</div>

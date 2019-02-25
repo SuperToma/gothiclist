@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Artist;
 use App\Entity\Song;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -23,6 +24,29 @@ class SongRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Song::class);
         $this->voteSongRepository = $voteSongRepository;
+    }
+
+    /**
+     * @param Artist $artist
+     * @param Song|null $excludedSong
+     * @return mixed
+     */
+    public function getByArtist(Artist $artist, Song $excludedSong = null)
+    {
+        $qbd = $this->createQueryBuilder('song');
+        $qbd->where('song.artist = :artistId')
+            ->andWhere('song.id != :songId')
+            ->andWhere('song.validated = :validated')
+            ->setParameter('artistId', $artist->getId())
+            ->setParameter('songId', $excludedSong ? $excludedSong->getId() : null)
+            ->setParameter('validated', 1);
+
+        $songs = $qbd->getQuery()->getResult();
+        foreach ($songs as &$song) {
+            $song->nbVotes = $this->voteSongRepository->count(['song' => $song]);
+        }
+
+        return $songs;
     }
 
     /**

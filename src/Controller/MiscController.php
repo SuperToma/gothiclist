@@ -82,8 +82,8 @@ class MiscController extends Controller
                 'loc' => $this->generateUrl('artist_home', [
                     'id' => $artist->getId(),
                     'slug' => $artist->getSlug()
-                ], UrlGeneratorInterface::ABSOLUTE_URL)
-            ];
+                ], UrlGeneratorInterface::ABSOLUTE_URL
+            )];
         }
 
         $styles = $em->getRepository(Style::class)->findAll();
@@ -93,8 +93,8 @@ class MiscController extends Controller
                 'loc' => $this->generateUrl('style_home', [
                     'idStyle' => $style->getId(),
                     'slug' => $style->getSlug()
-                ], UrlGeneratorInterface::ABSOLUTE_URL)
-            ];
+                ], UrlGeneratorInterface::ABSOLUTE_URL
+            )];
         }
 
         $users = $em->getRepository(User::class)->findAll();
@@ -104,8 +104,8 @@ class MiscController extends Controller
                 'loc' => $this->generateUrl('user_public_page', [
                     'id' => $user->getId(),
                     'nickname' => $user->getSlug()
-                ], UrlGeneratorInterface::ABSOLUTE_URL)
-            ];
+                ], UrlGeneratorInterface::ABSOLUTE_URL
+            )];
         }
 
         return $this->render('pages/misc/sitemap.xml.twig', ['urls' => $urls]);

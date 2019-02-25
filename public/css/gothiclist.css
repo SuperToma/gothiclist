@@ -214,3 +214,6 @@ input:checked + .slider:before {
   outline: 0;
   background-color: #428bca;
 }
+
+/*********** table comments ************/
+#comments .media { margin: 0; }

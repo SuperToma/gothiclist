@@ -1,0 +1,43 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ song.title }} - {{ song.artist.name }}{% endblock %}
+{% block description %}Song {{ song.title }} by {{ song.artist.name }}{% endblock %}
+
+{% block scripts_head %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="artist m-b-lg">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-lg-12 m-b-lg">
+                    <h1>{{ song.title }}</h1>
+                    <strong>Artist: </strong> {{ song.artist.name }}<br />
+                    <strong>Album: </strong> {{ song.release.title }}
+                </div>
+                <iframe width="560" height="315"
+                        src="https://www.youtube.com/embed/{{ song.youtubeId }}"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+    {% if other_songs %}
+        {% include 'parts/table_songs.html.twig' with {
+            'songs': other_songs,
+            'title': (song.artist.name ~ ' other songs')
+        } only %}
+    {% endif %}
+
+    {% include 'parts/comments.html.twig' with { type: 'song', id: song.id, comments: comments } only %}
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script src="/js/ckeditor/ckeditor.js"></script>
+{% endblock %}

@@ -6,15 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
   /**
   * @ORM\Entity
-  * @ORM\Table(
-  *     name="vote_song",
-  *     indexes={@ORM\Index(name="song_id_user_id_idx", columns={"song_id", "user_id"})},
-  *     uniqueConstraints={
-  *        @ORM\UniqueConstraint(name="song_id_user_id_unique", columns={"song_id", "user_id"})
-  *     }
-  * )
+  * @ORM\Table(name="comment_song")
   */
-class VoteSong
+class CommentSong
 {
     /**
      * @ORM\Id
@@ -34,17 +28,23 @@ class VoteSong
     }
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Song", inversedBy="votes", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Song", inversedBy="comments", fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="song_id", referencedColumnName="id", nullable=false)
      */
     private $song;
 
     /**
      * @var User
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="votesSong")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="commentsSong")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     private $user;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    private $text;
 
     /**
      * @var \DateTime
@@ -70,9 +70,9 @@ class VoteSong
 
     /**
      * @param $song
-     * @return VoteSong
+     * @return CommentSong
      */
-    public function setSong($song): VoteSong
+    public function setSong($song): CommentSong
     {
         $this->song = $song;
 
@@ -89,11 +89,30 @@ class VoteSong
 
     /**
      * @param User $user
-     * @return VoteSong
+     * @return CommentSong
      */
-    public function setUser(User $user): VoteSong
+    public function setUser(User $user): CommentSong
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getText(): string
+    {
+        return $this->text;
+    }
+
+    /**
+     * @param $text
+     * @return CommentSong
+     */
+    public function setText(string $text): CommentSong
+    {
+        $this->text = $text;
 
         return $this;
     }
@@ -108,9 +127,9 @@ class VoteSong
 
     /**
      * @param \DateTime $createdAt
-     * @return VoteSong
+     * @return CommentSong
      */
-    public function setCreatedAt(\DateTime $createdAt): VoteSong
+    public function setCreatedAt(\DateTime $createdAt): CommentSong
     {
         $this->createdAt = $createdAt;
 

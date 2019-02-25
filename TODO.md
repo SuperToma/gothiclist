@@ -1,8 +1,6 @@
-  - song page
   - SEO : jsonLD
   
-  - style listing page
-  - Style listPage
+  - save release year
   - Move ArtistRepository::cleanArtistName to a helper
   - Check video ID is correct on saved
   - Check inscriptiton vkontakte (2 times registration)
@@ -17,4 +15,3 @@
   - log change nickname
   - Page 500/404
 
-  - update directory + vnv nation

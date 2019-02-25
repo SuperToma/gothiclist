@@ -6,15 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
   /**
   * @ORM\Entity
-  * @ORM\Table(
-  *     name="vote_song",
-  *     indexes={@ORM\Index(name="song_id_user_id_idx", columns={"song_id", "user_id"})},
-  *     uniqueConstraints={
-  *        @ORM\UniqueConstraint(name="song_id_user_id_unique", columns={"song_id", "user_id"})
-  *     }
-  * )
+  * @ORM\Table(name="comment_artist")
   */
-class VoteSong
+class CommentArtist
 {
     /**
      * @ORM\Id
@@ -26,7 +20,7 @@ class VoteSong
     protected $id;
 
     /**
-     * VoteSong constructor.
+     * VoteArtist constructor.
      */
     public function __construct()
     {
@@ -34,17 +28,23 @@ class VoteSong
     }
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Song", inversedBy="votes", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="song_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Artist", inversedBy="comments", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="artist_id", referencedColumnName="id", nullable=false)
      */
-    private $song;
+    private $artist;
 
     /**
      * @var User
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="votesSong")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="commentsArtist")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     private $user;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    private $text;
 
     /**
      * @var \DateTime
@@ -63,18 +63,18 @@ class VoteSong
     /**
      * @return int
      */
-    public function getSong()
+    public function getArtist()
     {
-        return $this->song;
+        return $this->artist;
     }
 
     /**
-     * @param $song
-     * @return VoteSong
+     * @param $artist
+     * @return CommentArtist
      */
-    public function setSong($song): VoteSong
+    public function setArtist($artist): CommentArtist
     {
-        $this->song = $song;
+        $this->artist = $artist;
 
         return $this;
     }
@@ -89,11 +89,30 @@ class VoteSong
 
     /**
      * @param User $user
-     * @return VoteSong
+     * @return CommentArtist
      */
-    public function setUser(User $user): VoteSong
+    public function setUser(User $user): CommentArtist
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getText(): string
+    {
+        return $this->text;
+    }
+
+    /**
+     * @param $text
+     * @return CommentArtist
+     */
+    public function setText(string $text): CommentArtist
+    {
+        $this->text = $text;
 
         return $this;
     }
@@ -108,9 +127,9 @@ class VoteSong
 
     /**
      * @param \DateTime $createdAt
-     * @return VoteSong
+     * @return CommentArtist
      */
-    public function setCreatedAt(\DateTime $createdAt): VoteSong
+    public function setCreatedAt(\DateTime $createdAt): CommentArtist
     {
         $this->createdAt = $createdAt;
 
