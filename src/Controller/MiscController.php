@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Artist;
+use App\Entity\Song;
 use App\Entity\Style;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -95,6 +96,17 @@ class MiscController extends Controller
                     'slug' => $style->getSlug()
                 ], UrlGeneratorInterface::ABSOLUTE_URL
             )];
+        }
+
+        $songs = $em->getRepository(Song::class)->findAll();
+        /** @var Song $song */
+        foreach ($songs as $song) {
+            $urls[] = [
+                'loc' => $this->generateUrl('song_home', [
+                    'id' => $song->getId(),
+                    'slug' => $song->getSlug()
+                ], UrlGeneratorInterface::ABSOLUTE_URL
+                )];
         }
 
         $users = $em->getRepository(User::class)->findAll();

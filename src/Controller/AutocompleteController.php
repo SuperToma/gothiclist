@@ -20,7 +20,7 @@ class AutocompleteController extends Controller
      */
     public function artistGroup(string $prefixArtist, Finder $esFinder): JsonResponse
     {
-        $max = 15;
+        $max = 150;
 
         return $this->json($esFinder->getArtistGroupStartingWith($prefixArtist, $max));
     }

@@ -148,7 +148,7 @@ class Finder
             'index' => 'release',
             'from' => 0,
             'size' => $limit,
-            '_source' => ['title'],
+            '_source' => ['title', 'released'],
             'body' => [
                 'query' => [
                     'bool' => [
@@ -175,7 +175,7 @@ class Finder
                         ]
                     ]
                 ],
-                //'sort' => ['released' => ['order' => 'asc']]
+                'sort' => ['released' => ['order' => 'asc']]
             ]
         ];
 
@@ -206,6 +206,7 @@ class Finder
                 $newResults[] = [
                     'id' => $result['id'],
                     'album' => $result['title'],
+                    'released' => $result['released'],
                     'track' => $title,
                 ];
                 $titles[] = $title;
@@ -215,13 +216,21 @@ class Finder
         // Concat with album title if duplicate titles
         if(!empty($titles) && count($titles) !== count(array_unique($titles))) {
             $duplicateTitles = array_diff_assoc($titles, array_unique($titles));
+
+            $tmp = [];
             foreach($newResults as &$result) {
                 if(in_array($result['track'], $duplicateTitles)) {
-                    $result['track'] .= ' ('.$result['album'].')';
+                    $tmp[$result['track']][] = $result;
+                    $result['track'] .= ' | '.$result['released'].' | ('.$result['album'].')';
                 }
             }
         }
 
+        if(isset($_GET['toto'])) {
+            echo '<pre>';
+            print_r($tmp);
+            exit();
+        }
         // Remove albums
         foreach($newResults as &$result) {
             unset($result['album']);

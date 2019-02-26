@@ -1,6 +1,7 @@
   - SEO : jsonLD
   
   - save release year
+  - order add artist search by year
   - Move ArtistRepository::cleanArtistName to a helper
   - Check video ID is correct on saved
   - Check inscriptiton vkontakte (2 times registration)
