@@ -175,7 +175,7 @@ class Finder
                         ]
                     ]
                 ],
-                'sort' => ['released' => ['order' => 'asc']]
+                //'sort' => ['released' => ['order' => 'asc']]
             ]
         ];
 
@@ -218,26 +218,37 @@ class Finder
             $duplicateTitles = array_diff_assoc($titles, array_unique($titles));
 
             $duplicatedSongs = [];
-            foreach($newResults as &$result) {
+            foreach($newResults as $k => &$result) {
                 if(in_array($result['track'], $duplicateTitles)) {
                     $duplicatedSongs[$result['track']][] = $result;
-                    $result['track'] .= ' | '.$result['released'].' | ('.$result['album'].')';
+                    if(count($duplicatedSongs[$result['track']]) > 1) { // Keep only the first one
+                        unset($newResults[$k]);
+                    }
+                    //$result['track'] .= ' | '.$result['released'].' | ('.$result['album'].')';
+                }
+            }
+            $newResults = array_values($newResults); // Rebase array result keys
+
+            // Sort duplicate songs
+            foreach($duplicatedSongs as &$duplicatedSong) {
+                foreach($duplicatedSong as &$song) {
+                    $song['released'] = substr($song['released'], 0, 4); // for release as year
+                    $song['released'] = $song['released'] ? $song['released'] : 'NA';
+                    $song['track'] .= ' | '.$song['released'].': '.$song['album'];
+                }
+                array_multisort(array_column($duplicatedSong, 'released'), SORT_ASC, $duplicatedSong);
+            }
+
+            // Replace this array by the only one left in results
+            foreach($duplicatedSongs as $trackName => $songs) {
+                foreach($newResults as $k => $result) {
+                    if($trackName === $result['track']) {
+                        array_splice($newResults, $k, 0, $songs);
+                    }
                 }
             }
         }
 
-        if(isset($_GET['toto'])) {
-            foreach($duplicatedSongs as &$duplicatedSong) {
-                $duplicatedSongs['nbSongs'] = count($duplicatedSong);
-                foreach($duplicatedSong as &$song) {
-                    $song['released'] = substr($song['released'], 0, 4); // for release as year
-                }
-            }
-            array_multisort(array_column($duplicatedSongs, 'nbSongs'), SORT_DESC, $duplicatedSongs);
-            echo '<pre>';
-            print_r($duplicatedSongs);
-            exit();
-        }
         // Remove albums
         foreach($newResults as &$result) {
             unset($result['album']);
