@@ -152,9 +152,6 @@
     "react/promise": {
         "version": "v2.5.1"
     },
-    "ricbra/php-discogs-api": {
-        "version": "1.0.x-dev"
-    },
     "swiftmailer/swiftmailer": {
         "version": "v6.0.2"
     },
@@ -175,6 +172,9 @@
             "version": "3.3",
             "ref": "e3868d2f4a5104f19f844fe551099a00c6562527"
         }
+    },
+    "symfony/contracts": {
+        "version": "v1.0.2"
     },
     "symfony/debug": {
         "version": "v4.0.8"
