@@ -234,7 +234,7 @@ class Finder
                 foreach($duplicatedSong as &$song) {
                     $song['released'] = substr($song['released'], 0, 4); // for release as year
                     $song['released'] = $song['released'] ? $song['released'] : 'NA';
-                    $song['track'] .= ' | '.$song['released'].': '.$song['album'];
+                    $song['track'] .= ' || '.$song['released'].': '.$song['album'];
                 }
                 array_multisort(array_column($duplicatedSong, 'released'), SORT_ASC, $duplicatedSong);
             }
@@ -243,6 +243,7 @@ class Finder
             foreach($duplicatedSongs as $trackName => $songs) {
                 foreach($newResults as $k => $result) {
                     if($trackName === $result['track']) {
+                        unset($newResults[$k]);
                         array_splice($newResults, $k, 0, $songs);
                     }
                 }
