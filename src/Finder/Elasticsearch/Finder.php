@@ -217,18 +217,25 @@ class Finder
         if(!empty($titles) && count($titles) !== count(array_unique($titles))) {
             $duplicateTitles = array_diff_assoc($titles, array_unique($titles));
 
-            $tmp = [];
+            $duplicatedSongs = [];
             foreach($newResults as &$result) {
                 if(in_array($result['track'], $duplicateTitles)) {
-                    $tmp[$result['track']][] = $result;
+                    $duplicatedSongs[$result['track']][] = $result;
                     $result['track'] .= ' | '.$result['released'].' | ('.$result['album'].')';
                 }
             }
         }
 
         if(isset($_GET['toto'])) {
+            foreach($duplicatedSongs as &$duplicatedSong) {
+                $duplicatedSongs['nbSongs'] = count($duplicatedSong);
+                foreach($duplicatedSong as &$song) {
+                    $song['released'] = substr($song['released'], 0, 4); // for release as year
+                }
+            }
+            array_multisort(array_column($duplicatedSongs, 'nbSongs'), SORT_DESC, $duplicatedSongs);
             echo '<pre>';
-            print_r($tmp);
+            print_r($duplicatedSongs);
             exit();
         }
         // Remove albums
