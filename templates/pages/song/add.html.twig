@@ -38,6 +38,13 @@
                                disabled />
                         <input type="hidden" id="release_id" name="release_id" value="" />
                     </div>
+                    <div class="form-group" id="videosids" style="display:none;">
+                        <label for="song">Videos IDs</label>
+                        <div class="form-inline">
+                            <input type="text" name="youtubeid" class="form-control" placeholder="Youtube ID" style="width: 200px;">
+                            <input type="text" name="spotifyid" class="form-control" placeholder="Spotify ID" style="width: 200px;">
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </fieldset>
             </form>
@@ -91,6 +98,7 @@
             .bind('typeahead:asyncrequest', function() {
               $('#artist_id, #song').val(null);
               $('#song').attr('disabled', 'disabled');
+              $('#videosids').hide();
               $('.spin-artist').show();
             })
             .bind('typeahead:asyncreceive', function() {
@@ -141,12 +149,14 @@
             })
             .bind('typeahead:asyncrequest', function() {
               $('.spin-song').show();
+              $('#videosids').hide();
             })
             .bind('typeahead:asyncreceive', function() {
               $('.spin-song').hide();
             })
             .bind('typeahead:select', function(ev, suggestion) {
               $('#release_id').val(suggestion.id);
+              $('#videosids').show();
             });
 
         });

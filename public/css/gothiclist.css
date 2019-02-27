@@ -9,6 +9,7 @@ body {
 .img-artist { float: left; max-width: 500px; }
 .m-b { margin-bottom: 15px; }
 .m-b-lg { margin-bottom: 30px; }
+.m-0 { margin: 0; }
 
 .v-a-middle {
   vertical-align: middle !important;

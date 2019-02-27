@@ -63,15 +63,13 @@ class SongController extends Controller
         if($request->getMethod() === 'POST') {
             $artistId = $request->get('artist_id');
             $releaseId = $request->get('release_id');
-            $songName = $request->get('song_name');
-            $artistName = $request->get('artist_name');
 
             if(empty($artistId)) {
                 $this->addFlash('danger', 'You didn\'t send any artist');
                 return $this->render('pages/song/add.html.twig', []);
             }
 
-            if(empty($releaseId) || empty($songName)) {
+            if(empty($releaseId) || empty($request->get('song_name'))) {
                 $this->addFlash('danger', 'You did not send any song');
                 return $this->render('pages/song/add.html.twig', []);
             }
@@ -160,9 +158,10 @@ class SongController extends Controller
             $trackFound = false;
             $tracklist = '';
 
+            $songName = current(explode(' || ', $request->get('song_name'))); // Remove additional infos on song
+
             foreach($esRelease['tracklist'] as $track) {
                 $tracklist .= '<li>'.$track['title'][0].'</li>';
-                $songName = current(explode(' || ', $songName)); // Remove additional infos on song
 
                 if($track['title'][0] == $songName) {
                     $trackFound = true;
@@ -197,7 +196,9 @@ class SongController extends Controller
                 ->setRelease($release)
                 ->setArtist($artist)
                 ->setValidated(1)
-                ->setTitle($songName);
+                ->setTitle($songName)
+                ->setYoutubeId($request->get('youtubeid'))
+                ->setSpotifyId($request->get('spotifyid'));
 
             $this->getDoctrine()->getManager()->persist($song);
             $this->getDoctrine()->getManager()->flush();

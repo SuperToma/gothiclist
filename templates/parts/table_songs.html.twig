@@ -10,7 +10,8 @@
                         {% if app.request.get('_route') != 'artist_home' %}
                         <th scope="col">Artist</th>
                         {% endif %}
-                        <th scope="col">Album</th>
+                        <th></th>
+                        <th scope="col" class="hidden-xs">Album</th>
                         <th scope="col">Album's styles</th>
                         <th scope="col" class="hidden-xs">By</th>
                         <th scope="col" class="hidden-xs">Votes</th>
@@ -29,11 +30,12 @@
                         <td><a href="{{ path('artist_home', {'id': song.artist.id, 'slug': song.artist.name|slugify}) }}">{{ song.artist.name }}</a></td>
                         {% endif %}
                         <td>
-                            <img
-                                src="{{ asset('img/flags/4x3/' ~ countries[song.release.country] ~ '.svg') }}"
-                                class="country_flag"
-                                alt="{{ song.release.country }}" />
-                            <span class="hidden-xs">{{ song.release.title }}</span>
+                            <img class="country_flag"
+                                 src="{{ asset('img/flags/4x3/' ~ countries[song.release.country] ~ '.svg') }}"
+                                 alt="{{ song.release.country }}" />
+                        </td>
+                        <td class="hidden-xs">
+                            {{ song.release.title }}
                         </td>
                         <td>
                             {% for style in song.release.styles %}
