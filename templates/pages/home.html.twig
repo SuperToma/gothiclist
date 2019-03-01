@@ -5,9 +5,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 col-lg-12">
-                    <h1>Gothiclist</h1>
-                    <p>The gothic musical repertoire</p>
-                    <p>Industrial, EBM, New Wave, Darkwave, Goth Rock, Gothic Metal, Synthwave, Synth-pop</p>
+                    <h1 class="inline">Gothiclist</h1>
+                    gothic musical repertoire</p>
+                    <p>Industrial - EBM - New Wave - Darkwave - Goth Rock - Gothic Metal - Synthwave - Synth-pop</p>
+                    {% if not is_granted('ROLE_USER') %}
+                        <span> Register to add songs, descriptions, votes, comments, ...</span>
+                    {% endif %}
                 </div>
             </div>
         </div>

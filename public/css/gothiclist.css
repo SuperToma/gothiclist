@@ -15,6 +15,9 @@ body {
   vertical-align: middle !important;
 }
 
+.inline {
+  display: inline !important;
+}
 @media screen and (min-width: 768px) {
   .jumbotron h1 {
     font-size: 35px;
@@ -22,6 +25,12 @@ body {
   .container .jumbotron {
     padding: 30px;
   }
+}
+.jumbotron p {
+  text-align: center;
+}
+.jumbotron span {
+  font-size: 16px;
 }
 
 .btn-success, .btn-danger {
