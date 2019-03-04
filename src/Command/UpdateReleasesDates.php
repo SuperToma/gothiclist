@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Entity\Release;
+use App\Finder\Elasticsearch\Finder;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -30,10 +31,33 @@ class UpdateReleasesDates extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $releases = $this->entityManager->getRepository(Release::class)->findAll();
+        $em = $this->entityManager;
+        $releases = $em->getRepository(Release::class)->findAll();
+        $finder = new Finder();
+
+        /* @var Release $release */
         foreach ($releases as $release) {
-            /* @var Release $release */
-            var_dump($release->getIdDiscogs());
+
+            $esRelease = $finder->getReleaseById($release->getIdDiscogs());
+
+            if(!isset($esRelease['released'])) {
+                echo 'No release date found for release '.$release->getId().': '.$release->getTitle();
+                next();
+            }
+
+            $year = null;
+            if(strlen($esRelease['released']) === 4) {
+                $year = $esRelease['released'];
+            } elseif(strlen($esRelease['released']) === 10) {
+                $year = substr($esRelease['released'], 0, 4);
+            }
+
+            $release->setYear($year);
+            $em->persist($release);
+            $em->flush();
         }
+
+
+
     }
 }

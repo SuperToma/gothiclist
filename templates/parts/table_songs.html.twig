@@ -11,9 +11,9 @@
                         <th scope="col">Artist</th>
                         {% endif %}
                         <th></th>
+                        <th scope="col" class="hidden-xs"></th>
                         <th scope="col" class="hidden-xs">Album</th>
                         <th scope="col">Album's styles</th>
-                        <th scope="col" class="hidden-xs">By</th>
                         <th scope="col" class="hidden-xs">Votes</th>
                         <th scope="col">Listen</th>
                     </tr>
@@ -34,6 +34,7 @@
                                  src="{{ asset('img/flags/4x3/' ~ countries[song.release.country] ~ '.svg') }}"
                                  alt="{{ song.release.country }}" />
                         </td>
+                        <td class="hidden-xs">{{ song.release.year }}</td>
                         <td class="hidden-xs">
                             {{ song.release.title }}
                         </td>
@@ -49,7 +50,6 @@
                                 {{ (loop.last) ? '' : ' / ' }}
                             {% endfor %}
                         </td>
-                        <td class="hidden-xs">{% include 'parts/avatar.html.twig' with { 'user': song.user } only %}</td>
                         <td class="hidden-xs">
                             {% include 'parts/vote.html.twig' with { 'id': song.id, 'type': 'song', 'user': song.user } only %}
                             <span class="nbVotes">{{ song.nbVotes }}</span>
