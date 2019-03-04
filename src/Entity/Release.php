@@ -92,6 +92,12 @@ class Release
     private $country;
 
     /**
+     * @var integer
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $year;
+
+    /**
      * @var \DateTime
      * @ORM\Column(type="datetime", nullable=false)
      */
@@ -294,6 +300,25 @@ class Release
     public function setCountry(string $country): Release
     {
         $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getYear(): ?int
+    {
+        return $this->year;
+    }
+
+    /**
+     * @param integer $year
+     * @return Release
+     */
+    public function setYear(int $year = null): Release
+    {
+        $this->year = $year;
 
         return $this;
     }

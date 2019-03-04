@@ -140,6 +140,14 @@ class SongController extends Controller
 
                 $release = $this->getDoctrine()->getRepository(Release::class)->findOneBy(['idDiscogs' => $releaseId]);
                 if(empty($release)) {
+
+                    $year = null;
+                    if(strlen($esRelease['released']) === 4) {
+                        $year = $esRelease['released'];
+                    } elseif(strlen($esRelease['released']) === 10) {
+                        $year = substr($esRelease['released'], 0, 4);
+                    }
+
                     $release = (new Release())
                         ->setIdDiscogs($releaseId)
                         ->setUser($user)
@@ -147,6 +155,7 @@ class SongController extends Controller
                         ->setStyles($styles)
                         ->setGenres($genres)
                         ->setCountry($esRelease['country'])
+                        ->setYear($year)
                         ->setDiscogsNotes($esRelease['notes'] ?? '');
 
                     $this->getDoctrine()->getManager()->persist($release);
