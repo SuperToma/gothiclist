@@ -13,8 +13,11 @@
             <div class="row">
                 <div class="col-sm-12 col-lg-12 m-b-lg">
                     <h1>{{ song.title }}</h1>
-                    <strong>Artist: </strong> {{ song.artist.name }}<br />
-                    <strong>Album: </strong> {{ song.release.title }}
+                    <p>
+                        <strong>Artist: </strong> {{ song.artist.name }}<br />
+                        <strong>Album: </strong> {{ song.release.title }}<br />
+                        <strong>Year: </strong> {{ song.release.year }}
+                    </p>
                 </div>
                 <iframe width="560" height="315"
                         src="https://www.youtube.com/embed/{{ song.youtubeId }}"
