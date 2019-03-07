@@ -10,10 +10,10 @@
                         {% if app.request.get('_route') != 'artist_home' %}
                         <th scope="col">Artist</th>
                         {% endif %}
-                        <th></th>
+                        <th class="hidden-xs"></th>
                         <th scope="col" class="hidden-xs"></th>
-                        <th scope="col" class="hidden-xs">Album</th>
-                        <th scope="col">Album's styles</th>
+                        <th scope="col" class="hidden-xs hidden-sm">Album</th>
+                        <th scope="col"class="hidden-xs">Album's styles</th>
                         <th scope="col" class="hidden-xs">Votes</th>
                         <th scope="col">Listen</th>
                     </tr>
@@ -29,16 +29,16 @@
                         {% if app.request.get('_route') != 'artist_home' %}
                         <td><a href="{{ path('artist_home', {'id': song.artist.id, 'slug': song.artist.name|slugify}) }}">{{ song.artist.name }}</a></td>
                         {% endif %}
-                        <td>
+                        <td class="hidden-xs">
                             <img class="country_flag"
                                  src="{{ asset('img/flags/4x3/' ~ countries[song.release.country] ~ '.svg') }}"
                                  alt="{{ song.release.country }}" />
                         </td>
                         <td class="hidden-xs">{{ song.release.year }}</td>
-                        <td class="hidden-xs">
+                        <td class="hidden-xs hidden-sm">
                             {{ song.release.title }}
                         </td>
-                        <td>
+                        <td class="hidden-xs">
                             {% for style in song.release.styles %}
                                 {% if style.id == app.request.get('idStyle') %}
                                     <span class="text-muted">{{ style.name }}</span>

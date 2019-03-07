@@ -43,6 +43,9 @@ body {
   width: 20px;
   vertical-align: text-top;
 }
+.panel-body {
+  padding: 0;
+}
 /*************** Footer ***************/
 html,
 body {
