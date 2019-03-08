@@ -6,12 +6,14 @@ twig:
         countries:
             Europe: ''
             Belgium: 'be'
+            Canada: 'ca'
             Germany: 'de'
-            Russia: 'ru'
-            UK: 'gb'
-            US: 'us'
+            Italy: 'it'
             Norway: 'sj'
+            Russia: 'ru'
             Sweden: 'se'
             Switzerland: 'ch'
-            Italy: 'it'
+            UK: 'gb'
+            US: 'us'
+
 
