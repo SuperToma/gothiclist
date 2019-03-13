@@ -1,6 +1,7 @@
   - SEO : jsonLD
   
   - save release year
+  - Attach country on artists (not on albums)
   - order add artist search by year
   - Move ArtistRepository::cleanArtistName to a helper
   - Check video ID is correct on saved
