@@ -159,6 +159,13 @@ class SongController extends Controller
                         ->setDiscogsNotes($esRelease['notes'] ?? '');
 
                     $this->getDoctrine()->getManager()->persist($release);
+
+                    // Set artist country if necessary
+                    if(empty($artist->getCountry())) {
+                        $artist->setCountry($esRelease['country']);
+                        $this->getDoctrine()->getManager()->persist($artist);
+                    }
+
                     $this->getDoctrine()->getManager()->flush();
                 }
             }

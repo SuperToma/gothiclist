@@ -79,6 +79,12 @@ class Artist
     private $photoUrl;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $country;
+
+    /**
      * @var \DateTime
      * @ORM\Column(type="datetime", nullable=false)
      */
@@ -257,6 +263,25 @@ class Artist
     public function setPhotoUrl(?string $photoUrl): Artist
     {
         $this->photoUrl = $photoUrl;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCountry(): string
+    {
+        return (string)$this->country;
+    }
+
+    /**
+     * @param string|null $country
+     * @return Artist
+     */
+    public function setCountry(?string $country): Artist
+    {
+        $this->country = $country;
 
         return $this;
     }
