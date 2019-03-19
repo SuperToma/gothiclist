@@ -3,6 +3,11 @@ misc_contact:
     controller: App\Controller\MiscController::contact
     methods: [GET, POST]
 
+misc_terms:
+    path: /terms
+    controller: App\Controller\MiscController::terms
+    methods: [GET]
+
 sitemap:
     path: sitemap.xml
     controller: App\Controller\MiscController::sitemap

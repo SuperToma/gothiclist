@@ -17,6 +17,10 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class MiscController extends Controller
 {
+    public function terms() {
+        return $this->render('pages/misc/terms.html.twig');
+    }
+
     /**
      * @param Request $request
      * @param \Swift_Mailer $mailer
@@ -63,7 +67,7 @@ class MiscController extends Controller
             }
         }
 
-        return $this->render('pages/misc/contact.html.twig', []);
+        return $this->render('pages/misc/contact.html.twig');
     }
 
     public function sitemap(Request $request)

@@ -1,0 +1,56 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Contact us{% endblock %}
+{% block description %}Feel free to contact us by filling this form{% endblock %}
+
+{% block body %}
+<h1>Terms of use</h1>
+<p>
+    Gothiclist.com is a completly free website
+    <br /><br />
+
+    Your use of the Gothiclist Service implies your acceptance of these Terms of Use.
+    <br />
+    If you have any questions, please do not hesitate to <a href="{{ path('misc_contact') }}">contact us</a>.
+
+    <br /><br />
+    What is possible to do on Gothiclist :
+    <ul>
+        <li>Register</li>
+        <li>Add new songs</li>
+        <li>Implicitly add new artists by adding new songs</li>
+        <li>Vote on songs</li>
+        <li>Modify artist's descriptions</li>
+        <li>Add comments on songs</li>
+    </ul>
+
+    <br />
+    The records of Gothiclist are stored on our systems in accordance with standard safety practices.
+    <br /><br />
+    Gothiclist takes very seriously your privacy and the protection of your personal data.
+    <br /><br />
+    After a first connection on our website with a provider like Facebook, Twitter or Vkontakte
+    all the information that we store is :
+    <ul>
+        <li>Provider unique identifier number</li>
+        <li>Nickname</li>
+        <li>The photo of your profile</li>
+        <li>Country</li>
+        <li>Email (for contact purpose only by administrators)</li>
+        <li>Name (for contact purpose only by administrators)</li>
+        <li>Firstname (for contact purpose only by administrators)</li>
+    </ul>
+    For
+    <ul>
+        <li>a complete deletion of your information</li>
+        <li>a modification of your information</li>
+        <li>any other information/question please contact</li>
+    </ul>
+
+    Please <a href="{{ path('misc_contact') }}">contact us</a>,
+    <br />
+    it will be a pleasure to reply you as soon as possible.
+    <br /><br />
+    Gothiclist team.
+</p>
+{% endblock %}
