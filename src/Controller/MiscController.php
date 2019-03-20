@@ -79,6 +79,7 @@ class MiscController extends Controller
 
         $urls[] = ['loc' => $hostname.'/'];
         $urls[] = ['loc' => $this->generateUrl('misc_contact', [], UrlGeneratorInterface::ABSOLUTE_URL)];
+        $urls[] = ['loc' => $this->generateUrl('misc_terms', [], UrlGeneratorInterface::ABSOLUTE_URL)];
 
         $artists = $em->getRepository(Artist::class)->findAll();
         /** @var Artist $artist */
