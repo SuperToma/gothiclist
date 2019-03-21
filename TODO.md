@@ -1,5 +1,6 @@
   - SEO : jsonLD
   
+  - Add a timestamp on css files
   - order add artist search by year
   - Move ArtistRepository::cleanArtistName to a helper
   - Check video ID is correct on saved
