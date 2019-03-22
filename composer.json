@@ -7,7 +7,7 @@
         "cocur/slugify": "^3.2",
         "doctrine/doctrine-bundle": "^1.9",
         "doctrine/orm": "^2.6",
-        "elasticsearch/elasticsearch": "^6.0",
+        "elasticsearch/elasticsearch": "^6.1",
         "friendsofsymfony/user-bundle": "^2.1",
         "hwi/oauth-bundle": "^0.6.2",
         "php-http/guzzle6-adapter": "^1.1",

@@ -16,8 +16,8 @@
             {% if app.request.server.get('HTTP_HOST') starts with 'www' %}
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300,700">
             {% endif %}
-            <link rel="stylesheet" href="{{ asset('css/theme.css') }}" media="screen">
-            <link rel="stylesheet" href="{{ asset('css/gothiclist.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/theme.css') ~ '?' ~ assets_version }}" media="screen">
+            <link rel="stylesheet" href="{{ asset('css/gothiclist.css') ~ '?' ~ assets_version }}">
             <link rel="stylesheet" href="{{ asset('css/font-awesome-4.7.0.min.css') }}">
         {% endblock %}
 
