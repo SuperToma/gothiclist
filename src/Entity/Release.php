@@ -297,7 +297,7 @@ class Release
      * @param string $country
      * @return Release
      */
-    public function setCountry(string $country): Release
+    public function setCountry(?string $country): Release
     {
         $this->country = $country;
 
