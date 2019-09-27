@@ -30,9 +30,11 @@
                         <td><a href="{{ path('artist_home', {'id': song.artist.id, 'slug': song.artist.name|slugify}) }}">{{ song.artist.name }}</a></td>
                         {% endif %}
                         <td class="hidden-xs">
-                            <img class="country_flag"
-                                 src="{{ asset('img/flags/4x3/' ~ countries[song.artist.country] ~ '.svg') }}"
-                                 alt="{{ song.artist.country }}" />
+                            {% if song.artist.country %}
+                                <img class="country_flag"
+                                     src="{{ asset('img/flags/4x3/' ~ countries[song.artist.country] ~ '.svg') }}"
+                                     alt="{{ song.artist.country }}" />
+                            {% endif %}
                         </td>
                         <td class="hidden-xs">{{ song.release.year }}</td>
                         <td class="hidden-xs hidden-sm">
