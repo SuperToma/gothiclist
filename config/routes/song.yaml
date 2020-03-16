@@ -1,3 +1,11 @@
+song_cover:
+    path: /song/{id}-{slug}.jpg
+    controller: App\Controller\SongController::cover
+    methods: [GET]
+    requirements:
+        id: '\d+'
+
+
 song_home:
     path: /song/{id}-{slug}
     controller: App\Controller\SongController::index
@@ -9,4 +17,3 @@ song_add:
     path: /song/add
     controller: App\Controller\SongController::add
     methods: [GET, POST]
-

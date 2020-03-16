@@ -15,9 +15,12 @@ use App\Repository\SongRepository;
 use App\Repository\VoteSongRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+
 
 /**
  * Class SongController
@@ -25,6 +28,14 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class SongController extends Controller
 {
+    /** string $parameterBag */
+    private $parameterBag;
+
+    public function __construct(ParameterBagInterface $parameterBag)
+    {
+        $this->parameterBag = $parameterBag;
+    }
+
     public function index(int $id, string $slug, SongRepository $songRepository): Response
     {
         /** @var Song $song */
@@ -256,5 +267,33 @@ class SongController extends Controller
         $this->getDoctrine()->getManager()->flush();
 
         return $this->json(true);
+    }
+
+    public function cover(int $id, string $slug): BinaryFileResponse
+    {
+        /** @var Song $song */
+        $song = $this->getDoctrine()->getRepository(Song::class)->find($id);
+
+        if(!$song) {
+            throw $this->createNotFoundException('Sorry, song not found');
+        }
+
+        $imgPath = $this->getParameter('kernel.project_dir').
+            '/public/img/releases/'.$song->getRelease()->getId().'.jpg';
+
+        $withDest = 2468;
+        $heightDest = 1396;
+
+        $image = new \Imagick(realpath($imgPath));
+        $image->blurImage(8,8);
+        $image->scaleImage($withDest);
+        $image->cropThumbnailImage($withDest, $heightDest);
+        $image->brightnessContrastImage(-30, -50);
+
+        //print_r($image);
+        //exit();
+        header('Content-Type: image/' . $image->getImageFormat());
+        echo $image->getImageBlob();
+        die();
     }
 }
