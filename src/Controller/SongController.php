@@ -281,17 +281,41 @@ class SongController extends Controller
         $imgPath = $this->getParameter('kernel.project_dir').
             '/public/img/releases/'.$song->getRelease()->getId().'.jpg';
 
-        $withDest = 2468;
-        $heightDest = 1396;
+        $backgroundWidth = 2468;
+        $backgroundHeight = 1396;
 
+        $coverWidth = 950;
+
+        // Background
         $image = new \Imagick(realpath($imgPath));
         $image->blurImage(8,8);
-        $image->scaleImage($withDest);
-        $image->cropThumbnailImage($withDest, $heightDest);
+        $image->scaleImage($backgroundWidth);
+        $image->cropThumbnailImage($backgroundWidth, $backgroundHeight);
         $image->brightnessContrastImage(-30, -50);
 
-        //print_r($image);
-        //exit();
+        // Small cover
+        $cover = new \Imagick(realpath($imgPath));
+        $cover->scaleImage($coverWidth, 0);
+
+        $image->compositeImage($cover, \Imagick::COMPOSITE_DEFAULT, 150, 150);
+
+        // Song infos
+        $draw = new \ImagickDraw();
+        $draw->setFont('fonts/vtRemingtonPortable.ttf');
+        $draw->setFontSize( 80 );
+        $draw->setFillColor('white');
+        $image->annotateImage($draw, 1200, 450, 0, $song->getTitle());
+
+        $draw->setFontSize( 70 );
+        $image->annotateImage($draw, 1200, 700, 0, $song->getArtist()->getName());
+        $draw->setFontSize( 50 );
+        $image->annotateImage($draw, 1200, 830, 0, $song->getRelease()->getTitle());
+
+        // Gothiclist signature
+        $draw->setFont('fonts/civitype.ttf');
+        $draw->setFontSize( 80 );
+        $image->annotateImage($draw, 2100, 1300, 0, 'GothicList.com');
+
         header('Content-Type: image/' . $image->getImageFormat());
         echo $image->getImageBlob();
         die();
