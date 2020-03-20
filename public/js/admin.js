@@ -72,3 +72,58 @@ $('.tags-styles').each(function() {
   });
 });
 
+/********** Auto upload cover **********/
+$('.coverInputFile').change(function() {
+  const coverId = $(this).attr("data-id");
+  const formData = new FormData();
+
+  formData.append('cover', $(this)[0].files[0]);
+  formData.append('id', coverId);
+
+  $.ajax({
+    url: '/admin/upload_cover',
+    type: 'post',
+    data: formData,
+    contentType: false,
+    processData: false,
+    success: function(resp){
+      console.log(resp)
+      if(resp.file){
+        const imgUrl = "/img/releases/" + resp.file + "?" + Math.round(Math.random() * 1000);
+        $(".cover_" + coverId).attr("src", imgUrl);
+      }else{
+        alert('Error while uploading file');
+      }
+    },
+    error: function(resp){
+      alert("error: " + resp.responseJSON.message);
+    }
+  });
+});
+
+/********** Auto upload mp3 **********/
+$('.mp3InputFile').change(function() {
+  const songId = $(this).attr("data-id");
+  const formData = new FormData();
+
+  formData.append('mp3', $(this)[0].files[0]);
+  formData.append('id', songId);
+
+  $.ajax({
+    url: '/admin/upload_mp3',
+    type: 'post',
+    data: formData,
+    contentType: false,
+    processData: false,
+    success: function(resp){
+      if(resp.message === "Success"){
+        alert("Upload success");
+      }else{
+        alert('Error while uploading file');
+      }
+    },
+    error: function(resp){
+      alert("error: " + resp.responseJSON.message);
+    }
+  });
+});

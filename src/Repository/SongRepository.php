@@ -6,6 +6,7 @@ use App\Entity\Artist;
 use App\Entity\Song;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * Class SongRepository
@@ -19,6 +20,7 @@ class SongRepository extends ServiceEntityRepository
      * SongRepository constructor.
      * @param RegistryInterface $registry
      * @param VoteSongRepository $voteSongRepository
+     * @param ParameterBagInterface $parameterBag
      */
     public function __construct(RegistryInterface $registry, VoteSongRepository $voteSongRepository)
     {
@@ -65,6 +67,21 @@ class SongRepository extends ServiceEntityRepository
         if($withCountVotes) {
             foreach ($lastSongs as &$song) {
                 $song->nbVotes = $this->voteSongRepository->count(['song' => $song]);
+            }
+        }
+
+        foreach($lastSongs as &$song) {
+            $song->cover = false;
+            //@TODO: DOCUMENT_ROOT can be Symfony compliant
+            $cover = glob($_SERVER['DOCUMENT_ROOT'].'/img/releases/'.$song->getRelease()->getId().'-*.jpg');
+            if(isset($cover[0])) {
+                $song->cover = str_replace($_SERVER['DOCUMENT_ROOT'], '', $cover[0]);
+            }
+
+            $song->hasMp3 = false;
+            $mp3 = glob($_SERVER['DOCUMENT_ROOT'].'/../mp3/'.$song->getId().'-*.mp3');
+            if(isset($mp3[0])) {
+                $song->hasMp3 = true;
             }
         }
 

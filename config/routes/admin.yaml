@@ -18,4 +18,14 @@ admin_song_patch:
     controller: App\Controller\SongController::patch
     methods: [PATCH]
     requirements:
-          id: '\d+'
+      id: '\d+'
+
+admin_upload_cover:
+    path: /admin/upload_cover
+    controller: App\Controller\AdminController::uploadCover
+    methods: [POST]
+
+admin_upload_mp3:
+    path: /admin/upload_mp3
+    controller: App\Controller\AdminController::uploadMp3
+    methods: [POST]

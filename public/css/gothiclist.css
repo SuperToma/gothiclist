@@ -17,9 +17,16 @@ body {
   vertical-align: middle !important;
 }
 
+.float-right {
+  float: right;
+}
 .inline {
   display: inline !important;
 }
+
+.red { color: #e94f64; }
+.green { color: #52d273; }
+
 @media screen and (min-width: 768px) {
   .jumbotron h1 {
     font-size: 35px;

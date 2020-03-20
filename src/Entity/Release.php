@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -359,5 +360,15 @@ class Release
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        $slugify = new Slugify();
+
+        return $slugify->slugify($this->getTitle());
     }
 }

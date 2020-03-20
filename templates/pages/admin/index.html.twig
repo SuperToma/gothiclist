@@ -13,5 +13,5 @@
     {{ parent() }}
     <script src="{{ asset('js/typeahead.bundle.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap-tagsinput.min.js') }}"></script>
-    <script src="{{ asset('js/admin.js') }}"></script>
+    <script src="{{ asset('js/admin.js') ~ '?' ~ assets_version }}"></script>
 {% endblock %}

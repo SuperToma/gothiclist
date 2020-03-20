@@ -7,7 +7,9 @@
                     <tr>
                         <th scope="col">Title</th>
                         <th scope="col">Artist</th>
+                        <th scope="col">Cover</th>
                         <th scope="col">Album</th>
+                        <th scope="col">Mp3</th>
                         <th scope="col">Album's styles</th>
                         <th scope="col">By</th>
                         <th scope="col">Votes</th>
@@ -20,7 +22,35 @@
                     <tr>
                         <td>{{ song.title }}</td>
                         <td>{{ song.artist.name }}</td>
+                        <td> {# cover #}
+                            <table>
+                                <tr>
+                                    <td class="p-0">
+                                        <img src="{{ song.cover ? song.cover : "" }}"
+                                             class="cover_{{ song.release.id }}"
+                                             width="50" />
+                                    </td>
+                                    <td>
+                                        <label for="coverInputFile_{{ song.id }}"
+                                               class="float-right"><i class="fa fa-upload"></i>
+                                        </label>
+                                        <input id="coverInputFile_{{ song.id }}" name="cover" type="file"
+                                               data-id="{{ song.release.id }}"
+                                               class="coverInputFile hidden" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
                         <td>{{ song.release.title }}</td>
+                        <td> {# Mp3 #}
+                            <i class="fa fa-volume-off {{ song.hasMp3 ? 'green' : 'red' }}"></i>
+                            <label for="mp3InputFile_{{ song.id }}"
+                                   class="float-right"><i class="fa fa-upload"></i>
+                            </label>
+                            <input id="mp3InputFile_{{ song.id }}" name="mp3" type="file"
+                                   data-id="{{ song.id }}"
+                                   class="mp3InputFile hidden" />
+                        </td>
                         <td>
                             {%- for style in song.release.styles -%}
                                 {{ style.name }}{{ (loop.last) ? '' : ' / ' }}

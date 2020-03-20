@@ -12,7 +12,13 @@ return new class extends DefaultDeployer
             ->repositoryUrl('git@github.com:SuperToma/gothiclist.git')
             ->repositoryBranch('master')
             ->composerInstallFlags('--no-dev --prefer-dist --no-interaction --quiet')
-            ->sharedFilesAndDirs(['.env', 'var/log/', 'public/.well-known/'])
+            ->sharedFilesAndDirs([
+                '.env',
+                'var/log/',
+                'public/.well-known/',
+                'public/img/releases/',
+                'mp3/',
+            ])
         ;
     }
 

@@ -5,7 +5,6 @@ song_cover:
     requirements:
         id: '\d+'
 
-
 song_home:
     path: /song/{id}-{slug}
     controller: App\Controller\SongController::index
