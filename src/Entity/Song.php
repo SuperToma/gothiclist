@@ -12,13 +12,32 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Song
 {
+    const MP3_DIR = '../mp3/';
+
     /**
      * Song constructor.
+     * @throws \Exception
      */
     public function __construct()
     {
         $this->validated = false;
         $this->createdAt = new \DateTime();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCoversDirectory()
+    {
+        return $this->coversDirectory;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getMp3Directory()
+    {
+        return $this->mp3Directory;
     }
 
     /**
@@ -76,6 +95,12 @@ class Song
      * @ORM\Column(type="string", length=25, nullable=true)
      */
     private $spotifyId;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=25, nullable=true)
+     */
+    private $dailymotionId;
 
     /**
      * @var string
@@ -270,6 +295,25 @@ class Song
     /**
      * @return string
      */
+    public function getDailymotionId()
+    {
+        return $this->dailymotionId;
+    }
+
+    /**
+     * @param string $dailymotionId
+     * @return $this
+     */
+    public function setDailymotionId(string $dailymotionId)
+    {
+        $this->dailymotionId = $dailymotionId;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getValidated()
     {
         return $this->validated;
@@ -332,5 +376,29 @@ class Song
         $slugify = new Slugify();
 
         return $slugify->slugify($this->getTitle());
+    }
+
+    /**
+     * @return string
+     */
+    public function getMp3FileName()
+    {
+        return $this->getId().'-'.$this->getArtist()->getSlug().'--'.$this->getSlug().'.mp3';
+    }
+
+    /**
+     * @return string
+     */
+    public function getMp3Path()
+    {
+        return self::MP3_DIR.$this->getMp3FileName();
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasMp3()
+    {
+        return file_exists($this->getMp3Path());
     }
 }

@@ -26,7 +26,7 @@
                             <table>
                                 <tr>
                                     <td class="p-0">
-                                        <img src="{{ song.cover ? song.cover : "" }}"
+                                        <img src="{{ song.release.hasCover ? '/' ~ song.release.coverPath : '' }}"
                                              class="cover_{{ song.release.id }}"
                                              width="50" />
                                     </td>

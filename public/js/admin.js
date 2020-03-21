@@ -87,16 +87,21 @@ $('.coverInputFile').change(function() {
     contentType: false,
     processData: false,
     success: function(resp){
-      console.log(resp)
       if(resp.file){
-        const imgUrl = "/img/releases/" + resp.file + "?" + Math.round(Math.random() * 1000);
+        const imgUrl = resp.file + "?" + Math.round(Math.random() * 1000);
         $(".cover_" + coverId).attr("src", imgUrl);
       }else{
         alert('Error while uploading file');
       }
     },
     error: function(resp){
-      alert("error: " + resp.responseJSON.message);
+      if("responseText" in resp) {
+        alert("Error: " + resp.statusText)
+      } else if("responseJSON" in resp) {
+        alert("Error: " + resp.responseJSON.message);
+      } else {
+        alert("Error");
+      }
     }
   });
 });

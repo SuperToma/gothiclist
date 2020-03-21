@@ -13,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
 */
 class Release
 {
+    const COVERS_DIR = 'img/releases/';
+
     /**
      * Song constructor.
      */
@@ -370,5 +372,29 @@ class Release
         $slugify = new Slugify();
 
         return $slugify->slugify($this->getTitle());
+    }
+
+    /**
+     * @return string
+     */
+    public function getCoverFileName()
+    {
+        return $this->getId().'-'.$this->getSlug().'.jpg';
+    }
+
+    /**
+     * @return string
+     */
+    public function getCoverPath()
+    {
+        return self::COVERS_DIR.$this->getCoverFileName();
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasCover()
+    {
+        return file_exists($this->getCoverPath());
     }
 }

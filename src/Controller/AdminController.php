@@ -17,38 +17,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class AdminController extends Controller
 {
-    /** string $coversDirectory */
-    private $coversDirectory;
-
-    /** string $mp3Directory */
-    private $mp3Directory;
-
-    /**
-     * AdminController constructor.
-     * @param $coversDirectory
-     */
-    public function __construct($coversDirectory, $mp3Directory)
-    {
-        $this->coversDirectory = $coversDirectory;
-        $this->mp3Directory = $mp3Directory;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCoversDirectory()
-    {
-        return $this->coversDirectory;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMp3Directory()
-    {
-        return $this->mp3Directory;
-    }
-
     /**
      * @param SongRepository $songRepository
      * @return Response
@@ -135,10 +103,9 @@ class AdminController extends Controller
             return $this->json(['message' => 'Invalid release'], 400);
         }
 
-        $fileName = $idRelease.'-'.$release->getSlug().'.jpg';
-        $cover->move($this->getCoversDirectory(), $fileName);
+        $cover->move(Release::COVERS_DIR, $release->getCoverFileName());
 
-        return $this->json(['file' => $fileName]);
+        return $this->json(['file' => '/'.$release->getCoverPath()]);
     }
 
     /**
@@ -171,9 +138,15 @@ class AdminController extends Controller
             return $this->json(['message' => 'Invalid id'], 400);
         }
 
-        $mp3->move($this->getMp3Directory(), $idSong.'-'.$song->getArtist()->getSlug().'--'.$song->getSlug().'.mp3');
+        $mp3->move(Song::MP3_DIR, $song->getMp3FileName());
 
         return $this->json(['message' => 'Success']);
+    }
+
+    public function sendToDailymotion(Request $request)
+    {
+        $idSong = $request->get('id');
+        die($idSong);
     }
 
 }

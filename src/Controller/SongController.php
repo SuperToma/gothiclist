@@ -310,9 +310,9 @@ class SongController extends Controller
         $image->annotateImage($draw, 1200, 830, 0, $song->getRelease()->getTitle());
 
         // Gothiclist signature
-        $draw->setFont('fonts/civitype.ttf');
+        /* $draw->setFont('fonts/civitype.ttf');
         $draw->setFontSize( 80 );
-        $image->annotateImage($draw, 2100, 1300, 0, 'GothicList.com');
+        $image->annotateImage($draw, 2100, 1300, 0, 'GothicList.com'); */
 
         header('Content-Type: image/' . $image->getImageFormat());
         echo $image->getImageBlob();

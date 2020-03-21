@@ -70,21 +70,6 @@ class SongRepository extends ServiceEntityRepository
             }
         }
 
-        foreach($lastSongs as &$song) {
-            $song->cover = false;
-            //@TODO: DOCUMENT_ROOT can be Symfony compliant
-            $cover = glob($_SERVER['DOCUMENT_ROOT'].'/img/releases/'.$song->getRelease()->getId().'-*.jpg');
-            if(isset($cover[0])) {
-                $song->cover = str_replace($_SERVER['DOCUMENT_ROOT'], '', $cover[0]);
-            }
-
-            $song->hasMp3 = false;
-            $mp3 = glob($_SERVER['DOCUMENT_ROOT'].'/../mp3/'.$song->getId().'-*.mp3');
-            if(isset($mp3[0])) {
-                $song->hasMp3 = true;
-            }
-        }
-
         return $lastSongs;
     }
 
