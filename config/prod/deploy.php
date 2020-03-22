@@ -17,7 +17,7 @@ return new class extends DefaultDeployer
                 'var/log/',
                 'public/.well-known/',
                 'public/img/releases/',
-                'mp3/',
+                'assets/mp3/',
             ])
         ;
     }

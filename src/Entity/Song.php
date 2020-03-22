@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Song
 {
-    const MP3_DIR = '../mp3/';
+    const MP3_DIR = '../assets/mp3/';
 
     /**
      * Song constructor.
