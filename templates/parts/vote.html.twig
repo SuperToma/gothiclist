@@ -2,7 +2,7 @@
 {% if is_valid(user) %}
     {% set user_votes = user.votesSongIds %}
 {% endif %}
-<span class="vote fa fa-heart {{ (id in user_votes) ? 'tomato' : 'fa-heart-o' }}"
+<span class="vote fas fa-heart {{ (id in user_votes) ? 'tomato' : 'fa-heart-o' }}"
       data-id="{{ id }}"
       data-type="{{ type }}"
       style="cursor: pointer"

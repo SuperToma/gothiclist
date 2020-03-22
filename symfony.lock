@@ -68,6 +68,12 @@
     "elasticsearch/elasticsearch": {
         "version": "v6.0.1"
     },
+    "ezimuel/guzzlestreams": {
+        "version": "3.0.1"
+    },
+    "ezimuel/ringphp": {
+        "version": "1.1.2"
+    },
     "friendsofsymfony/user-bundle": {
         "version": "v2.1.2"
     },
@@ -80,12 +86,6 @@
     "guzzlehttp/psr7": {
         "version": "1.4.2"
     },
-    "guzzlehttp/ringphp": {
-        "version": "1.1.0"
-    },
-    "guzzlehttp/streams": {
-        "version": "3.0.0"
-    },
     "hwi/oauth-bundle": {
         "version": "0.6.2"
     },
@@ -94,6 +94,9 @@
     },
     "paragonie/random_compat": {
         "version": "v2.0.12"
+    },
+    "php": {
+        "version": "7.3"
     },
     "php-http/cache-plugin": {
         "version": "v1.5.0"
@@ -113,14 +116,17 @@
     "php-http/httplug-bundle": {
         "version": "1.6",
         "recipe": {
-            "repo": "github.com/symfony/recipes",
+            "repo": "github.com/symfony/recipes-contrib",
             "branch": "master",
             "version": "1.6",
-            "ref": "4655962c64e2de96c418caf576c57215711c7877"
-        }
+            "ref": "87b3d491d593d2c6e3b90bf0689ac69a188bfa5f"
+        },
+        "files": [
+            "config/packages/httplug.yaml"
+        ]
     },
     "php-http/logger-plugin": {
-        "version": "v1.0.0"
+        "version": "1.1.0"
     },
     "php-http/message": {
         "version": "1.6.0"
@@ -132,7 +138,7 @@
         "version": "v1.0.0"
     },
     "php-http/stopwatch-plugin": {
-        "version": "1.1.0"
+        "version": "1.3.0"
     },
     "psr/cache": {
         "version": "1.0.1"
