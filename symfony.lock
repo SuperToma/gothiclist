@@ -5,6 +5,9 @@
     "cocur/slugify": {
         "version": "v3.1"
     },
+    "dailymotion/sdk": {
+        "version": "1.6.5"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {

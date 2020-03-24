@@ -11,7 +11,8 @@ return new class extends DefaultDeployer
             ->deployDir('/home/gothiclist')
             ->repositoryUrl('git@github.com:SuperToma/gothiclist.git')
             ->repositoryBranch('master')
-            ->composerInstallFlags('--no-dev --prefer-dist --no-interaction --quiet')
+            ->composerInstallFlags('--no-dev --prefer-dist --no-interaction')
+            ->useSshAgentForwarding(true)
             ->sharedFilesAndDirs([
                 '.env',
                 'var/log/',

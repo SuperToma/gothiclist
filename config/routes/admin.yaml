@@ -29,3 +29,8 @@ admin_upload_mp3:
     path: /admin/upload_mp3
     controller: App\Controller\AdminController::uploadMp3
     methods: [POST]
+
+admin_send_to_dailymotion:
+    path: /admin/send_to_dailymotion
+    controller: App\Controller\AdminController::sendToDailymotion
+    methods: [POST]

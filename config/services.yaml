@@ -24,6 +24,13 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    App\Controller\AdminController:
+        arguments:
+            $dmApiKey: '%env(DM_API_KEY)%'
+            $dmApiSecret: '%env(DM_API_SECRET)%'
+            $dmUserLogin: '%env(DM_USER_LOGIN)%'
+            $dmUserPassword: '%env(DM_USER_PASSWORD)%'
+
     # App services
     app.oauth_aware.user_provider.service:
         class: App\Security\Core\User\UserProvider

@@ -3,7 +3,7 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     globals:
-        assets_version: 27
+        assets_version: 32
         countries:
             Europe: ''
             Belgium: 'be'

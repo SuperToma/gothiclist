@@ -26,6 +26,9 @@ body {
 
 .red { color: #e94f64; }
 .green { color: #52d273; }
+.blue-daily {
+  color: #00C6F7;
+}
 
 @media screen and (min-width: 768px) {
   .jumbotron h1 {

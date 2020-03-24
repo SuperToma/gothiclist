@@ -17,6 +17,65 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class AdminController extends Controller
 {
+    /** string $dmApiKey */
+    protected $dmApiKey;
+
+    /** string $dmApiSecret */
+    protected $dmApiSecret;
+
+    /** string $dmUserLogin */
+    protected $dmUserLogin;
+
+    /** string $dmUserPassword */
+    protected $dmUserPassword;
+
+    /**
+     * AdminController constructor.
+     * @param $dmApiKey
+     * @param $dmApiSecret
+     * @param $dmUserLogin
+     * @param $dmUserPassword
+     */
+    public function __construct($dmApiKey, $dmApiSecret, $dmUserLogin, $dmUserPassword)
+    {
+        $this->dmApiKey = $dmApiKey;
+        $this->dmApiSecret = $dmApiSecret;
+        $this->dmUserLogin = $dmUserLogin;
+        $this->dmUserPassword = $dmUserPassword;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDmApiKey()
+    {
+        return $this->dmApiKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDmApiSecret()
+    {
+        return $this->dmApiKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDmUserLogin()
+    {
+        return $this->dmApiKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDmUserPassword()
+    {
+        return $this->dmApiKey;
+    }
+
     /**
      * @param SongRepository $songRepository
      * @return Response
@@ -145,8 +204,50 @@ class AdminController extends Controller
 
     public function sendToDailymotion(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'You need to be administrator to access this page');
+
         $idSong = $request->get('id');
-        die($idSong);
+
+        if(!$idSong) {
+            return $this->json(['message' => 'Id is missing'], 400);
+        }
+
+        /** @var Song $song */
+        $song = $this->getDoctrine()->getRepository(Song::class)->find($idSong);
+        if(empty($song)) {
+            return $this->json(['message' => 'Invalid id'], 400);
+        }
+
+        if(!$song->hasMp3()) {
+            return $this->json(['message' => 'Please upload an Mp3 before'], 400);
+        }
+
+        if(!$song->getRelease()->hasCover()) {
+            return $this->json(['message' => 'Please upload a cover before'], 400);
+        }
+
+        $dmApi = new \Dailymotion();
+        $dmApi->setGrantType(
+            \Dailymotion::GRANT_TYPE_PASSWORD,
+            $this->getDmApiKey(),
+            $this->getDmApiSecret(),
+            ['manage_videos'],
+            ['username' => $this->getDmUserLogin(), 'password' => $this->getDmUserPassword()]
+        );
+
+        $videoUrl = $dmApi->uploadFile($song->getMp3Path());
+
+        $dmApi->post('/videos', [
+                'url'       => $videoUrl,
+                'title'     => 'Dailymotion PHP SDK upload test',
+                'tags'      => 'dailymotion,api,sdk,test',
+                'channel'   => 'videogames',
+                'published' => true,
+            ]
+        );
+
+
+        var_dump($this->getDmApiKey()); exit();
     }
 
 }

@@ -43,7 +43,7 @@
                         </td>
                         <td>{{ song.release.title }}</td>
                         <td> {# Mp3 #}
-                            <i class="fas fa-volume-off {{ song.hasMp3 ? 'green' : 'red' }}"></i>
+                            <i class="fas fa-volume-off volume_{{ song.id }} {{ song.hasMp3 ? 'green' : 'red' }}"></i>
                             <label for="mp3InputFile_{{ song.id }}"
                                    class="float-right"><i class="fas fa-upload"></i>
                             </label>
@@ -82,7 +82,7 @@
                                         <i class="fab fa-dailymotion fa-lg"></i>
                                     </a>
                                 {% else %}
-                                    <i class="fab fa-dailymotion fa-lg fa-off"></i>
+                                    <a onclick="sendToDailymotion({{ song.id }});"><i class="fab fa-dailymotion dailymotion_{{ song.id }} fa-lg fa-off"></i></a>
                                 {% endif %}
                             </div>
 

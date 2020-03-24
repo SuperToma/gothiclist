@@ -122,13 +122,46 @@ $('.mp3InputFile').change(function() {
     processData: false,
     success: function(resp){
       if(resp.message === "Success"){
+        $(".volume_" + songId).removeClass('red').addClass('green');
         alert("Upload success");
       }else{
         alert('Error while uploading file');
       }
     },
     error: function(resp){
-      alert("error: " + resp.responseJSON.message);
+      if("responseText" in resp) {
+        alert("Error: " + resp.statusText)
+      } else if("responseJSON" in resp) {
+        alert("Error: " + resp.responseJSON.message);
+      } else {
+        alert("Error");
+      }
     }
   });
 });
+
+function sendToDailymotion(id)
+{
+  $.ajax({
+    url: '/admin/send_to_dailymotion',
+    type: 'post',
+    data: { "id": id },
+    success: function(resp){
+      if(resp.message === "Success"){
+        $(".dailymotion_" + id).removeClass('fa-off').addClass('blue-daily');
+        alert("Sent success");
+      }else{
+        alert('Error while sending to Dailymotion');
+      }
+    },
+    error: function(resp){
+      if("responseText" in resp) {
+        alert("Error: " + resp.statusText)
+      } else if("responseJSON" in resp) {
+        alert("Error: " + resp.responseJSON.message);
+      } else {
+        alert("Error");
+      }
+    }
+  });
+}
