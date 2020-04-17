@@ -22,7 +22,7 @@ return new class extends DefaultDeployer
             ])
             ->writableDirs([
                 'assets/videos',
-                'assets/mp3/videos-backgrounds',
+                'assets/videos-backgrounds',
             ])
         ;
     }
