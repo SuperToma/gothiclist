@@ -10,21 +10,22 @@ use App\Entity\Song;
 use App\Entity\Style;
 use App\Entity\User;
 use App\Finder\Elasticsearch\Finder;
+use App\Generator\ImageGenerator;
 use App\Repository\SongRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 
 /**
  * Class SongController
  * @package App\Controller
  */
-class SongController extends Controller
+class SongController extends AbstractController
 {
     /** string $parameterBag */
     private $parameterBag;
@@ -267,7 +268,7 @@ class SongController extends Controller
         return $this->json(true);
     }
 
-    public function cover(int $id, string $slug): BinaryFileResponse
+    public function cover(int $id, string $slug)//: BinaryFileResponse
     {
         /** @var Song $song */
         $song = $this->getDoctrine()->getRepository(Song::class)->find($id);
@@ -276,46 +277,13 @@ class SongController extends Controller
             throw $this->createNotFoundException('Sorry, song not found');
         }
 
-        $imgPath = $this->getParameter('kernel.project_dir').
-            '/public/img/releases/'.$song->getRelease()->getId().'.jpg';
+        $imageGenerator = new ImageGenerator($song);
 
-        $backgroundWidth = 2468;
-        $backgroundHeight = 1396;
+        $response = new BinaryFileResponse($imageGenerator->generateSongVideoBackgroundFile());
+        $response->deleteFileAfterSend();
 
-        $coverWidth = 950;
+        $response->headers->set('Content-Type', 'image/jpeg');
 
-        // Background
-        $image = new \Imagick(realpath($imgPath));
-        $image->blurImage(8,8);
-        $image->scaleImage($backgroundWidth);
-        $image->cropThumbnailImage($backgroundWidth, $backgroundHeight);
-        $image->brightnessContrastImage(-30, -50);
-
-        // Small cover
-        $cover = new \Imagick(realpath($imgPath));
-        $cover->scaleImage($coverWidth, 0);
-
-        $image->compositeImage($cover, \Imagick::COMPOSITE_DEFAULT, 150, 150);
-
-        // Song infos
-        $draw = new \ImagickDraw();
-        $draw->setFont('fonts/vtRemingtonPortable.ttf');
-        $draw->setFontSize( 80 );
-        $draw->setFillColor('white');
-        $image->annotateImage($draw, 1200, 450, 0, $song->getTitle());
-
-        $draw->setFontSize( 70 );
-        $image->annotateImage($draw, 1200, 700, 0, $song->getArtist()->getName());
-        $draw->setFontSize( 50 );
-        $image->annotateImage($draw, 1200, 830, 0, $song->getRelease()->getTitle());
-
-        // Gothiclist signature
-        /* $draw->setFont('fonts/civitype.ttf');
-        $draw->setFontSize( 80 );
-        $image->annotateImage($draw, 2100, 1300, 0, 'GothicList.com'); */
-
-        header('Content-Type: image/' . $image->getImageFormat());
-        echo $image->getImageBlob();
-        die();
+        return $response;
     }
 }

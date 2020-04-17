@@ -6,7 +6,7 @@ use App\Entity\Artist;
 use App\Entity\ArtistVersion;
 use App\Repository\ArtistRepository;
 use App\Repository\SongRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * Class ArtistController
  * @package App\Controller
  */
-class ArtistController extends Controller
+class ArtistController extends AbstractController
 {
     /**
      * @param int $id

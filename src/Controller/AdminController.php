@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Release;
 use App\Entity\Song;
 use App\Entity\Style;
+use App\Generator\VideoGenerator;
 use App\Repository\SongRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Uploader\DailymotionUploader;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,67 +17,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  * Class AdminController
  * @package App\Controller
  */
-class AdminController extends Controller
+class AdminController extends AbstractController
 {
-    /** string $dmApiKey */
-    protected $dmApiKey;
-
-    /** string $dmApiSecret */
-    protected $dmApiSecret;
-
-    /** string $dmUserLogin */
-    protected $dmUserLogin;
-
-    /** string $dmUserPassword */
-    protected $dmUserPassword;
-
-    /**
-     * AdminController constructor.
-     * @param $dmApiKey
-     * @param $dmApiSecret
-     * @param $dmUserLogin
-     * @param $dmUserPassword
-     */
-    public function __construct($dmApiKey, $dmApiSecret, $dmUserLogin, $dmUserPassword)
-    {
-        $this->dmApiKey = $dmApiKey;
-        $this->dmApiSecret = $dmApiSecret;
-        $this->dmUserLogin = $dmUserLogin;
-        $this->dmUserPassword = $dmUserPassword;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDmApiKey()
-    {
-        return $this->dmApiKey;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDmApiSecret()
-    {
-        return $this->dmApiKey;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDmUserLogin()
-    {
-        return $this->dmApiKey;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDmUserPassword()
-    {
-        return $this->dmApiKey;
-    }
-
     /**
      * @param SongRepository $songRepository
      * @return Response
@@ -85,7 +28,7 @@ class AdminController extends Controller
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'You need to be administrator to access this page');
 
         return $this->render('pages/admin/index.html.twig', [
-            'last_songs' => $songRepository->getLast(30)
+            'last_songs' => $songRepository->getLast(100)
         ]);
     }
 
@@ -135,15 +78,18 @@ class AdminController extends Controller
 
     /**
      * @param Request $request
+     * @param DailymotionUploader $dailymotionUploader
      * @return JsonResponse
+     * @throws \DailymotionApiException
+     * @throws \DailymotionAuthRequiredException
      */
-    public function uploadCover(Request $request)
+    public function uploadCover(Request $request, DailymotionUploader $dailymotionUploader)
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'You need to be administrator to access this page');
 
         /** @var UploadedFile $cover */
         $cover = $request->files->get('cover');
-        $idRelease = $request->get('id');
+        $idSong = $request->get('id');
 
         if(!$cover) {
             return $this->json(['message' => 'Cover is missing'], 400);
@@ -153,25 +99,43 @@ class AdminController extends Controller
             return $this->json(['message' => 'Invalid file'], 400);
         }
 
-        if(!$idRelease) {
+        if(!$idSong) {
             return $this->json(['message' => 'Id is missing'], 400);
         }
 
-        $release = $this->getDoctrine()->getRepository(Release::class)->find($idRelease);
-        if(empty($release)) {
-            return $this->json(['message' => 'Invalid release'], 400);
+        /** @var Song $song */
+        $song = $this->getDoctrine()->getRepository(Song::class)->find($idSong);
+        if(empty($song)) {
+            return $this->json(['message' => 'Invalid Id'], 400);
         }
 
-        $cover->move(Release::COVERS_DIR, $release->getCoverFileName());
+        $cover->move(Release::COVERS_DIR, $song->getRelease()->getCoverFileName());
 
-        return $this->json(['file' => '/'.$release->getCoverPath()]);
+        if($song->hasMp3()) {
+            $videoGenerator = new VideoGenerator($song);
+            $videoGenerator->generateVideo();
+
+            $dailymotionId = $dailymotionUploader->uploadSong($song, $videoGenerator->getVideoPath());
+
+            $videoGenerator->deleteVideoFile();
+
+            return $this->json([
+                'file' => '/'.$song->getRelease()->getCoverPath(),
+                'dailymotionId' => $dailymotionId
+            ]);
+        }
+
+        return $this->json(['file' => '/'.$song->getRelease()->getCoverPath()]);
     }
 
     /**
      * @param Request $request
+     * @param DailymotionUploader $dailymotionUploader
      * @return JsonResponse
+     * @throws \DailymotionApiException
+     * @throws \DailymotionAuthRequiredException
      */
-    public function uploadMp3(Request $request)
+    public function uploadMp3(Request $request, DailymotionUploader $dailymotionUploader)
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'You need to be administrator to access this page');
 
@@ -182,9 +146,9 @@ class AdminController extends Controller
         if(!$mp3) {
             return $this->json(['message' => 'Mp3 is missing'], 400);
         }
-
-        if($mp3->getMimeType() !== 'audio/mpeg') {
-            return $this->json(['message' => 'Invalid file'], 400);
+        
+        if(!in_array($mp3->getMimeType(), ['audio/mpeg', 'application/octet-stream', 'application/x-font-gdos'])) {
+            return $this->json(['message' => 'Invalid mp3 file'], 400);
         }
 
         if(!$idSong) {
@@ -199,55 +163,18 @@ class AdminController extends Controller
 
         $mp3->move(Song::MP3_DIR, $song->getMp3FileName());
 
+        if($song->getRelease()->hasCover()) {
+            $videoGenerator = new VideoGenerator($song);
+            $videoGenerator->generateVideo();
+
+            $dailymotionId = $dailymotionUploader->uploadSong($song, $videoGenerator->getVideoPath());
+
+            $videoGenerator->deleteVideoFile();
+
+            return $this->json(['message' => 'Success', 'dailymotionId' => $dailymotionId]);
+        }
+
         return $this->json(['message' => 'Success']);
-    }
-
-    public function sendToDailymotion(Request $request)
-    {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'You need to be administrator to access this page');
-
-        $idSong = $request->get('id');
-
-        if(!$idSong) {
-            return $this->json(['message' => 'Id is missing'], 400);
-        }
-
-        /** @var Song $song */
-        $song = $this->getDoctrine()->getRepository(Song::class)->find($idSong);
-        if(empty($song)) {
-            return $this->json(['message' => 'Invalid id'], 400);
-        }
-
-        if(!$song->hasMp3()) {
-            return $this->json(['message' => 'Please upload an Mp3 before'], 400);
-        }
-
-        if(!$song->getRelease()->hasCover()) {
-            return $this->json(['message' => 'Please upload a cover before'], 400);
-        }
-
-        $dmApi = new \Dailymotion();
-        $dmApi->setGrantType(
-            \Dailymotion::GRANT_TYPE_PASSWORD,
-            $this->getDmApiKey(),
-            $this->getDmApiSecret(),
-            ['manage_videos'],
-            ['username' => $this->getDmUserLogin(), 'password' => $this->getDmUserPassword()]
-        );
-
-        $videoUrl = $dmApi->uploadFile($song->getMp3Path());
-
-        $dmApi->post('/videos', [
-                'url'       => $videoUrl,
-                'title'     => 'Dailymotion PHP SDK upload test',
-                'tags'      => 'dailymotion,api,sdk,test',
-                'channel'   => 'videogames',
-                'published' => true,
-            ]
-        );
-
-
-        var_dump($this->getDmApiKey()); exit();
     }
 
 }

@@ -6,7 +6,7 @@ use App\Entity\Style;
 use App\Repository\SongRepository;
 use App\Repository\StyleRepository;
 use App\Repository\VoteSongRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * Class StyleController
  * @package App\Controller
  */
-class StyleController extends Controller
+class StyleController extends AbstractController
 {
     /**
      * @param int $idStyle

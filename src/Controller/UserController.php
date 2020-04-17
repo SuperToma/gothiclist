@@ -8,7 +8,7 @@ use App\Entity\VoteSong;
 use App\Repository\UserRepository;
 use App\Repository\VoteSongRepository;
 use Cocur\Slugify\Slugify;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * Class UserController
  * @package App\Controller
  */
-class UserController extends Controller
+class UserController extends AbstractController
 {
     /**
      * @param Request $request

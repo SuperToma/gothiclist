@@ -3,24 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Artist;
-use App\Entity\ArtistVersion;
 use App\Entity\CommentArtist;
 use App\Entity\CommentSong;
 use App\Entity\Song;
-use App\Repository\ArtistRepository;
-use App\Repository\SongRepository;
-use function GuzzleHttp\default_ca_bundle;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Class CommentController
  * @package App\Controller
  */
-class CommentController extends Controller
+class CommentController extends AbstractController
 {
     public function add(Request $request): JsonResponse
     {

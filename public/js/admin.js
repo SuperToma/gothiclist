@@ -90,15 +90,21 @@ $('.coverInputFile').change(function() {
       if(resp.file){
         const imgUrl = resp.file + "?" + Math.round(Math.random() * 1000);
         $(".cover_" + coverId).attr("src", imgUrl);
+
+        //Change Dailymotion logo color & ID
+        if(typeof resp.dailymotionId === "string") {
+          $(".dailymotion_" + dailymotionId + " input").text(dailymotionId);
+          $(".dailymotion_" + dailymotionId + " i").removeClass('fa-off').addClass('blue-daily');
+        }
       }else{
         alert('Error while uploading file');
       }
     },
     error: function(resp){
-      if("responseText" in resp) {
-        alert("Error: " + resp.statusText)
-      } else if("responseJSON" in resp) {
+      if("responseJSON" in resp) {
         alert("Error: " + resp.responseJSON.message);
+      } else if("responseText" in resp) {
+        alert("Error: " + resp.statusText)
       } else {
         alert("Error");
       }
@@ -123,45 +129,25 @@ $('.mp3InputFile').change(function() {
     success: function(resp){
       if(resp.message === "Success"){
         $(".volume_" + songId).removeClass('red').addClass('green');
+
+        //Change Dailymotion logo color & ID
+        if(typeof resp.dailymotionId === "string") {
+          $(".dailymotion_" + dailymotionId + " input").text(dailymotionId);
+          $(".dailymotion_" + dailymotionId + " i").removeClass('fa-off').addClass('blue-daily');
+        }
         alert("Upload success");
       }else{
         alert('Error while uploading file');
       }
     },
     error: function(resp){
-      if("responseText" in resp) {
-        alert("Error: " + resp.statusText)
-      } else if("responseJSON" in resp) {
+      if("responseJSON" in resp) {
         alert("Error: " + resp.responseJSON.message);
+      } else if("responseText" in resp) {
+        alert("Error: " + resp.statusText)
       } else {
         alert("Error");
       }
     }
   });
 });
-
-function sendToDailymotion(id)
-{
-  $.ajax({
-    url: '/admin/send_to_dailymotion',
-    type: 'post',
-    data: { "id": id },
-    success: function(resp){
-      if(resp.message === "Success"){
-        $(".dailymotion_" + id).removeClass('fa-off').addClass('blue-daily');
-        alert("Sent success");
-      }else{
-        alert('Error while sending to Dailymotion');
-      }
-    },
-    error: function(resp){
-      if("responseText" in resp) {
-        alert("Error: " + resp.statusText)
-      } else if("responseJSON" in resp) {
-        alert("Error: " + resp.responseJSON.message);
-      } else {
-        alert("Error");
-      }
-    }
-  });
-}

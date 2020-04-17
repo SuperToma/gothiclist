@@ -4,14 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Style;
 use App\Finder\Elasticsearch\Finder;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Class AutocompleteController
  * @package App\Controller
  */
-class AutocompleteController extends Controller
+class AutocompleteController extends AbstractController
 {
     /**
      * @param string $prefixArtist

@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\VoteArtist;
 use App\Entity\VoteSong;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
  * Class VoteController
  * @package App\Controller
  */
-class VoteController extends Controller
+class VoteController extends AbstractController
 {
     /**
      * @param Request $request

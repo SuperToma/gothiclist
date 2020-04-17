@@ -27,7 +27,7 @@
                                 <tr>
                                     <td class="p-0">
                                         <img src="{{ song.release.hasCover ? '/' ~ song.release.coverPath : '' }}"
-                                             class="cover_{{ song.release.id }}"
+                                             class="cover_{{ song.id }}"
                                              width="50" />
                                     </td>
                                     <td>
@@ -35,7 +35,7 @@
                                                class="float-right"><i class="fas fa-upload"></i>
                                         </label>
                                         <input id="coverInputFile_{{ song.id }}" name="cover" type="file"
-                                               data-id="{{ song.release.id }}"
+                                               data-id="{{ song.id }}"
                                                class="coverInputFile hidden" />
                                     </td>
                                 </tr>
@@ -75,15 +75,12 @@
                             <span class="nbVotes">{{ song.nbVotes }}</span>
                         </td>
                         <td>
-                            <div class="w-125 form-inline">
-                                <input type="text" value="{{ song.spotifyId }}" data-song-id="{{ song.id }}" class="dailymotion-id w-100 form-control input-sm" placeholder="Dailymotion id">
-                                {% if song.dailymotionId %}
-                                    <a href="https://www.dailymotion.com/embed/video/{{ song.dailymotionId }}?autoplay=1" data-target="#modal" data-toggle="modal">
-                                        <i class="fab fa-dailymotion fa-lg"></i>
-                                    </a>
-                                {% else %}
-                                    <a onclick="sendToDailymotion({{ song.id }});"><i class="fab fa-dailymotion dailymotion_{{ song.id }} fa-lg fa-off"></i></a>
-                                {% endif %}
+                            <div class="w-125 form-inline dailymotion-{{ song.dailymotionId }}">
+                                <input type="text"
+                                       value="{{ song.dailymotionId }}"
+                                       class="w-100 form-control input-sm"
+                                       disabled />
+                                <i class="fab fa-dailymotion fa-lg {{ song.dailymotionId ? 'blue-daily' : '' }}"></i>
                             </div>
 
                             <div class="w-125 form-inline">

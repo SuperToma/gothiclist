@@ -24,12 +24,12 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    App\Controller\AdminController:
+    App\Uploader\DailymotionUploader:
         arguments:
-            $dmApiKey: '%env(DM_API_KEY)%'
-            $dmApiSecret: '%env(DM_API_SECRET)%'
-            $dmUserLogin: '%env(DM_USER_LOGIN)%'
-            $dmUserPassword: '%env(DM_USER_PASSWORD)%'
+            $dmApiKey: '%env(string:DM_API_KEY)%'
+            $dmApiSecret: '%env(string:DM_API_SECRET)%'
+            $dmUserLogin: '%env(string:DM_USER_LOGIN)%'
+            $dmUserPassword: '%env(string:DM_USER_PASSWORD)%'
 
     # App services
     app.oauth_aware.user_provider.service:

@@ -6,7 +6,7 @@ use App\Entity\Artist;
 use App\Entity\Song;
 use App\Entity\Style;
 use App\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  * Class MiscController
  * @package App\Controller
  */
-class MiscController extends Controller
+class MiscController extends AbstractController
 {
     public function terms() {
         return $this->render('pages/misc/terms.html.twig');
