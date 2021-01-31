@@ -20,6 +20,10 @@ return new class extends DefaultDeployer
                 'public/img/releases/',
                 'assets/mp3/',
             ])
+            ->writableDirs([
+                'assets/videos',
+                'assets/videos-backgrounds',
+            ])
         ;
     }
 
