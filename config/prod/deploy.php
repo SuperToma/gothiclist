@@ -7,8 +7,8 @@ return new class extends DefaultDeployer
     public function configure()
     {
         return $this->getConfigBuilder()
-            ->server('gothiclist@gothiclist.com')
-            ->deployDir('/home/gothiclist')
+            ->server('toma@gothiclist.com')
+            ->deployDir('/var/www/gothiclist')
             ->repositoryUrl('git@github.com:SuperToma/gothiclist.git')
             ->repositoryBranch('master')
             ->composerInstallFlags('--no-dev --prefer-dist --no-interaction')

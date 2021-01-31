@@ -22,7 +22,8 @@ hwi_oauth:
             type:                'facebook'
             client_id:           '1882882331970659'
             client_secret:       '%env(FACEBOOK_SECRET)%'
-            scope:               'email,user_gender,user_age_range,user_location'
+            scope:               'email'
+            # scope:               'email,user_gender,user_age_range,user_location'
             options:
                 display: popup #dialog is optimized for popup window
                 auth_type: rerequest # Re-asking for Declined Permissions

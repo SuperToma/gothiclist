@@ -47,7 +47,7 @@ class Finder
         }
 
         return [
-            'total' => $rawResults['hits']['total'],
+            'total' => $rawResults['hits']['total']['value'],
             'results' => $rawResults['hits']['hits'],
         ];
     }

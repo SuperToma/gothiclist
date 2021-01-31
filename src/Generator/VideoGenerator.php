@@ -28,7 +28,7 @@ class VideoGenerator
     {
         $this->imageGenerator->generateSongVideoBackgroundFile();
 
-        $this->generateVideoFile(false);
+        $this->generateVideoFile();
     }
 
     /**
@@ -72,7 +72,7 @@ class VideoGenerator
         exec('/usr/bin/ffmpeg -y -loop 1 -framerate 1 \
             -i '.$this->imageGenerator->generateSongVideoBackgroundFile().' \
             -i '.$this->song->getMp3Path().' \
-            '.($compressVideo ? '-c:v libx264 -crf 0 -c:a copy' : '-c copy').' -shortest \
+            '.($compressVideo ? '-c:v libx264 -crf 21 -c:a copy' : '-c copy').' -shortest \
             '.$this->getVideoPath());
     }
 }
