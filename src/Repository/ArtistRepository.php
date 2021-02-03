@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Entity\Artist;
 use App\Entity\Song;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * Class StyleRepository
@@ -15,9 +15,9 @@ class ArtistRepository extends ServiceEntityRepository
 {
     /**
      * StyleRepository constructor.
-     * @param RegistryInterface $registry
+     * @param ManagerRegistry $registry
      */
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Artist::class);
     }

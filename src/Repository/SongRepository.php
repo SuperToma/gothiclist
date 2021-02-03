@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Entity\Artist;
 use App\Entity\Song;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
@@ -18,11 +18,10 @@ class SongRepository extends ServiceEntityRepository
 
     /**
      * SongRepository constructor.
-     * @param RegistryInterface $registry
+     * @param ManagerRegistry $registry
      * @param VoteSongRepository $voteSongRepository
-     * @param ParameterBagInterface $parameterBag
      */
-    public function __construct(RegistryInterface $registry, VoteSongRepository $voteSongRepository)
+    public function __construct(ManagerRegistry $registry, VoteSongRepository $voteSongRepository)
     {
         parent::__construct($registry, Song::class);
         $this->voteSongRepository = $voteSongRepository;

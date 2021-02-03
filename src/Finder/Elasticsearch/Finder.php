@@ -59,7 +59,7 @@ class Finder
     public function getArtistById($artistId)
     {
         $params = [
-            'index' => 'artist',
+            'index' => 'artists',
             'body' => [
                 'query' => [
                     'term' => ['_id' => $artistId]
@@ -73,7 +73,7 @@ class Finder
     public function getReleaseById($songId)
     {
         $params = [
-            'index' => 'release',
+            'index' => 'releases',
             'body' => [
                 'query' => [
                     'term' => ['_id' => $songId]
@@ -92,7 +92,7 @@ class Finder
     public function getArtistGroupStartingWith(string $text, int $limit = 15)
     {
         $params = [
-            'index' => 'artist',
+            'index' => 'artists',
             '_source' => 'name',
             'from' => 0,
             'size' => $limit,
@@ -115,7 +115,7 @@ class Finder
     protected function getMainReleasesTitlesFromArtistId($artistId)
     {
         $params = [
-            'index' => 'master',
+            'index' => 'masters',
             'from' => 0,
             'size' => 1000,
             '_source' => ['main_release', 'title'],
@@ -145,7 +145,7 @@ class Finder
     public function getSongsStartingWith(int $artistId, string $text, $limit = 15)
     {
         $params = [
-            'index' => 'release',
+            'index' => 'releases',
             'from' => 0,
             'size' => $limit,
             '_source' => ['title', 'released'],

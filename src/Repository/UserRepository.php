@@ -4,9 +4,9 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Cocur\Slugify\Slugify;
+use Doctrine\Persistence\ManagerRegistry;
 use FOS\UserBundle\Util\Canonicalizer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * Class UserRepository
@@ -16,9 +16,9 @@ class UserRepository extends ServiceEntityRepository
 {
     /**
      * SongRepository constructor.
-     * @param RegistryInterface $registry
+     * @param ManagerRegistry $registry
      */
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
     }
