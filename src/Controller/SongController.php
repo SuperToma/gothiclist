@@ -136,6 +136,7 @@ class SongController extends AbstractController
                     $genres->add($genre);
                 }
 
+                print_r($esRelease['styles']); exit("//");
                 //Add release styles
                 $styles = new ArrayCollection();
                 foreach($esRelease['styles'] as $styleName) {
@@ -187,9 +188,9 @@ class SongController extends AbstractController
             $songName = current(explode(' || ', $request->get('song_name'))); // Remove additional infos on song
 
             foreach($esRelease['tracklist'] as $track) {
-                $tracklist .= '<li>'.$track['title'][0].'</li>';
+                $tracklist .= '<li>'.$track['title'].'</li>';
 
-                if($track['title'][0] == $songName) {
+                if($track['title'] == $songName) {
                     $trackFound = true;
                     break;
                 }
