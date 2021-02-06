@@ -121,7 +121,7 @@ class Finder
             '_source' => ['main_release', 'title'],
             'body' => [
                 'query' => [
-                    'term' => [ 'artists.id' => $artistId ]
+                    'term' => ['artists.id' => $artistId]
                 ]
             ]
         ];
@@ -170,7 +170,7 @@ class Finder
                                     ]
                                 ]
                             ], [
-                                'term' => ['artists.artist.id' => $artistId]
+                                'term' => ['artists.id' => $artistId]
                             ]
                         ]
                     ]
@@ -186,7 +186,10 @@ class Finder
 
         //Remove non main_releases
         $mainReleases = $this->getMainReleasesTitlesFromArtistId($artistId);
+
         //@TODO : keep releases's non existing songs
+
+        // Remove duplicates (non main releases)
         foreach($esResults['results'] as $i => $result) {
             if (in_array($result['title'], $mainReleases)) {
                 if ($result['id'] != array_search($result['title'], $mainReleases)) {
@@ -202,7 +205,7 @@ class Finder
         foreach($esResults['results'] as $result) {
             //If many tracks returned
             foreach($result['inner_hits']['tracklist']['hits']['hits'] as $track) {
-                $title = $track['_source']['title'][0];
+                $title = $track['_source']['title'];
                 $newResults[] = [
                     'id' => $result['id'],
                     'album' => $result['title'],
