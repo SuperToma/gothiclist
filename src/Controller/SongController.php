@@ -136,7 +136,6 @@ class SongController extends AbstractController
                     $genres->add($genre);
                 }
 
-                print_r($esRelease['styles']); exit("//");
                 //Add release styles
                 $styles = new ArrayCollection();
                 foreach($esRelease['styles'] as $styleName) {
