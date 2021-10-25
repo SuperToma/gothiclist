@@ -9,7 +9,7 @@
         "doctrine/doctrine-bundle": "^1.9",
         "doctrine/orm": "^2.6",
         "elasticsearch/elasticsearch": "^7.6",
-        "friendsofsymfony/user-bundle": "^2.1",
+        "friendsofsymfony/user-bundle": "^2.2",
         "hwi/oauth-bundle": "^0.6.2",
         "php-http/guzzle6-adapter": "^1.1",
         "php-http/httplug-bundle": "^1.10",
